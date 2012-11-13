@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="UserServiceService" targetNamespace="http://service.aic.tuwien.ac.at/" xmlns:ns1="http://jws.samples.geronimo.apache.org" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://service.aic.tuwien.ac.at/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:import namespace="http://jws.samples.geronimo.apache.org" location="UserServicePortType.wsdl">
+    </wsdl:import>
+  <wsdl:binding name="UserServiceServiceSoapBinding" type="ns1:UserServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="addUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="userExists">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="userExists">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="userExistsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="removeUser">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="removeUser">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="removeUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checkCredentials">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="checkCredentials">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="checkCredentialsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="UserServiceService">
+    <wsdl:port name="UserServicePort" binding="tns:UserServiceServiceSoapBinding">
+      <soap:address location="http://localhost:9090/UserServicePort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
