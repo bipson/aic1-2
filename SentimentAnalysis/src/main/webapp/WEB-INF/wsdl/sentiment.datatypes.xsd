@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://aic.sentiment.datatypes/" elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://aic.sentiment.datatypes/">
+
+	
+	<complexType name="ArrayOfStrings">
+		<sequence>
+			<element maxOccurs="unbounded" name="string" type="string"/>
+		</sequence>
+	</complexType>
+	
+	
+	<element name="InitFaultP" type="string"></element>
+	
+	
+    <element name="ComputeRequestP" type="string"></element>
+	
+	<element name="ComputeResponseP" type="double"></element>
+	
+	<element name="ComputeFaultP" type="string"></element>
+	
+	
+	<element name="ComputeAverageRequestP" type="tns:ArrayOfStrings"></element>
+	
+	<element name="ComputeAverageResponseP" type="double"></element>
+	
+	<element name="ComputeAverageFaultP" type="string"></element>
+ 
+</schema>
