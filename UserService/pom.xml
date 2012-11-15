@@ -16,7 +16,10 @@
   specific language governing permissions and limitations
   under the License.
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+	http://maven.apache.org/maven-v4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>at.ac.tuwien.aic.service</groupId>
     <artifactId>user_service</artifactId>
@@ -34,11 +37,13 @@
      -->
 	<properties>
 		<cxf.version>2.2.3</cxf.version>
+		<geronimo.version>3.0.0</geronimo.version>
 	</properties>
     <build>
         <plugins>
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.5.1</version>
                 <configuration>
                     <source>1.6</source>
                     <target>1.6</target>
@@ -49,19 +54,12 @@
                 <version>2.1</version>
                 <configuration>
                 	<failOnMissingWebXml>false</failOnMissingWebXml>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>tomcat-maven-plugin</artifactId>
-                <version>1.1</version>
-                <configuration>
-                    <server>myTomcat</server>
-                    <!-- if using Tomcat 6 (see README) -->
-                    <!--url>http://localhost:8080/manager</url -->
-                    <!-- if using Tomcat 7 (see README) -->
-                    <url>http://localhost:8080/manager/text</url>
-                    <path>/${project.build.finalName}</path>
+                	<webResources>
+						<resource>
+							<directory>${project.build.directory}/generated/wsdl/</directory>
+							<targetPath>WEB-INF</targetPath>
+						</resource>
+					</webResources>
                 </configuration>
             </plugin>
    		    <plugin>
@@ -97,30 +95,47 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<groupId>org.apache.geronimo.plugins</groupId>
+				<groupId>org.apache.geronimo.buildsupport</groupId>
 				<artifactId>geronimo-maven-plugin</artifactId>
+				<version>${geronimo.version}</version>
 				<configuration>
-					<assemblies>
+		            <geronimoHome>${geronimo.home}</geronimoHome>
+		            <username>system</username>
+		            <password>manager</password>
+				    <logOutput>true</logOutput>
+				    <moduleArchive>${project.build.directory}/${project.build.finalName}.${project.packaging}</moduleArchive>
+       				<modulePlan>plan.xml</modulePlan>
+       				<moduleId>${project.groupId}/${project.artifactId}/${project.version}/${project.packaging}</moduleId>
+				    <assemblies>
 						<assembly>
 							<groupId>org.apache.geronimo.assemblies</groupId>
-							<artifactId>geronimo-tomcat-minimal</artifactId>
-							<version>${project.version}</version>
+							<artifactId>geronimo-tomcat7-minimal</artifactId>
+							<version>${geronimo.version}</version>
 							<classifier>bin</classifier>
-							<type>war</type>
+							<type>zip</type>
 						</assembly>
 					</assemblies>
 				</configuration>
+				<!--
 				<executions>
     				<execution>
-        				<id>deploy-ears</id>
+        				<id>undeploy-war-as-module</id>
         				<goals>
-            				<goal>deploy-module</goal>
+            				<goal>undeploy-module</goal>
         				</goals>
         				<configuration>
-             				<moduleArchive>target/UserService.war</moduleArchive>
+	        				<modules>
+		        				<module>
+									<groupId>at.ac.tuwien.aic.service</groupId>
+									<artifactId>user_service</artifactId>
+									<version>0.1</version>
+									<type>war</type>
+								</module>
+							</modules>
 						</configuration>
     				</execution>
     			</executions>
+    			-->
 			</plugin>
         </plugins>
         <finalName>user_service</finalName>
@@ -137,15 +152,9 @@
         					<pluginExecutions>
         						<pluginExecution>
         							<pluginExecutionFilter>
-        								<groupId>
-        									org.apache.cxf
-        								</groupId>
-        								<artifactId>
-        									cxf-java2ws-plugin
-        								</artifactId>
-        								<versionRange>
-        									[2.2.3,)
-        								</versionRange>
+        								<groupId>org.apache.cxf</groupId>
+        								<artifactId>cxf-java2ws-plugin</artifactId>
+        								<versionRange>[2.2.3,)</versionRange>
         								<goals>
         									<goal>java2ws</goal>
         								</goals>
@@ -191,7 +200,7 @@
                 <dependency>
                     <groupId>org.apache.cxf</groupId>
                     <artifactId>cxf-rt-transports-http-jetty</artifactId>
-                    <version>${project.version}</version>
+                    <version>${cxf.version}</version>
                 </dependency>
             </dependencies>
         </profile>
@@ -199,25 +208,9 @@
     
     <dependencies>
 		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-frontend-jaxws</artifactId>
-			<version>${cxf.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-transports-http</artifactId>
-			<version>${cxf.version}</version>
-		</dependency>
-	        <!-- Jetty is needed if you're are not using the CXFServlet -->
-		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-transports-http-jetty</artifactId>
-			<version>${cxf.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.geronimo.plugins</groupId>
+			<groupId>org.apache.geronimo.buildsupport</groupId>
 			<artifactId>geronimo-maven-plugin</artifactId>
-			<version>2.0.2</version>
+			<version>${geronimo.version}</version>
 		</dependency>
         <dependency>
 	    	<groupId>junit</groupId>
