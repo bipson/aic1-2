@@ -23,9 +23,6 @@
   <wsdl:message name="ComputeResponse">
 		<wsdl:part name="ComputeResponseP" type="xsd:double"></wsdl:part>
   </wsdl:message>
-  <wsdl:message name="ComputeFault">
-		<wsdl:part name="ComputeFaultP" type="xsd:string"></wsdl:part>
-  </wsdl:message>
   
   <wsdl:message name="ComputeAverageRequest">
 		<wsdl:part name="ComputeAverageRequestP" type="xsddt:ArrayOfStrings"></wsdl:part>
@@ -33,9 +30,7 @@
   <wsdl:message name="ComputeAverageResponse">
 		<wsdl:part name="ComputeAverageResponseP" type="xsd:double"></wsdl:part>
   </wsdl:message>
-  <wsdl:message name="ComputeAverageFault">
-		<wsdl:part name="ComputeAverageFaultP" type="xsd:string"></wsdl:part>
-  </wsdl:message>
+
   
   <wsdl:portType name="Sentiment">
     <wsdl:operation name="Init">
@@ -46,12 +41,10 @@
     <wsdl:operation name="Compute">
       <wsdl:input message="tns:ComputeRequest"/>
       <wsdl:output message="tns:ComputeResponse"/>
-      <wsdl:fault name="fault" message="tns:ComputeFault"></wsdl:fault>
     </wsdl:operation>
     <wsdl:operation name="ComputeAverage">
       <wsdl:input message="tns:ComputeAverageRequest"/>
       <wsdl:output message="tns:ComputeAverageResponse"/>
-      <wsdl:fault name="fault" message="tns:ComputeAverageFault"></wsdl:fault>
     </wsdl:operation>
   </wsdl:portType>
   
