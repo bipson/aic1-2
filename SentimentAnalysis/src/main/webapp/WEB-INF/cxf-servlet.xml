@@ -11,8 +11,8 @@
 
     <jaxws:endpoint 
         id="sentiment-ws"
-        implementor="aic.SentimentImpl"
-        wsdlLocation="WEB-INF/wsdl/sentiment.service.wsdl"
+        implementor="at.tuwien.aic2012.sentiment.SentimentImpl"
+        wsdlLocation="WEB-INF/wsdl/at/tuwien/aic2012/at.tuwien.aic2012.sentiment.service.wsdl"
         address="/Sentiment">
     </jaxws:endpoint>
 </beans>

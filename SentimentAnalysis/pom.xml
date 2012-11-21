@@ -1,36 +1,56 @@
 
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <groupId>at.tuwien.aic.ws2012</groupId>
-    <artifactId>sentiment-ws</artifactId>
+    
+	<modelVersion>4.0.0</modelVersion>
+    <groupId>at.tuwien.aic2012</groupId>
+    <artifactId>sentiment</artifactId>
     <packaging>war</packaging>
+	<name>SentimentService</name>
     <version>0.1.1-SNAPSHOT</version>
 
 	 <properties>
-		<cxf.version>2.7.0</cxf.version>
+		<cxf.version>2.6.2</cxf.version>
+		<geronimo.version>3.0.0</geronimo.version>
 	 </properties>
 
     <build>
         <finalName>SentimentAnalysis</finalName>
+		
+		<pluginManagement>
+			<plugins>
+				<!-- eclipse has some problem determining in which phase to run the cxf-codegen-plugin, 
+					so has to be used -->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.cxf</groupId>
+										<artifactId>cxf-codegen-plugin</artifactId>
+										<versionRange>[2.6.0,)</versionRange>
+										<goals>
+											<goal>wsdl2java</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<execute>
+											<runOnIncremental>false</runOnIncremental>
+										</execute>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		
+		
         <plugins>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>2.3.2</version>
-                <configuration>
-                    <source>1.6</source>
-                    <target>1.6</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <artifactId>maven-resources-plugin</artifactId>
-                <version>2.5</version>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-codegen-plugin</artifactId>
@@ -40,11 +60,21 @@
                         <id>generate-sources</id>
                         <phase>generate-sources</phase>
                         <configuration>
+							<defaultOptions>
+								<extraargs>
+									<!-- we want the namespace to be at.tuwien.aic2012.sentiment.service 
+										otherwise it would be generated backwards like: service.sentiment.aic2012.tuwien.at -->
+									<extraarg>-p</extraarg>
+									<extraarg>http://at.tuwien.aic2012.sentiment.service/=at.tuwien.aic2012.sentiment.service</extraarg>
+									<extraarg>-p</extraarg> 
+									<extraarg>http://at.tuwien.aic2012.sentiment.datatypes/=at.tuwien.aic2012.sentiment.datatypes</extraarg>
+								</extraargs>
+							</defaultOptions>
                             <wsdlOptions>
                                 <wsdlOption>
-                                    <wsdl>${basedir}/src/main/webapp/WEB-INF/wsdl/sentiment.service.wsdl</wsdl>
+                                    <wsdl>${basedir}/src/main/webapp/WEB-INF/wsdl/at/tuwien/aic2012/at.tuwien.aic2012.sentiment.service.wsdl</wsdl>
                                     <bindingFiles>
-                                        <bindingFile>src/main/webapp/WEB-INF/wsdl/sentiment.binding.xml</bindingFile>
+                                        <bindingFile>${basedir}/src/main/webapp/WEB-INF/wsdl/at/tuwien/aic2012/at.tuwien.aic2012.sentiment.binding.xml</bindingFile>
                                     </bindingFiles>                                    
                                 </wsdlOption>
                             </wsdlOptions>
@@ -56,95 +86,82 @@
                 </executions>
             </plugin>
 
-
-
-            <!-- eclice has some problem determining in which phase to run the cxf-codegen-plugin, so has to be used  -->
-            <plugin>
-				<groupId>org.eclipse.m2e</groupId>
-				<artifactId>lifecycle-mapping</artifactId>
-				<version>1.0.0</version>
-				<configuration>
-					<lifecycleMappingMetadata>
-						<pluginExecutions>
-							<pluginExecution>
-								<pluginExecutionFilter>
-									<groupId>org.apache.cxf</groupId>
-									<artifactId>cxf-codegen-plugin</artifactId>
-									<versionRange>[2.6.2,)</versionRange>
-									<goals>
-										<goal>wsdl2java</goal>
-									</goals>
-								</pluginExecutionFilter>
-								<action>
-									<execute >
-										<runOnIncremental>false</runOnIncremental>
-									</execute >
-								</action>
-							</pluginExecution>
-						</pluginExecutions>
-					</lifecycleMappingMetadata>
-				</configuration>
-			</plugin>
-
-
-
-
         </plugins>
     </build>
  
-    <repositories>
+ 	<repositories>
+		<repository>
+			<id>central</id>
+			<name>Maven Repository Switchboard</name>
+			<layout>default</layout>
+			<url>http://repo1.maven.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+
 		<repository>
 			<id>java.net-m2</id>
 			<name>java.net - Maven 2</name>
 			<url>https://repository.jboss.org/nexus/content/repositories/java.net-m2</url>
-		</repository>    
-		<repository>
-		  <id>central</id>
-		  <name>Maven Repository Switchboard</name>
-		  <layout>default</layout>
-		  <url>http://repo1.maven.org/maven2</url>
-		  <snapshots>
-			<enabled>false</enabled>
-		  </snapshots>
 		</repository>
 
-    </repositories>
+		<repository>
+			<id>Codehaus Snapshots</id>
+			<url>http://nexus.codehaus.org/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+		</repository>
+	</repositories>
 
 
-<pluginRepositories>
-    <pluginRepository>
-      <id>central</id>
-      <name>Maven Plugin Repository</name>
-      <url>http://repo1.maven.org/maven2</url>
-      <layout>default</layout>
-      <snapshots>
-        <enabled>false</enabled>
-      </snapshots>
-      <releases>
-        <updatePolicy>never</updatePolicy>
-      </releases>
-    </pluginRepository>
-  </pluginRepositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>central</id>
+			<name>Maven Plugin Repository</name>
+			<url>http://repo1.maven.org/maven2</url>
+			<layout>default</layout>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<updatePolicy>never</updatePolicy>
+			</releases>
+		</pluginRepository>
+
+		<pluginRepository>
+			<id>Codehaus Snapshots</id>
+			<url>http://nexus.codehaus.org/snapshots/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+				<!-- Workaround for MNG-2974, see note below -->
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
 
 
-    <dependencies>
-      
-            <dependency>
-               <groupId>org.apache.cxf</groupId>
-               <artifactId>cxf-rt-frontend-jaxws</artifactId>
-               <version>${cxf.version}</version>
-            </dependency> 
-          
-            <dependency>
-               <groupId>org.apache.cxf</groupId>
-               <artifactId>cxf-rt-transports-http</artifactId>
-               <version>${cxf.version}</version>
-            </dependency>
-            <dependency>
-               <groupId>org.springframework</groupId>
-               <artifactId>spring-web</artifactId>
-               <version>3.0.6.RELEASE</version>
-            </dependency>
-
-    </dependencies>
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-frontend-jaxws</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-rt-transports-http</artifactId>
+			<version>${cxf.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+			<version>3.1.2.RELEASE</version>
+		</dependency>
+	</dependencies>
 </project>

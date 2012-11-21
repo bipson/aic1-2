@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://aic.sentiment.service/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="Sentiment" targetNamespace="http://aic.sentiment.service/" xmlns:xsddt="http://aic.sentiment.datatypes/">
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://at.tuwien.aic2012.sentiment.service/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://at.tuwien.aic2012.sentiment.service/" xmlns:xsddt="http://at.tuwien.aic2012.sentiment.datatypes/">
 
   <wsdl:types>
     <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    	<xsd:import namespace="http://aic.sentiment.datatypes/"
-    		schemaLocation="sentiment.datatypes.xsd">
+    	<xsd:import namespace="http://at.tuwien.aic2012.sentiment.datatypes/"
+    		schemaLocation="at.tuwien.aic2012.sentiment.datatypes.xsd">
     	</xsd:import>
     </xsd:schema>
   </wsdl:types>
@@ -48,42 +48,42 @@
     </wsdl:operation>
   </wsdl:portType>
   
-  <wsdl:binding name="SentimentSOAP" type="tns:Sentiment">
+  <wsdl:binding name="at.tuwien.aic2012.sentiment.ServiceSOAP" type="tns:Sentiment">
     <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="Init">
-      <soap:operation soapAction="http://aic.sentiment.service/Sentiment/Init"/>
+      <soap:operation soapAction="http://at.tuwien.aic2012.sentiment.service/Init"/>
       <wsdl:input>
-        <soap:body namespace="http://aic.sentiment.service/Sentiment/" use="literal"/>
+        <soap:body namespace="http://at.tuwien.aic2012.sentiment.service/" use="literal"/>
       </wsdl:input>
       <wsdl:output>
-        <soap:body namespace="http://aic.sentiment.service/Sentiment/" use="literal"/>
+        <soap:body namespace="http://at.tuwien.aic2012.sentiment.service/" use="literal"/>
       </wsdl:output>
     </wsdl:operation>
     
     <wsdl:operation name="Compute">
-      <soap:operation soapAction="http://aic.sentiment.service/Sentiment/Compute"/>
+      <soap:operation soapAction="http://at.tuwien.aic2012.sentiment.service/Compute"/>
       <wsdl:input>
-        <soap:body namespace="http://aic.sentiment.service/Sentiment/" use="literal"/>
+        <soap:body namespace="http://at.tuwien.aic2012.sentiment.service/" use="literal"/>
       </wsdl:input>
       <wsdl:output>
-        <soap:body namespace="http://aic.sentiment.service/Sentiment/" use="literal"/>
+        <soap:body namespace="http://at.tuwien.aic2012.sentiment.service/" use="literal"/>
       </wsdl:output>
     </wsdl:operation>
     
     <wsdl:operation name="ComputeAverage">
-      <soap:operation soapAction="http://aic.sentiment.service/Sentiment/ComputeAverage"/>
+      <soap:operation soapAction="http://at.tuwien.aic2012.sentiment.service/ComputeAverage"/>
       <wsdl:input>
-        <soap:body namespace="http://aic.sentiment.service/Sentiment/" use="literal"/>
+        <soap:body namespace="http://at.tuwien.aic2012.sentiment.service/" use="literal"/>
       </wsdl:input>
       <wsdl:output>
-        <soap:body namespace="http://aic.sentiment.service/Sentiment/" use="literal"/>
+        <soap:body namespace="http://at.tuwien.aic2012.sentiment.service/" use="literal"/>
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
   
   <wsdl:service name="Sentiment">
-    <wsdl:port binding="tns:SentimentSOAP" name="SentimentSOAP">
-      <soap:address location="http://localhost:8080/SentimentAnalysis/"/>
+    <wsdl:port binding="tns:at.tuwien.aic2012.sentiment.ServiceSOAP" name="at.tuwien.aic2012.sentiment.ServiceSOAP">
+      <soap:address location="http://localhost:8080/SentimentAnalysis/Sentiment/"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

@@ -1,17 +1,17 @@
-package aic;
+package at.tuwien.aic2012.sentiment;
 
 import javax.jws.WebService;
-import datatypes.sentiment.aic.ArrayOfStrings;
+import at.tuwien.aic2012.sentiment.datatypes.ArrayOfStrings;
 
-import service.sentiment.aic.Sentiment;
-import service.sentiment.aic.InitFault;
+import at.tuwien.aic2012.sentiment.service.Sentiment;
+import at.tuwien.aic2012.sentiment.service.InitFault;
 
 
 @WebService(		  serviceName = "Sentiment",
-                      portName = "SentimentSOAP",
-                      targetNamespace = "http://aic.sentiment.service/",
-                      wsdlLocation = "WEB-INF/wsdl/sentiment.service.wsdl",
-                      endpointInterface = "service.sentiment.aic.Sentiment")                   
+                      portName = "at.tuwien.aic2012.sentiment.ServiceSOAP",
+                      targetNamespace = "http://at.tuwien.aic2012.sentiment.service/",
+                      wsdlLocation = "WEB-INF/wsdl/at/tuwien/aic2012/at.tuwien.aic2012.sentiment.service.wsdl",
+                      endpointInterface = "at.tuwien.aic2012.sentiment.service.Sentiment")                   
 public class SentimentImpl implements Sentiment {
 
 	private boolean init;
