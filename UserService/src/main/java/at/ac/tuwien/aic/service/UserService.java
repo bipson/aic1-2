@@ -6,7 +6,7 @@ import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 import javax.jws.soap.SOAPBinding.Style;
 
-@WebService
+@WebService(portName = "UserServicePort", serviceName = "UserService", wsdlLocation = "WEB-INF/UserService.wsdl", targetNamespace = "http://aic.tuwien.ac.at/UserService.wsdl", endpointInterface = "at.ac.tuwien.aic.service.IUserService")
 @SOAPBinding(style = Style.RPC)
 public class UserService implements IUserService {
 

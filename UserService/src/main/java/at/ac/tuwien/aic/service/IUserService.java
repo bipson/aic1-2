@@ -4,7 +4,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 
-@WebService(name = "UserServicePortType", targetNamespace = "http://jws.samples.geronimo.apache.org")
+@WebService(targetNamespace = "http://aic.tuwien.ac.at/UserService.wsdl")
 public interface IUserService {
 	@WebMethod
 	public boolean addUser(@WebParam(name = "companyName") String companyName,
