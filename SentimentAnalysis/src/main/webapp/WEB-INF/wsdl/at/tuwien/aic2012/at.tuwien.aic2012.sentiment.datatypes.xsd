@@ -16,10 +16,13 @@
 	
 	<element name="ComputeResponseP" type="double"></element>
 	
+	<element name="ComputeFaultP" type="string"></element>
+	
 	
 	<element name="ComputeAverageRequestP" type="tns:ArrayOfStrings"></element>
 	
 	<element name="ComputeAverageResponseP" type="double"></element>
 	
+	<element name="ComputeAverageFaultP" type="string"></element>
  
 </schema>

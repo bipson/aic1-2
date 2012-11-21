@@ -5,6 +5,8 @@ import at.tuwien.aic2012.sentiment.datatypes.ArrayOfStrings;
 
 import at.tuwien.aic2012.sentiment.service.Sentiment;
 import at.tuwien.aic2012.sentiment.service.InitFault;
+import at.tuwien.aic2012.sentiment.service.ComputeFault;
+import at.tuwien.aic2012.sentiment.service.ComputeAverageFault;
 
 
 @WebService(		  serviceName = "Sentiment",
@@ -23,7 +25,8 @@ public class SentimentImpl implements Sentiment {
 	}
 
 	
-	public double compute(String text) {
+	public double compute(String text) 
+			throws ComputeFault {
 	
 		if(!init) {
 			try {
@@ -41,7 +44,8 @@ public class SentimentImpl implements Sentiment {
 	}
 	
 	
-	public double computeAverage(ArrayOfStrings texts) {
+	public double computeAverage(ArrayOfStrings texts) 
+			throws ComputeAverageFault {
 		
 		if(!init) {
 			try {
