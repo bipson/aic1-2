@@ -1,29 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions name="PaymentService" targetNamespace="http://aic.service.payment/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://aic.service.payment/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
-  <wsdl:types>
-    <xs:schema elementFormDefault="unqualified" targetNamespace="http://aic.service.payment/" version="1.0" xmlns:tns="http://aic.service.payment/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-<xs:element name="Pay" type="tns:Pay"/>
-<xs:element name="PayResponse" type="tns:PayResponse"/>
-<xs:complexType name="Pay">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="ourAccountData" type="xs:string"/>
-      <xs:element minOccurs="0" name="userAccountData" type="xs:string"/>
-      <xs:element minOccurs="0" name="amount" type="xs:double"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="PayResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="paymentSucceeded" type="xs:boolean"/>
-    </xs:sequence>
-  </xs:complexType>
-</xs:schema>
-  </wsdl:types>
   <wsdl:message name="Pay">
-    <wsdl:part name="parameters" element="tns:Pay">
+    <wsdl:part name="ourAccountData" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="userAccountData" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="amount" type="xsd:double">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="PayResponse">
-    <wsdl:part name="parameters" element="tns:PayResponse">
+    <wsdl:part name="paymentSucceeded" type="xsd:boolean">
     </wsdl:part>
   </wsdl:message>
   <wsdl:portType name="IPayment">
@@ -35,14 +21,14 @@
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="PaymentServiceSoapBinding" type="tns:IPayment">
-    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
     <wsdl:operation name="Pay">
-      <soap:operation soapAction="urn:Pay" style="document"/>
+      <soap:operation soapAction="urn:Pay" style="rpc"/>
       <wsdl:input name="Pay">
-        <soap:body use="literal"/>
+        <soap:body use="literal" namespace="http://aic.service.payment/"/>
       </wsdl:input>
       <wsdl:output name="PayResponse">
-        <soap:body use="literal"/>
+        <soap:body use="literal" namespace="http://aic.service.payment/"/>
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>

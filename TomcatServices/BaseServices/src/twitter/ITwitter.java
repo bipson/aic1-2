@@ -4,9 +4,11 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 @WebService(name = "ITwitter", targetNamespace = "http://aic.service.twitter/")
+@SOAPBinding(style = SOAPBinding.Style.RPC)
 public interface ITwitter {
 	@WebMethod(operationName = "FetchTweets", action = "urn:FetchTweets")
 	@WebResult(name = "tweets")

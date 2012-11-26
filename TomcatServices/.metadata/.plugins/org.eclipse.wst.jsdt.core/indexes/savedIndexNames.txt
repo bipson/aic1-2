@@ -1,6 +1,0 @@
-INDEX VERSION 1.122+C:\Users\AIC\Documents\aic1-2\TomcatServices\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-3534380362.index
-900337337.index
-2395202109.index
-2210793961.index
-362536910.index
