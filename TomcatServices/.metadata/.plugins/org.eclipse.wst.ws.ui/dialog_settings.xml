@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="0/org.eclipse.jst.ws.wsImpl.java">
+		<item value="twitter.Twitter"/>
+		<item value="user.User"/>
+		<item value="sentiment.Sentiment"/>
+		<item value="payment.Payment"/>
+		<item value="accounting.Accounting"/>
+	</list>
+</section>

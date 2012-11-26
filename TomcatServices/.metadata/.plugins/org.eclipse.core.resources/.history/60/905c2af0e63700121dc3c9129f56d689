@@ -1,0 +1,31 @@
+package user;
+
+import javax.jws.WebService;
+
+@WebService(targetNamespace = "http://aic.service.user/",
+            endpointInterface = "user.IUser",
+            portName = "User",
+            serviceName = "UserService")
+public final class User implements IUser {
+
+	@Override
+	public Boolean add(String companyName, String password) {
+		return true;
+	}
+
+	@Override
+	public Boolean remove(String companyName) {
+		return true;
+	}
+
+	@Override
+	public Boolean exists(String companyName) {
+		return false;
+	}
+
+	@Override
+	public Boolean checkCredentials(String companyName, String password) {
+		return true;
+	}
+
+}

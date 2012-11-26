@@ -1,0 +1,37 @@
+package user;
+
+import javax.jws.WebService;
+
+@WebService(targetNamespace = "http://aic.service.user/",
+            endpointInterface = "user.IUser",
+            portName = "User",
+            serviceName = "UserService")
+public final class User implements IUser {
+
+	@Override
+	public Boolean add(String companyName, String password) {
+		return true;
+	}
+
+	@Override
+	public Boolean remove(String companyName) {
+		return true;
+	}
+
+	@Override
+	public Boolean exists(String companyName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	@WebMethod(operationName = "CheckCredentials", action = "urn:CheckCredentials")
+	@WebResult(name = "credentialsValid")
+	Boolean checkCredentials(
+			@WebParam(name = "companyName") String companyName,
+			@WebParam(name = "password") String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

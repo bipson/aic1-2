@@ -1,0 +1,21 @@
+package accounting;
+
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
+import javax.jws.WebResult;
+import javax.jws.WebService;
+
+@WebService(name = "IAccounting", targetNamespace = "http://aic.service.accounting/")
+public interface IAccounting {
+	@WebMethod(operationName = "GetBill", action = "urn:GetBill")
+	@WebResult(name = "currentBill")
+	Double getBill(
+		   @WebParam(name = "companyName") String companyName);
+	
+	//Boolean Charge(String companyName, Double value);
+	@WebMethod(operationName = "Charge", targetNamespace = "http://aic.service.accounting/")
+	@WebResult(name = "chargingSucceeded")
+	Boolean charge(
+			@WebParam(name = "companyName") String companyName,
+			@WebParam()
+}
