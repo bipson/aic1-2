@@ -46,52 +46,55 @@
       <AssemblyReference>Workflows</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Flowchart sap2010:Annotation.AnnotationText="First, we try to get the current bill for the provided user name.&#xD;&#xA;If we get NaN, this means the user is not registered and we print a message.&#xD;&#xA;Otherwise, return the received amount and print an according message." sap2010:WorkflowViewState.IdRef="Flowchart_1" StartNode="{x:Reference __ReferenceID4}">
-    <FlowStep x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_4">
-      <local:GetBill DisplayName="Get Bill For User" sap2010:WorkflowViewState.IdRef="GetBill_1" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
-        <local:GetBill.companyName>
-          <InArgument x:TypeArguments="x:String">
-            <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
-          </InArgument>
-        </local:GetBill.companyName>
-        <local:GetBill.currentBill>
-          <OutArgument x:TypeArguments="x:Double">
-            <mca:CSharpReference x:TypeArguments="x:Double">currentBill</mca:CSharpReference>
-          </OutArgument>
-        </local:GetBill.currentBill>
-      </local:GetBill>
-      <FlowStep.Next>
-        <FlowSwitch x:TypeArguments="x:String" x:Name="__ReferenceID0" DisplayName="Check Bill" sap2010:WorkflowViewState.IdRef="FlowSwitch`1_1">
-          <FlowSwitch.Default>
-            <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_1">
-              <WriteLine DisplayName="Bill Is Positive" sap2010:WorkflowViewState.IdRef="WriteLine_1">
+  <Flowchart sap2010:Annotation.AnnotationText="First, we try to get the current bill for the provided user name.&#xA;If we get NaN, this means the user is not registered and we print a message.&#xA;Otherwise, return the received amount and print an according message." sap2010:WorkflowViewState.IdRef="Flowchart_1">
+    <Flowchart.StartNode>
+      <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_4">
+        <local:GetBill DisplayName="Get Bill For User" sap2010:WorkflowViewState.IdRef="GetBill_1" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+          <local:GetBill.companyName>
+            <InArgument x:TypeArguments="x:String">
+              <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
+            </InArgument>
+          </local:GetBill.companyName>
+          <local:GetBill.currentBill>
+            <OutArgument x:TypeArguments="x:Double">
+              <mca:CSharpReference x:TypeArguments="x:Double">currentBill</mca:CSharpReference>
+            </OutArgument>
+          </local:GetBill.currentBill>
+        </local:GetBill>
+        <FlowStep.Next>
+          <FlowSwitch x:TypeArguments="x:String" x:Name="__ReferenceID1" DisplayName="Check Bill" sap2010:WorkflowViewState.IdRef="FlowSwitch`1_1">
+            <FlowSwitch.Default>
+              <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_1">
+                <WriteLine DisplayName="Bill Is Positive" sap2010:WorkflowViewState.IdRef="WriteLine_1">
+                  <InArgument x:TypeArguments="x:String">
+                    <mca:CSharpValue x:TypeArguments="x:String">"Pending payment: " + currentBill + "€"</mca:CSharpValue>
+                  </InArgument>
+                </WriteLine>
+              </FlowStep>
+            </FlowSwitch.Default>
+            <FlowSwitch.Expression>
+              <mca:CSharpValue x:TypeArguments="x:String">currentBill.ToString(System.Globalization.CultureInfo.InvariantCulture)</mca:CSharpValue>
+            </FlowSwitch.Expression>
+            <FlowStep x:Key="NaN" x:Name="__ReferenceID3" sap2010:WorkflowViewState.IdRef="FlowStep_2">
+              <WriteLine DisplayName="User Not Registered" sap2010:WorkflowViewState.IdRef="WriteLine_2">
                 <InArgument x:TypeArguments="x:String">
-                  <mca:CSharpValue x:TypeArguments="x:String">"Pending payment: " + currentBill + "€"</mca:CSharpValue>
+                  <mca:CSharpValue x:TypeArguments="x:String">"The company \"" + companyName + "\" is not registered."</mca:CSharpValue>
                 </InArgument>
               </WriteLine>
             </FlowStep>
-          </FlowSwitch.Default>
-          <FlowSwitch.Expression>
-            <mca:CSharpValue x:TypeArguments="x:String">currentBill.ToString(System.Globalization.CultureInfo.InvariantCulture)</mca:CSharpValue>
-          </FlowSwitch.Expression>
-          <FlowStep x:Key="NaN" x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_2">
-            <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_2">
-              <InArgument x:TypeArguments="x:String">
-                <mca:CSharpValue x:TypeArguments="x:String">"The company \"" + companyName + "\" is not registered."</mca:CSharpValue>
-              </InArgument>
-            </WriteLine>
-          </FlowStep>
-          <FlowStep x:Key="0" x:Name="__ReferenceID3" sap2010:WorkflowViewState.IdRef="FlowStep_3">
-            <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_3" Text="No payment pending." />
-          </FlowStep>
-        </FlowSwitch>
-      </FlowStep.Next>
-    </FlowStep>
+            <FlowStep x:Key="0" x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_3">
+              <WriteLine DisplayName="No Payment Pending" sap2010:WorkflowViewState.IdRef="WriteLine_3" Text="No payment pending." />
+            </FlowStep>
+          </FlowSwitch>
+        </FlowStep.Next>
+      </FlowStep>
+    </Flowchart.StartNode>
     <x:Reference>__ReferenceID0</x:Reference>
     <x:Reference>__ReferenceID1</x:Reference>
     <x:Reference>__ReferenceID2</x:Reference>
     <x:Reference>__ReferenceID3</x:Reference>
-    <sads:DebugSymbol.Symbol>d09DOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xHZXRDdXJyZW50QmlsbC54YW1sCzEDXw8CAQEzBz4XAgEPSw1LkgECAQxDD0cbAgEIVQ1VYwIBBk4NUhkCAQI2DTZWAgETOw07XgIBEEUTRXgCAQlVS1VgAgEHUBFQhwECAQM=</sads:DebugSymbol.Symbol>
+    <x:Reference>__ReferenceID4</x:Reference>
+    <sads:DebugSymbol.Symbol>d09DOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xHZXRDdXJyZW50QmlsbC54YW1sCzEDYg8CAQE0CT8ZAgEPTA9MlAECAQxEEUgdAgEIVg9WhgECAQZPD1MbAgECNw83WAIBEzwPPGACARBGFUZ6AgEJVm5WgwECAQdRE1GJAQIBAw==</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
