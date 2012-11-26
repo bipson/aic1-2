@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://aic.service.payment/" name="PaymentService" targetNamespace="http://aic.service.payment/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types />
+  <wsdl:message name="Pay">
+    <wsdl:part name="ourAccountData" type="xsd:string" />
+    <wsdl:part name="userAccountData" type="xsd:string" />
+    <wsdl:part name="amount" type="xsd:double" />
+  </wsdl:message>
+  <wsdl:message name="PayResponse">
+    <wsdl:part name="paymentSucceeded" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:portType name="IPayment">
+    <wsdl:operation name="Pay">
+      <wsdl:input name="Pay" message="tns:Pay" />
+      <wsdl:output name="PayResponse" message="tns:PayResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="PaymentServiceSoapBinding" type="tns:IPayment">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="Pay">
+      <soap:operation soapAction="urn:Pay" style="rpc" />
+      <wsdl:input name="Pay">
+        <soap:body use="literal" namespace="http://aic.service.payment/" />
+      </wsdl:input>
+      <wsdl:output name="PayResponse">
+        <soap:body use="literal" namespace="http://aic.service.payment/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="PaymentService">
+    <wsdl:port name="Payment" binding="tns:PaymentServiceSoapBinding">
+      <soap:address location="http://localhost:8080/BaseServices/services/Payment" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
