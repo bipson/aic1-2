@@ -14,7 +14,7 @@ public final class User implements IUser {
 	public Boolean add(String companyName, String password) {
 		if(MOCKUP) {
 			System.out.println("User.add: companyName=\"" + companyName + "\" password=\"" + password + "\"");
-			return !(companyName.equals("company1") || companyName.equals("company2"));
+			return !(companyName.equals("company1") || companyName.equals("company2") || companyName.equals("company7"));
 		} else {
 			// Final service code.
 			return true;
@@ -25,7 +25,7 @@ public final class User implements IUser {
 	public Boolean remove(String companyName) {
 		if(MOCKUP) {
 			System.out.println("User.remove: companyName=\"" + companyName + "\"");
-			return companyName.equals("company1") || companyName.equals("company2");
+			return companyName.equals("company1") || companyName.equals("company2") || companyName.equals("company6");
 		} else {
 			// Final service code.
 			return true;
@@ -36,7 +36,7 @@ public final class User implements IUser {
 	public Boolean exists(String companyName) {
 		if(MOCKUP) {
 			System.out.println("User.exists: companyName=\"" + companyName + "\"");
-			return companyName.equals("company1") || companyName.equals("company2");
+			return companyName.equals("company1") || companyName.equals("company2") || companyName.equals("company5") || companyName.equals("company6");
 		} else {
 			// Final service code.
 			return false;

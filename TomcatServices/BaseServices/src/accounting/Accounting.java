@@ -16,7 +16,7 @@ public final class Accounting implements IAccounting {
 			System.out.println("Accounting.getBill: companyName=\"" + companyName + "\"");
 			if(companyName.equals("company1")) {
 				return 34.5;
-			} else if(companyName.equals("company2")) {
+			} else if(companyName.equals("company2") || companyName.equals("company5") || companyName.equals("company6")) {
 				return 0.0;
 			} else if(companyName.equals("company3")) {
 				return 1.0;

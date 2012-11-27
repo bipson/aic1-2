@@ -11,17 +11,37 @@ type LambdaTrackingParticipant (replyChannel) =
     override this.Track (record : TrackingRecord, timeout : TimeSpan) =
         replyChannel record
 
-let isStateRecord (record : TrackingRecord) =
-    if record :? ActivityStateRecord then Some record else None
+let grabRecords<'a when 'a :> TrackingRecord> records =
+    records
+    |> List.filter (fun (record : TrackingRecord) -> record :? 'a)
+    |> List.map (fun (record : TrackingRecord) -> record :?> 'a)
 
-let invokeWith inputs tracker activity =
+let grabReferenceRecords =
+    let referenceNames = 
+        [ 
+            "Workflows.AccountingReference.Activities"
+            "Workflows.PaymentReference.Activities"
+            "Workflows.SentimentReference.Activities"
+            "Workflows.TwitterReference.Activities"
+            "Workflows.UserReference.Activities" 
+        ]
+    grabRecords<ActivityStateRecord>
+    >> List.filter (fun record ->
+        record.State = "Executing" &&
+        List.exists record.Activity.TypeName.StartsWith referenceNames)
+    >> List.map (fun record ->
+        let typeName = record.Activity.TypeName
+        typeName.LastIndexOf '.' |> (+) 1 |> typeName.Substring)
+
+let invokeWith inputs activity =
     let invoker = WorkflowInvoker activity
-    LambdaTrackingParticipant tracker
+    let track = List<TrackingRecord> ()
+    LambdaTrackingParticipant track.Add
     |> invoker.Extensions.Add
     inputs
     |> List.map (fun (name, value) -> name, box value)
     |> Map.ofList
-    |> invoker.Invoke
+    |> invoker.Invoke, List.ofSeq track
 
 let getResult name (results : #IDictionary<String,Object>) : 'a =
     results.[name] :?> 'a
