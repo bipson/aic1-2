@@ -32,17 +32,10 @@ public final class Twitter implements ITwitter {
 				return new Tweet[] {
 					new Tweet(1, "0.3", "user", 0),
 					new Tweet(2, "0.5", "user", 0),
-					new Tweet(3, "0.6", "user", 0),
-					new Tweet(4, "0.7", "user", 0),
-					new Tweet(5, "0.8", "user", 0),
-					new Tweet(6, "1.0", "user", 0)
-				};
-			} else if(searchString.equals("company3")) {
-				return new Tweet[] {
-					new Tweet(1, "0.1", "user", 0),
-					new Tweet(2, "0.5", "user", 0),
 					new Tweet(3, "0.7", "user", 0),
-					new Tweet(5, "0.9", "user", 0)
+					new Tweet(4, "0.8", "user", 0),
+					new Tweet(5, "0.9", "user", 0),
+					new Tweet(6, "1.0", "user", 0)
 				};
 			} else {
 				return new Tweet[0];

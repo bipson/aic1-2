@@ -6,6 +6,10 @@ public final class Tweet {
 	private String user;
 	private long reTweets;
 	
+	public Tweet() {
+		this(0, "", "", 0);
+	}
+	
 	public Tweet(long id, String text, String user, long reTweets) {
 		this.id = id;
 		this.text = text;

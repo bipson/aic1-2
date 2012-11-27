@@ -33,7 +33,7 @@ public final class Accounting implements IAccounting {
 	public Boolean charge(String companyName, Double amount) {
 		if(MOCKUP) {
 			System.out.println("Accounting.charge: companyName=\"" + companyName + "\" amount=\"" + amount + "\"");
-			return companyName.equals("company1") || companyName.equals("company2");
+			return companyName.equals("company1") || companyName.equals("company2") || companyName.equals("company6");
 		} else {
 			// Final service code.
 			return true;
