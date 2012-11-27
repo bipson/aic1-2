@@ -6,10 +6,27 @@ open System.Activities
 open System.Activities.Tracking
 open System.Collections.Generic
 
+[<Literal>]
+let trackToOutput = true;
+
 type LambdaTrackingParticipant (replyChannel) =
     inherit TrackingParticipant ()
     override this.Track (record : TrackingRecord, timeout : TimeSpan) =
         replyChannel record
+
+let printRecord (record : TrackingRecord) =
+    match record with
+    | :? WorkflowInstanceRecord as r ->
+        sprintf "%d WorkflowInstanceRecord, ActivityDefinitionID: %s, State: %s" r.RecordNumber r.ActivityDefinitionId r.State
+    | :? ActivityScheduledRecord as r->
+        sprintf "%d ActivityScheduledRecord, ChildActivity: %s" r.RecordNumber r.Child.Name
+    | :? ActivityStateRecord as r ->
+        sprintf "%d ActivityStateRecord, Activity: %s, State: %s" r.RecordNumber r.Activity.Name r.State
+    | :? BookmarkResumptionRecord as r ->
+        sprintf "%d BookmarkResumptionRecord, Owner: %s, Bookmark: %s" r.RecordNumber r.Owner.Name 
+            (let n = r.BookmarkName in if String.IsNullOrWhiteSpace n then "[empty]" else n)
+    | _ -> record.ToString ()
+    |> printfn "\t%s"
 
 let grabRecords<'a when 'a :> TrackingRecord> records =
     records
@@ -18,13 +35,8 @@ let grabRecords<'a when 'a :> TrackingRecord> records =
 
 let grabReferenceRecords =
     let referenceNames = 
-        [ 
-            "Workflows.AccountingReference.Activities"
-            "Workflows.PaymentReference.Activities"
-            "Workflows.SentimentReference.Activities"
-            "Workflows.TwitterReference.Activities"
-            "Workflows.UserReference.Activities" 
-        ]
+        [ "Accounting"; "Payment"; "Sentiment"; "Twitter"; "User" ]
+        |> List.map (sprintf "Workflows.%sReference.Activities")
     grabRecords<ActivityStateRecord>
     >> List.filter (fun record ->
         record.State = "Executing" &&
@@ -36,7 +48,10 @@ let grabReferenceRecords =
 let invokeWith inputs activity =
     let invoker = WorkflowInvoker activity
     let track = List<TrackingRecord> ()
-    LambdaTrackingParticipant track.Add
+    let tracker record =
+        track.Add record
+        if trackToOutput then printRecord record
+    LambdaTrackingParticipant tracker
     |> invoker.Extensions.Add
     inputs
     |> List.map (fun (name, value) -> name, box value)
