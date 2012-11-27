@@ -1,4 +1,0 @@
-<jaxws:bindings xmlns:jaxws="http://java.sun.com/xml/ns/jaxws"
-	wsdlLocation="at.tuwien.aic2012.sentiment.service.wsdl">
-	<jaxws:enableWrapperStyle>false</jaxws:enableWrapperStyle>
-</jaxws:bindings>
