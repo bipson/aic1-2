@@ -14,7 +14,8 @@ public final class Twitter implements ITwitter {
 	@Override
 	public Tweet[] fetchTweets(String searchString, Date from, Date to) {
 		if(MOCKUP) {
-			if(searchString == "company1") {
+			System.out.println("Twitter.fetchTweets: searchString=\"" + searchString + "\" from=\"" + from + "\" to=\"" + to + "\"");
+			if(searchString.equals("company1")) {
 				return new Tweet[] {
 					new Tweet(1, "0.1", "user", 0),
 					new Tweet(2, "0.1", "user", 0),
@@ -27,7 +28,7 @@ public final class Twitter implements ITwitter {
 					new Tweet(9, "0.7", "user", 0),
 					new Tweet(10, "0.9", "user", 0)
 				};
-			} else if(searchString == "company2") {
+			} else if(searchString.equals("company2")) {
 				return new Tweet[] {
 					new Tweet(1, "0.3", "user", 0),
 					new Tweet(2, "0.5", "user", 0),
@@ -36,7 +37,7 @@ public final class Twitter implements ITwitter {
 					new Tweet(5, "0.8", "user", 0),
 					new Tweet(6, "1.0", "user", 0)
 				};
-			} else if(searchString == "company3") {
+			} else if(searchString.equals("company3")) {
 				return new Tweet[] {
 					new Tweet(1, "0.1", "user", 0),
 					new Tweet(2, "0.5", "user", 0),
@@ -63,7 +64,8 @@ public final class Twitter implements ITwitter {
 	@Override
 	public Boolean attachListener(String filter) {
 		if(MOCKUP) {
-			return true;
+			System.out.println("Twitter.attachListener: filter=\"" + filter + "\"");
+			return !filter.equals("company3");
 		} else {
 			// Final service code.
 			return true;
@@ -73,7 +75,8 @@ public final class Twitter implements ITwitter {
 	@Override
 	public Boolean detachListener(String filter) {
 		if(MOCKUP) {
-			return true;
+			System.out.println("Twitter.detachListener: filter=\"" + filter + "\"");
+			return !filter.equals("company2");
 		} else {
 			// Final service code.
 			return true;

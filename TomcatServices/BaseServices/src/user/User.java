@@ -13,7 +13,8 @@ public final class User implements IUser {
 	@Override
 	public Boolean add(String companyName, String password) {
 		if(MOCKUP) {
-			return companyName != "company1" && companyName != "company2";
+			System.out.println("User.add: companyName=\"" + companyName + "\" password=\"" + password + "\"");
+			return !(companyName.equals("company1") || companyName.equals("company2"));
 		} else {
 			// Final service code.
 			return true;
@@ -23,7 +24,8 @@ public final class User implements IUser {
 	@Override
 	public Boolean remove(String companyName) {
 		if(MOCKUP) {
-			return companyName == "company1" || companyName == "company2";
+			System.out.println("User.remove: companyName=\"" + companyName + "\"");
+			return companyName.equals("company1") || companyName.equals("company2");
 		} else {
 			// Final service code.
 			return true;
@@ -33,7 +35,8 @@ public final class User implements IUser {
 	@Override
 	public Boolean exists(String companyName) {
 		if(MOCKUP) {
-			return companyName == "company1" || companyName == "company2";
+			System.out.println("User.exists: companyName=\"" + companyName + "\"");
+			return companyName.equals("company1") || companyName.equals("company2");
 		} else {
 			// Final service code.
 			return false;
@@ -43,9 +46,10 @@ public final class User implements IUser {
 	@Override
 	public Boolean checkCredentials(String companyName, String password) {
 		if(MOCKUP) {
-			return (companyName == "company1" && password == "c1password")
-				|| (companyName == "company2" && password == "c2password")
-				|| (companyName == "company3" && password == "c3password");
+			System.out.println("User.checkCredentials: companyName=\"" + companyName + "\" password=\"" + password + "\"");
+			return (companyName.equals("company1") && password.equals("c1password"))
+				|| (companyName.equals("company2") && password.equals("c2password"))
+				|| (companyName.equals("company3") && password.equals("c3password"));
 		} else {
 			// Final service code.
 			return true;

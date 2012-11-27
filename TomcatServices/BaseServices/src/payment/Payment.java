@@ -13,7 +13,8 @@ public final class Payment implements IPayment {
     @Override
     public Boolean pay(String ourAccountData, String userAccountData, Double amount) {
     	if(MOCKUP) {
-            return userAccountData == "company1accountdata" || userAccountData == "company2accountdata";
+    		System.out.println("Payment.pay: ourAccountData=\"" + ourAccountData + "\" userAccountData=\"" + userAccountData + "\" amount=\"" + amount + "\"");
+            return userAccountData.equals("company1accountdata") || userAccountData.equals("company2accountdata");
     	} else {
     		// Final service code.
     		return true;

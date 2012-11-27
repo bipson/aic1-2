@@ -13,6 +13,7 @@ public final class Sentiment implements ISentiment {
 	@Override
 	public Double compute(String text) {
 		if(MOCKUP) {
+			System.out.println("Sentiment.compute: text=\"" + text + "\"");
 			return new Double(text);
 		} else {
 			// Final service code.
