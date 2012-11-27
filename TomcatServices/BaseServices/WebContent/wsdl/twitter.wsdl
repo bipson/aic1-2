@@ -51,9 +51,9 @@
   <wsdl:message name="FetchTweets">
     <wsdl:part name="searchString" type="xsd:string">
     </wsdl:part>
-    <wsdl:part name="from" type="xsd:anySimpleType">
+    <wsdl:part name="from" type="xsd:dateTime">
     </wsdl:part>
-    <wsdl:part name="to" type="xsd:anySimpleType">
+    <wsdl:part name="to" type="xsd:dateTime">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="FetchTweetsResponse">

@@ -61,7 +61,7 @@
         <OutArgument x:TypeArguments="wt:ExtractTextResponse">
           <VariableReference x:TypeArguments="wt:ExtractTextResponse">
             <VariableReference.Variable>
-              <Variable x:TypeArguments="wt:ExtractTextResponse" x:Name="__ReferenceID1" Name="tempResult_ca9352ca86d7477d8b7d9950621cb87b" />
+              <Variable x:TypeArguments="wt:ExtractTextResponse" x:Name="__ReferenceID1" Name="tempResult_f0cc75459e6e4a1faa34ab29c8825ab2" />
             </VariableReference.Variable>
           </VariableReference>
         </OutArgument>
@@ -72,7 +72,7 @@
         <OutArgument x:TypeArguments="s:String[]">[texts]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="s:String[]">[tempResult_ca9352ca86d7477d8b7d9950621cb87b.texts]</InArgument>
+        <InArgument x:TypeArguments="s:String[]">[tempResult_f0cc75459e6e4a1faa34ab29c8825ab2.texts]</InArgument>
       </Assign.Value>
     </Assign>
     <sads:DebugSymbol.Symbol>d5QBQzpcVXNlcnNcQUlDXERvY3VtZW50c1xhaWMxLTJcV29ya2Zsb3dBcHBsaWNhdGlvblxXb3JrZmxvd3NcU2VydmljZSBSZWZlcmVuY2VzXFR3aXR0ZXJSZWZlcmVuY2VcV29ya2Zsb3dzLlR3aXR0ZXJSZWZlcmVuY2UuSVR3aXR0ZXIuRXh0cmFjdFRleHQueGFtbAkhA08OAgEBJgU6DwIBCjsFRRcCAQdGBU0OAgECNTY1fgIBDCsPLx8CAQs+C0IfAgEJSzJLZQIBBUgzSDoCAQM=</sads:DebugSymbol.Symbol>

@@ -127,15 +127,15 @@ namespace Workflows.TwitterReference {
         public string searchString;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=1)]
-        public string from;
+        public System.DateTime from;
         
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=2)]
-        public string to;
+        public System.DateTime to;
         
         public FetchTweets() {
         }
         
-        public FetchTweets(string searchString, string from, string to) {
+        public FetchTweets(string searchString, System.DateTime from, System.DateTime to) {
             this.searchString = searchString;
             this.from = from;
             this.to = to;

@@ -42,13 +42,13 @@
   <wsdl:message name="AttachListener">
     <wsdl:part name="filter" type="xsd:string" />
   </wsdl:message>
-  <wsdl:message name="FetchTweetsResponse">
-    <wsdl:part name="tweets" type="tns:tweetArray" />
-  </wsdl:message>
   <wsdl:message name="FetchTweets">
     <wsdl:part name="searchString" type="xsd:string" />
-    <wsdl:part name="from" type="xsd:anySimpleType" />
-    <wsdl:part name="to" type="xsd:anySimpleType" />
+    <wsdl:part name="from" type="xsd:dateTime" />
+    <wsdl:part name="to" type="xsd:dateTime" />
+  </wsdl:message>
+  <wsdl:message name="FetchTweetsResponse">
+    <wsdl:part name="tweets" type="tns:tweetArray" />
   </wsdl:message>
   <wsdl:portType name="ITwitter">
     <wsdl:operation name="FetchTweets">

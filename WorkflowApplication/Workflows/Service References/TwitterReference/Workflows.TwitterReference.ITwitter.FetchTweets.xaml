@@ -4,6 +4,7 @@
  xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
  xmlns:p="http://aic.service.twitter/"
  xmlns:p1="http://schemas.microsoft.com/netfx/2009/xaml/servicemodel"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
  xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
  xmlns:sc="clr-namespace:System.ComponentModel;assembly=System"
@@ -26,12 +27,12 @@
         <RequiredArgumentAttribute />
       </x:Property.Attributes>
     </x:Property>
-    <x:Property Name="from" Type="InArgument(x:String)">
+    <x:Property Name="from" Type="InArgument(s:DateTime)">
       <x:Property.Attributes>
         <RequiredArgumentAttribute />
       </x:Property.Attributes>
     </x:Property>
-    <x:Property Name="_to" Type="InArgument(x:String)">
+    <x:Property Name="_to" Type="InArgument(s:DateTime)">
       <x:Property.Attributes>
         <RequiredArgumentAttribute />
       </x:Property.Attributes>
@@ -70,7 +71,7 @@
         <OutArgument x:TypeArguments="wt:FetchTweetsResponse">
           <VariableReference x:TypeArguments="wt:FetchTweetsResponse">
             <VariableReference.Variable>
-              <Variable x:TypeArguments="wt:FetchTweetsResponse" x:Name="__ReferenceID1" Name="tempResult_d4c04f28f26446c79f92dc9d21d6297a" />
+              <Variable x:TypeArguments="wt:FetchTweetsResponse" x:Name="__ReferenceID1" Name="tempResult_59d5d8d692da4986b61debfa344d7f6d" />
             </VariableReference.Variable>
           </VariableReference>
         </OutArgument>
@@ -81,9 +82,9 @@
         <OutArgument x:TypeArguments="wt:tweet[]">[tweets]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="wt:tweet[]">[tempResult_d4c04f28f26446c79f92dc9d21d6297a.tweets]</InArgument>
+        <InArgument x:TypeArguments="wt:tweet[]">[tempResult_59d5d8d692da4986b61debfa344d7f6d.tweets]</InArgument>
       </Assign.Value>
     </Assign>
-    <sads:DebugSymbol.Symbol>d5QBQzpcVXNlcnNcQUlDXERvY3VtZW50c1xhaWMxLTJcV29ya2Zsb3dBcHBsaWNhdGlvblxXb3JrZmxvd3NcU2VydmljZSBSZWZlcmVuY2VzXFR3aXR0ZXJSZWZlcmVuY2VcV29ya2Zsb3dzLlR3aXR0ZXJSZWZlcmVuY2UuSVR3aXR0ZXIuRmV0Y2hUd2VldHMueGFtbAkqA1gOAgEBLwVDDwIBCkQFThcCAQdPBVYOAgECPjY+owECAQw0DzgfAgELRwtLHwIBCVQyVGYCAQVRM1E7AgED</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d5QBQzpcVXNlcnNcQUlDXERvY3VtZW50c1xhaWMxLTJcV29ya2Zsb3dBcHBsaWNhdGlvblxXb3JrZmxvd3NcU2VydmljZSBSZWZlcmVuY2VzXFR3aXR0ZXJSZWZlcmVuY2VcV29ya2Zsb3dzLlR3aXR0ZXJSZWZlcmVuY2UuSVR3aXR0ZXIuRmV0Y2hUd2VldHMueGFtbAkrA1kOAgEBMAVEDwIBCkUFTxcCAQdQBVcOAgECPzY/owECAQw1DzkfAgELSAtMHwIBCVUyVWYCAQVSM1I7AgED</sads:DebugSymbol.Symbol>
   </Sequence>
 </Activity>

@@ -1,7 +1,7 @@
 package twitter;
 
 import javax.jws.WebService;
-import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.Date;
 
 @WebService(targetNamespace = "http://aic.service.twitter/",
             endpointInterface = "twitter.ITwitter",
@@ -12,7 +12,7 @@ public final class Twitter implements ITwitter {
 	private static final boolean MOCKUP = true;
 
 	@Override
-	public Tweet[] fetchTweets(String searchString, XMLGregorianCalendar from, XMLGregorianCalendar to) {
+	public Tweet[] fetchTweets(String searchString, Date from, Date to) {
 		if(MOCKUP) {
 			return new Tweet[] {
 				new Tweet(1, "hay man. What's going on over at AICcompany? they rock! #aic", "philipp", 0),

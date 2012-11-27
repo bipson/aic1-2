@@ -214,34 +214,6 @@
     </XamlAppDef>
   </ItemGroup>
   <ItemGroup>
-    <XamlAppDef Include="Service References\TwitterReference\Workflows.TwitterReference.ITwitter.FetchTweets.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-      <SubType>Designer</SubType>
-    </XamlAppDef>
-  </ItemGroup>
-  <ItemGroup>
-    <XamlAppDef Include="Service References\TwitterReference\Workflows.TwitterReference.ITwitter.ExtractText.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-      <SubType>Designer</SubType>
-    </XamlAppDef>
-  </ItemGroup>
-  <ItemGroup>
-    <XamlAppDef Include="Service References\TwitterReference\Workflows.TwitterReference.ITwitter.DetachListener.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-      <SubType>Designer</SubType>
-    </XamlAppDef>
-  </ItemGroup>
-  <ItemGroup>
-    <XamlAppDef Include="Service References\TwitterReference\Workflows.TwitterReference.ITwitter.AttachListener.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-      <SubType>Designer</SubType>
-    </XamlAppDef>
-  </ItemGroup>
-  <ItemGroup>
     <XamlAppDef Include="Service References\UserReference\Workflows.UserReference.IUser.Remove.xaml">
       <Generator>MSBuild:Compile</Generator>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -296,6 +268,34 @@
   <ItemGroup>
     <XamlAppDef Include="QuerySentiment.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </XamlAppDef>
+  </ItemGroup>
+  <ItemGroup>
+    <XamlAppDef Include="Service References\TwitterReference\Workflows.TwitterReference.ITwitter.FetchTweets.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+      <SubType>Designer</SubType>
+    </XamlAppDef>
+  </ItemGroup>
+  <ItemGroup>
+    <XamlAppDef Include="Service References\TwitterReference\Workflows.TwitterReference.ITwitter.ExtractText.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+      <SubType>Designer</SubType>
+    </XamlAppDef>
+  </ItemGroup>
+  <ItemGroup>
+    <XamlAppDef Include="Service References\TwitterReference\Workflows.TwitterReference.ITwitter.DetachListener.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+      <SubType>Designer</SubType>
+    </XamlAppDef>
+  </ItemGroup>
+  <ItemGroup>
+    <XamlAppDef Include="Service References\TwitterReference\Workflows.TwitterReference.ITwitter.AttachListener.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <DependentUpon>Reference.svcmap</DependentUpon>
       <SubType>Designer</SubType>
     </XamlAppDef>
   </ItemGroup>

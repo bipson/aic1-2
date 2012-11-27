@@ -5,7 +5,7 @@ import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
-import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.Date;
 
 @WebService(name = "ITwitter", targetNamespace = "http://aic.service.twitter/")
 @SOAPBinding(style = SOAPBinding.Style.RPC)
@@ -14,8 +14,8 @@ public interface ITwitter {
 	@WebResult(name = "tweets")
 	Tweet[] fetchTweets(
 			@WebParam(name = "searchString") String searchString,
-			@WebParam(name = "from") XMLGregorianCalendar from,
-			@WebParam(name = "to") XMLGregorianCalendar to);
+			@WebParam(name = "from") Date from,
+			@WebParam(name = "to") Date to);
 	
 	@WebMethod(operationName = "ExtractText", action = "urn:ExtractText")
 	@WebResult(name = "texts")
