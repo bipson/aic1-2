@@ -14,14 +14,38 @@ public final class Twitter implements ITwitter {
 	@Override
 	public Tweet[] fetchTweets(String searchString, Date from, Date to) {
 		if(MOCKUP) {
-			return new Tweet[] {
-				new Tweet(1, "hay man. What's going on over at AICcompany? they rock! #aic", "philipp", 0),
-				new Tweet(2, "lol @ AICcompany. not BAD!", "andy", 20),
-				new Tweet(3, "hai guys, this is something unrelated #fluke", "christian", 3),
-				new Tweet(4, "AICcompany sucks! they are bad! they are stupid!", "juraj", 18600),
-				new Tweet(5, "I must say @AICcompany you have opened my eyes! good work!", "philip", 19),
-				new Tweet(6, "anyone knows what AICcompany do? they seem shitty.", "csaba", 6)
-			};
+			if(searchString == "company1") {
+				return new Tweet[] {
+					new Tweet(1, "0.1", "user", 0),
+					new Tweet(2, "0.1", "user", 0),
+					new Tweet(3, "0.2", "user", 0),
+					new Tweet(4, "0.3", "user", 0),
+					new Tweet(5, "0.4", "user", 0),
+					new Tweet(6, "0.4", "user", 0),
+					new Tweet(7, "0.4", "user", 0),
+					new Tweet(8, "0.5", "user", 0),
+					new Tweet(9, "0.7", "user", 0),
+					new Tweet(10, "0.9", "user", 0)
+				};
+			} else if(searchString == "company2") {
+				return new Tweet[] {
+					new Tweet(1, "0.3", "user", 0),
+					new Tweet(2, "0.5", "user", 0),
+					new Tweet(3, "0.6", "user", 0),
+					new Tweet(4, "0.7", "user", 0),
+					new Tweet(5, "0.8", "user", 0),
+					new Tweet(6, "1.0", "user", 0)
+				};
+			} else if(searchString == "company3") {
+				return new Tweet[] {
+					new Tweet(1, "0.1", "user", 0),
+					new Tweet(2, "0.5", "user", 0),
+					new Tweet(3, "0.7", "user", 0),
+					new Tweet(5, "0.9", "user", 0)
+				};
+			} else {
+				return new Tweet[0];
+			}
 		} else {
 			// Final service code.
 			return null;

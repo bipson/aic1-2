@@ -13,7 +13,7 @@ public final class User implements IUser {
 	@Override
 	public Boolean add(String companyName, String password) {
 		if(MOCKUP) {
-			return true;
+			return companyName != "company1" && companyName != "company2";
 		} else {
 			// Final service code.
 			return true;
@@ -23,7 +23,7 @@ public final class User implements IUser {
 	@Override
 	public Boolean remove(String companyName) {
 		if(MOCKUP) {
-			return true;
+			return companyName == "company1" || companyName == "company2";
 		} else {
 			// Final service code.
 			return true;
@@ -33,7 +33,7 @@ public final class User implements IUser {
 	@Override
 	public Boolean exists(String companyName) {
 		if(MOCKUP) {
-			return false;
+			return companyName == "company1" || companyName == "company2";
 		} else {
 			// Final service code.
 			return false;
@@ -43,7 +43,9 @@ public final class User implements IUser {
 	@Override
 	public Boolean checkCredentials(String companyName, String password) {
 		if(MOCKUP) {
-			return true;
+			return (companyName == "company1" && password == "c1password")
+				|| (companyName == "company2" && password == "c2password")
+				|| (companyName == "company3" && password == "c3password");
 		} else {
 			// Final service code.
 			return true;

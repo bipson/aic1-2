@@ -13,7 +13,15 @@ public final class Accounting implements IAccounting {
 	@Override
 	public Double getBill(String companyName) {
 		if(MOCKUP) {
-			return 34.5;
+			if(companyName == "company1") {
+				return 34.5;
+			} else if(companyName == "company2") {
+				return 0.0;
+			} else if(companyName == "company3") {
+				return 1.0;
+			} else {
+				return Double.NaN;
+			}
 		} else {
 			// Final service code.
 			return 34.5;
@@ -23,7 +31,7 @@ public final class Accounting implements IAccounting {
 	@Override
 	public Boolean charge(String companyName, Double amount) {
 		if(MOCKUP) {
-			return true;
+			return companyName == "company1" || companyName == "company2" || companyName == "company3";
 		} else {
 			// Final service code.
 			return true;

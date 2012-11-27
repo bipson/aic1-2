@@ -13,10 +13,10 @@ public final class Sentiment implements ISentiment {
 	@Override
 	public Double compute(String text) {
 		if(MOCKUP) {
-			return 0.45;
+			return new Double(text);
 		} else {
 			// Final service code.
-			return 0.45;
+			return 0.5;
 		}
 	}
 
