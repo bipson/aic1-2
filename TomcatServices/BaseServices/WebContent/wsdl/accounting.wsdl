@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="AccountingService" targetNamespace="http://aic.service.accounting/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://aic.service.accounting/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:message name="GetBillResponse">
+    <wsdl:part name="currentBill" type="xsd:double">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetOurAccountDataResponse">
+    <wsdl:part name="ourAccountData" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetBill">
+    <wsdl:part name="companyName" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ChargeResponse">
+    <wsdl:part name="chargingSucceeded" type="xsd:boolean">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="GetOurAccountData">
+  </wsdl:message>
+  <wsdl:message name="Charge">
+    <wsdl:part name="companyName" type="xsd:string">
+    </wsdl:part>
+    <wsdl:part name="amount" type="xsd:double">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="IAccounting">
+    <wsdl:operation name="GetOurAccountData">
+      <wsdl:input name="GetOurAccountData" message="tns:GetOurAccountData">
+    </wsdl:input>
+      <wsdl:output name="GetOurAccountDataResponse" message="tns:GetOurAccountDataResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Charge">
+      <wsdl:input name="Charge" message="tns:Charge">
+    </wsdl:input>
+      <wsdl:output name="ChargeResponse" message="tns:ChargeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBill">
+      <wsdl:input name="GetBill" message="tns:GetBill">
+    </wsdl:input>
+      <wsdl:output name="GetBillResponse" message="tns:GetBillResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AccountingServiceSoapBinding" type="tns:IAccounting">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Charge">
+      <soap:operation soapAction="urn:Charge" style="rpc"/>
+      <wsdl:input name="Charge">
+        <soap:body use="literal" namespace="http://aic.service.accounting/"/>
+      </wsdl:input>
+      <wsdl:output name="ChargeResponse">
+        <soap:body use="literal" namespace="http://aic.service.accounting/"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetOurAccountData">
+      <soap:operation soapAction="urn:GetOurAccountData" style="rpc"/>
+      <wsdl:input name="GetOurAccountData">
+        <soap:body use="literal" namespace="http://aic.service.accounting/"/>
+      </wsdl:input>
+      <wsdl:output name="GetOurAccountDataResponse">
+        <soap:body use="literal" namespace="http://aic.service.accounting/"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetBill">
+      <soap:operation soapAction="urn:GetBill" style="rpc"/>
+      <wsdl:input name="GetBill">
+        <soap:body use="literal" namespace="http://aic.service.accounting/"/>
+      </wsdl:input>
+      <wsdl:output name="GetBillResponse">
+        <soap:body use="literal" namespace="http://aic.service.accounting/"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AccountingService">
+    <wsdl:port name="Accounting" binding="tns:AccountingServiceSoapBinding">
+      <soap:address location="http://localhost:8080/BaseServices/services/Accounting"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="SentimentService" targetNamespace="http://aic.service.sentiment/" xmlns:ns1="http://jaxb.dev.java.net/array" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://aic.service.sentiment/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://jaxb.dev.java.net/array" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<xs:complexType final="#all" name="stringArray">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="item" nillable="true" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="ComputeResponse">
+    <wsdl:part name="sentiment" type="xsd:double">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ComputeAverageResponse">
+    <wsdl:part name="averageSentiment" type="xsd:double">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="Compute">
+    <wsdl:part name="text" type="xsd:string">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="ComputeAverage">
+    <wsdl:part name="texts" type="ns1:stringArray">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ISentiment">
+    <wsdl:operation name="ComputeAverage">
+      <wsdl:input name="ComputeAverage" message="tns:ComputeAverage">
+    </wsdl:input>
+      <wsdl:output name="ComputeAverageResponse" message="tns:ComputeAverageResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Compute">
+      <wsdl:input name="Compute" message="tns:Compute">
+    </wsdl:input>
+      <wsdl:output name="ComputeResponse" message="tns:ComputeResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SentimentServiceSoapBinding" type="tns:ISentiment">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="Compute">
+      <soap:operation soapAction="urn:Compute" style="rpc"/>
+      <wsdl:input name="Compute">
+        <soap:body use="literal" namespace="http://aic.service.sentiment/"/>
+      </wsdl:input>
+      <wsdl:output name="ComputeResponse">
+        <soap:body use="literal" namespace="http://aic.service.sentiment/"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ComputeAverage">
+      <soap:operation soapAction="urn:ComputeAverage" style="rpc"/>
+      <wsdl:input name="ComputeAverage">
+        <soap:body use="literal" namespace="http://aic.service.sentiment/"/>
+      </wsdl:input>
+      <wsdl:output name="ComputeAverageResponse">
+        <soap:body use="literal" namespace="http://aic.service.sentiment/"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SentimentService">
+    <wsdl:port name="Sentiment" binding="tns:SentimentServiceSoapBinding">
+      <soap:address location="http://localhost:8080/BaseServices/services/Sentiment"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

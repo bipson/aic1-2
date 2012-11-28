@@ -1,0 +1,6 @@
+*.suo
+Workflows/bin/
+Workflows/obj/
+WorkflowTests/bin/
+WorkflowTests/obj/
+TestResults/

@@ -1,0 +1,80 @@
+<Activity mc:Ignorable="sap2010 sads" x:Class="Workflows.TwitterReference.Activities.ExtractText" this:ExtractText.EndpointConfigurationName="Twitter"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:p="http://aic.service.twitter/"
+ xmlns:p1="http://schemas.microsoft.com/netfx/2009/xaml/servicemodel"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:sc="clr-namespace:System.ComponentModel;assembly=System"
+ xmlns:this="clr-namespace:Workflows.TwitterReference.Activities"
+ xmlns:wt="clr-namespace:Workflows.TwitterReference;assembly=Workflows"
+ xmlns:wt1="clr-namespace:Workflows.TwitterReference;assembly=Workflows, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="EndpointConfigurationName" Type="x:String">
+      <x:Property.Attributes>
+        <sc:DefaultValueAttribute>
+          <x:Arguments>
+            <x:String>Twitter</x:String>
+          </x:Arguments>
+        </sc:DefaultValueAttribute>
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="tweets" Type="InArgument(wt:tweet[])">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="texts" Type="OutArgument(s:String[])" />
+  </x:Members>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces serialized as XML namespaces</mva:VisualBasic.Settings>
+  <Sequence>
+    <Sequence.Variables>
+      <x:Reference>__ReferenceID1</x:Reference>
+      <x:Reference>__ReferenceID2</x:Reference>
+    </Sequence.Variables>
+    <p1:Send x:Name="__ReferenceID0" Action="urn:ExtractText" OperationName="ExtractText" SerializerOption="XmlSerializer" ServiceContractName="p:ITwitter">
+      <p1:Send.CorrelationInitializers>
+        <p1:RequestReplyCorrelationInitializer>
+          <p1:RequestReplyCorrelationInitializer.CorrelationHandle>
+            <InArgument x:TypeArguments="p1:CorrelationHandle">
+              <VariableValue x:TypeArguments="p1:CorrelationHandle">
+                <VariableValue.Variable>
+                  <Variable x:TypeArguments="p1:CorrelationHandle" x:Name="__ReferenceID2" />
+                </VariableValue.Variable>
+              </VariableValue>
+            </InArgument>
+          </p1:RequestReplyCorrelationInitializer.CorrelationHandle>
+        </p1:RequestReplyCorrelationInitializer>
+      </p1:Send.CorrelationInitializers>
+      <p1:SendMessageContent>
+        <InArgument x:TypeArguments="wt:ExtractText">[New Workflows.TwitterReference.ExtractText() With { .tweets = tweets }]</InArgument>
+      </p1:SendMessageContent>
+      <p1:Send.EndpointConfigurationName>
+        <PropertyReference x:TypeArguments="x:String" PropertyName="EndpointConfigurationName" />
+      </p1:Send.EndpointConfigurationName>
+    </p1:Send>
+    <p1:ReceiveReply Request="{x:Reference __ReferenceID0}" Action="*">
+      <p1:ReceiveMessageContent>
+        <OutArgument x:TypeArguments="wt:ExtractTextResponse">
+          <VariableReference x:TypeArguments="wt:ExtractTextResponse">
+            <VariableReference.Variable>
+              <Variable x:TypeArguments="wt:ExtractTextResponse" x:Name="__ReferenceID1" Name="tempResult_f0cc75459e6e4a1faa34ab29c8825ab2" />
+            </VariableReference.Variable>
+          </VariableReference>
+        </OutArgument>
+      </p1:ReceiveMessageContent>
+    </p1:ReceiveReply>
+    <Assign>
+      <Assign.To>
+        <OutArgument x:TypeArguments="s:String[]">[texts]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="s:String[]">[tempResult_f0cc75459e6e4a1faa34ab29c8825ab2.texts]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <sads:DebugSymbol.Symbol>d5QBQzpcVXNlcnNcQUlDXERvY3VtZW50c1xhaWMxLTJcV29ya2Zsb3dBcHBsaWNhdGlvblxXb3JrZmxvd3NcU2VydmljZSBSZWZlcmVuY2VzXFR3aXR0ZXJSZWZlcmVuY2VcV29ya2Zsb3dzLlR3aXR0ZXJSZWZlcmVuY2UuSVR3aXR0ZXIuRXh0cmFjdFRleHQueGFtbAkhA08OAgEBJgU6DwIBCjsFRRcCAQdGBU0OAgECNTY1fgIBDCsPLx8CAQs+C0IfAgEJSzJLZQIBBUgzSDoCAQM=</sads:DebugSymbol.Symbol>
+  </Sequence>
+</Activity>

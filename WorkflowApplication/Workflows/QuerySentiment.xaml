@@ -1,0 +1,501 @@
+﻿<Activity mc:Ignorable="sads sap sap2010" x:Class="Workflows.QuerySentiment"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+ xmlns:local="clr-namespace:Workflows.TwitterReference"
+ xmlns:local1="clr-namespace:Workflows.UserReference.Activities"
+ xmlns:local2="clr-namespace:Workflows.AccountingReference.Activities"
+ xmlns:local3="clr-namespace:Workflows.TwitterReference.Activities"
+ xmlns:local4="clr-namespace:Workflows.SentimentReference.Activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:p="http://schemas.microsoft.com/netfx/2009/xaml/servicemodel"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:sc="clr-namespace:System.ComponentModel;assembly=System"
+ xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
+ xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:wa="clr-namespace:Workflows.AccountingReference"
+ xmlns:ws="clr-namespace:Workflows.SentimentReference"
+ xmlns:wu="clr-namespace:Workflows.UserReference"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="companyName" Type="InArgument(x:String)" />
+    <x:Property Name="dateFrom" Type="InArgument(s:DateTime)" />
+    <x:Property Name="dateTo" Type="InArgument(s:DateTime)" />
+    <x:Property Name="sentiment" Type="OutArgument(x:Double)" />
+  </x:Members>
+  <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
+  <sap2010:WorkflowViewState.IdRef>Workflows.QuerySentiment_1</sap2010:WorkflowViewState.IdRef>
+  <TextExpression.NamespacesForImplementation>
+    <sco:Collection x:TypeArguments="x:String">
+      <x:String>System</x:String>
+      <x:String>System.Collections.Generic</x:String>
+      <x:String>System.Data</x:String>
+      <x:String>System.Linq</x:String>
+      <x:String>System.Text</x:String>
+      <x:String>Workflows.TwitterReference</x:String>
+    </sco:Collection>
+  </TextExpression.NamespacesForImplementation>
+  <TextExpression.ReferencesForImplementation>
+    <sco:Collection x:TypeArguments="AssemblyReference">
+      <AssemblyReference>Microsoft.CSharp</AssemblyReference>
+      <AssemblyReference>System</AssemblyReference>
+      <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Core</AssemblyReference>
+      <AssemblyReference>System.Data</AssemblyReference>
+      <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
+      <AssemblyReference>System.ServiceModel</AssemblyReference>
+      <AssemblyReference>System.ServiceModel.Activities</AssemblyReference>
+      <AssemblyReference>System.Xaml</AssemblyReference>
+      <AssemblyReference>System.Xml</AssemblyReference>
+      <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>mscorlib</AssemblyReference>
+      <AssemblyReference>Workflows</AssemblyReference>
+    </sco:Collection>
+  </TextExpression.ReferencesForImplementation>
+  <Flowchart sap2010:Annotation.AnnotationText="First we check if the user is registered. If not, we print an error message and fail.&#xA;Next we charge for the query. Even a failed query is work for us and therefore costs the client money.&#xA;If that failed, we again print an error and fail.&#xA;Otherwise, we try the remaining steps. If either of them fails, we print a generic message and fail.&#xA;Fetch tweets from the requested timespan.&#xA;Extract the text of the tweets.&#xA;Compute and return the average sentiment of all tweet texts.&#xA;Failure means we return NaN as the computed sentiment." DisplayName="Query Sentiment" sap2010:WorkflowViewState.IdRef="Flowchart_1">
+    <Flowchart.Variables>
+      <Variable x:TypeArguments="x:Boolean" Name="doesUserExist" />
+      <Variable x:TypeArguments="x:Double" Name="blanketAmount" />
+      <Variable x:TypeArguments="x:Boolean" Name="chargingSucceeded" />
+      <Variable x:TypeArguments="local:tweet[]" Name="fetchedTweets" />
+      <Variable x:TypeArguments="s:String[]" Name="extractedTexts" />
+    </Flowchart.Variables>
+    <Flowchart.StartNode>
+      <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_5">
+        <local1:Exists DisplayName="Check If User Exists" sap2010:WorkflowViewState.IdRef="Exists_1" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+          <local1:Exists.companyName>
+            <InArgument x:TypeArguments="x:String">
+              <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
+            </InArgument>
+          </local1:Exists.companyName>
+          <local1:Exists.userExists>
+            <OutArgument x:TypeArguments="x:Boolean">
+              <mca:CSharpReference x:TypeArguments="x:Boolean">doesUserExist</mca:CSharpReference>
+            </OutArgument>
+          </local1:Exists.userExists>
+        </local1:Exists>
+        <FlowStep.Next>
+          <FlowDecision x:Name="__ReferenceID2" DisplayName="Does User Exist?" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
+            <FlowDecision.Condition>
+              <mca:CSharpValue x:TypeArguments="x:Boolean">doesUserExist</mca:CSharpValue>
+            </FlowDecision.Condition>
+            <FlowDecision.True>
+              <FlowStep x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_2">
+                <Assign sap2010:Annotation.AnnotationText="This is the amount of money every sentiment query costs." sap2010:WorkflowViewState.IdRef="Assign_1">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="x:Double">
+                      <mca:CSharpReference x:TypeArguments="x:Double">blanketAmount</mca:CSharpReference>
+                    </OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="x:Double">
+                      <mca:CSharpValue x:TypeArguments="x:Double">0.50</mca:CSharpValue>
+                    </InArgument>
+                  </Assign.Value>
+                </Assign>
+                <FlowStep.Next>
+                  <FlowStep x:Name="__ReferenceID5" sap2010:WorkflowViewState.IdRef="FlowStep_1">
+                    <local2:Charge DisplayName="Charge Blanket Amount" sap2010:WorkflowViewState.IdRef="Charge_1" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+                      <local2:Charge.amount>
+                        <InArgument x:TypeArguments="x:Double">
+                          <mca:CSharpValue x:TypeArguments="x:Double">blanketAmount</mca:CSharpValue>
+                        </InArgument>
+                      </local2:Charge.amount>
+                      <local2:Charge.chargingSucceeded>
+                        <OutArgument x:TypeArguments="x:Boolean">
+                          <mca:CSharpReference x:TypeArguments="x:Boolean">chargingSucceeded</mca:CSharpReference>
+                        </OutArgument>
+                      </local2:Charge.chargingSucceeded>
+                      <local2:Charge.companyName>
+                        <InArgument x:TypeArguments="x:String">
+                          <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
+                        </InArgument>
+                      </local2:Charge.companyName>
+                    </local2:Charge>
+                    <FlowStep.Next>
+                      <FlowDecision x:Name="__ReferenceID6" DisplayName="Charging Succeeded?" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
+                        <FlowDecision.Condition>
+                          <mca:CSharpValue x:TypeArguments="x:Boolean">chargingSucceeded</mca:CSharpValue>
+                        </FlowDecision.Condition>
+                        <FlowDecision.True>
+                          <FlowStep x:Name="__ReferenceID8" sap2010:WorkflowViewState.IdRef="FlowStep_10">
+                            <local3:FetchTweets DisplayName="Fetch Tweets" sap2010:WorkflowViewState.IdRef="FetchTweets_1" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+                              <local3:FetchTweets._to>
+                                <InArgument x:TypeArguments="s:DateTime">
+                                  <mca:CSharpValue x:TypeArguments="s:DateTime">dateTo</mca:CSharpValue>
+                                </InArgument>
+                              </local3:FetchTweets._to>
+                              <local3:FetchTweets.from>
+                                <InArgument x:TypeArguments="s:DateTime">
+                                  <mca:CSharpValue x:TypeArguments="s:DateTime">dateFrom</mca:CSharpValue>
+                                </InArgument>
+                              </local3:FetchTweets.from>
+                              <local3:FetchTweets.searchString>
+                                <InArgument x:TypeArguments="x:String">
+                                  <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
+                                </InArgument>
+                              </local3:FetchTweets.searchString>
+                              <local3:FetchTweets.tweets>
+                                <OutArgument x:TypeArguments="local:tweet[]">
+                                  <mca:CSharpReference x:TypeArguments="local:tweet[]">fetchedTweets</mca:CSharpReference>
+                                </OutArgument>
+                              </local3:FetchTweets.tweets>
+                            </local3:FetchTweets>
+                            <FlowStep.Next>
+                              <FlowStep x:Name="__ReferenceID9" sap2010:WorkflowViewState.IdRef="FlowStep_9">
+                                <local3:ExtractText DisplayName="Extract Text From Tweets" sap2010:WorkflowViewState.IdRef="ExtractText_1" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+                                  <local3:ExtractText.texts>
+                                    <OutArgument x:TypeArguments="s:String[]">
+                                      <mca:CSharpReference x:TypeArguments="s:String[]">extractedTexts</mca:CSharpReference>
+                                    </OutArgument>
+                                  </local3:ExtractText.texts>
+                                  <local3:ExtractText.tweets>
+                                    <InArgument x:TypeArguments="local:tweet[]">
+                                      <mca:CSharpValue x:TypeArguments="local:tweet[]">fetchedTweets</mca:CSharpValue>
+                                    </InArgument>
+                                  </local3:ExtractText.tweets>
+                                </local3:ExtractText>
+                                <FlowStep.Next>
+                                  <FlowDecision x:Name="__ReferenceID10" DisplayName="Texts Available?" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
+                                    <FlowDecision.Condition>
+                                      <mca:CSharpValue x:TypeArguments="x:Boolean">extractedTexts.Length &gt; 0</mca:CSharpValue>
+                                    </FlowDecision.Condition>
+                                    <FlowDecision.True>
+                                      <FlowStep x:Name="__ReferenceID12" sap2010:WorkflowViewState.IdRef="FlowStep_7">
+                                        <local4:ComputeAverage DisplayName="Compute Average Sentiment" sap2010:WorkflowViewState.IdRef="ComputeAverage_1" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+                                          <local4:ComputeAverage.averageSentiment>
+                                            <OutArgument x:TypeArguments="x:Double">
+                                              <mca:CSharpReference x:TypeArguments="x:Double">sentiment</mca:CSharpReference>
+                                            </OutArgument>
+                                          </local4:ComputeAverage.averageSentiment>
+                                          <local4:ComputeAverage.texts>
+                                            <InArgument x:TypeArguments="s:String[]">
+                                              <mca:CSharpValue x:TypeArguments="s:String[]">extractedTexts</mca:CSharpValue>
+                                            </InArgument>
+                                          </local4:ComputeAverage.texts>
+                                        </local4:ComputeAverage>
+                                        <FlowStep.Next>
+                                          <FlowStep x:Name="__ReferenceID13" sap2010:WorkflowViewState.IdRef="FlowStep_6">
+                                            <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_2">
+                                              <InArgument x:TypeArguments="x:String">
+                                                <mca:CSharpValue x:TypeArguments="x:String">"The computed sentiment from " + dateFrom + " to " + dateTo + " is: " + sentiment</mca:CSharpValue>
+                                              </InArgument>
+                                            </WriteLine>
+                                          </FlowStep>
+                                        </FlowStep.Next>
+                                      </FlowStep>
+                                    </FlowDecision.True>
+                                    <FlowDecision.False>
+                                      <FlowStep x:Name="__ReferenceID11" sap2010:WorkflowViewState.IdRef="FlowStep_8">
+                                        <WriteLine DisplayName="No Tweets Fetched" sap2010:WorkflowViewState.IdRef="WriteLine_3">
+                                          <InArgument x:TypeArguments="x:String">
+                                            <mca:CSharpValue x:TypeArguments="x:String">"No tweets are available from " + dateFrom + " to " + dateTo + "."</mca:CSharpValue>
+                                          </InArgument>
+                                        </WriteLine>
+                                        <FlowStep.Next>
+                                          <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_3">
+                                            <Assign DisplayName="Set Result" sap2010:WorkflowViewState.IdRef="Assign_2">
+                                              <Assign.To>
+                                                <OutArgument x:TypeArguments="x:Double">
+                                                  <mca:CSharpReference x:TypeArguments="x:Double">sentiment</mca:CSharpReference>
+                                                </OutArgument>
+                                              </Assign.To>
+                                              <Assign.Value>
+                                                <InArgument x:TypeArguments="x:Double">
+                                                  <mca:CSharpValue x:TypeArguments="x:Double">Double.NaN</mca:CSharpValue>
+                                                </InArgument>
+                                              </Assign.Value>
+                                            </Assign>
+                                          </FlowStep>
+                                        </FlowStep.Next>
+                                      </FlowStep>
+                                    </FlowDecision.False>
+                                  </FlowDecision>
+                                </FlowStep.Next>
+                              </FlowStep>
+                            </FlowStep.Next>
+                          </FlowStep>
+                        </FlowDecision.True>
+                        <FlowDecision.False>
+                          <FlowStep x:Name="__ReferenceID7" sap2010:WorkflowViewState.IdRef="FlowStep_11">
+                            <WriteLine DisplayName="Charging Failed" sap2010:WorkflowViewState.IdRef="WriteLine_4" Text="The blanket amount could not be charged. Please try again." />
+                            <FlowStep.Next>
+                              <x:Reference>__ReferenceID0</x:Reference>
+                            </FlowStep.Next>
+                          </FlowStep>
+                        </FlowDecision.False>
+                      </FlowDecision>
+                    </FlowStep.Next>
+                  </FlowStep>
+                </FlowStep.Next>
+              </FlowStep>
+            </FlowDecision.True>
+            <FlowDecision.False>
+              <FlowStep x:Name="__ReferenceID3" sap2010:WorkflowViewState.IdRef="FlowStep_4">
+                <WriteLine DisplayName="User Not Registered" sap2010:WorkflowViewState.IdRef="WriteLine_1">
+                  <InArgument x:TypeArguments="x:String">
+                    <mca:CSharpValue x:TypeArguments="x:String">"The company \"" + companyName + "\" is not registered."</mca:CSharpValue>
+                  </InArgument>
+                </WriteLine>
+                <FlowStep.Next>
+                  <x:Reference>__ReferenceID0</x:Reference>
+                </FlowStep.Next>
+              </FlowStep>
+            </FlowDecision.False>
+          </FlowDecision>
+        </FlowStep.Next>
+      </FlowStep>
+    </Flowchart.StartNode>
+    <x:Reference>__ReferenceID1</x:Reference>
+    <x:Reference>__ReferenceID2</x:Reference>
+    <x:Reference>__ReferenceID3</x:Reference>
+    <x:Reference>__ReferenceID0</x:Reference>
+    <x:Reference>__ReferenceID4</x:Reference>
+    <x:Reference>__ReferenceID5</x:Reference>
+    <x:Reference>__ReferenceID6</x:Reference>
+    <x:Reference>__ReferenceID7</x:Reference>
+    <x:Reference>__ReferenceID8</x:Reference>
+    <x:Reference>__ReferenceID9</x:Reference>
+    <x:Reference>__ReferenceID10</x:Reference>
+    <x:Reference>__ReferenceID11</x:Reference>
+    <x:Reference>__ReferenceID12</x:Reference>
+    <x:Reference>__ReferenceID13</x:Reference>
+    <sads:DebugSymbol.Symbol>d09DOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xRdWVyeVNlbnRpbWVudC54YW1sJDsDjAIPAgEBRQlQGQMB3wFUD1RbAwHVAe8BEfMBHQMBygHJAS3UATYDAbUBWBFjGgMBoAFmFXYlAwGBAXobemsCAXfhAR3hAbgBAgF1fh2TATICAUyWASGhATYCATelASelAYIBAgEtwgEpxgE1AgEiqQEptAFBAgENtwEtuwE5AgECSA9IWAMB6gFND01jAwHgAfEBFfEBiwEDAcsB0QEz0QF7AwHAAcwBM8wBggEDAbYBYBdgWQMBqwFbF1tqAwGhAW4bbnMDAZYBcxtzZAMBjAFpG2lmAwGCAeEBeeEBtQECAXaGASOGAWsCAWuQASOQAXsCAWGLASOLAWwCAVeBASOBAWkCAU2ZASeZAX0CAUKeASeeAXcCATjEAS3EAa0BAgEjsQEvsQF9AgEYrAEvrAF+AgEOuQExuQHAAQIBAw==</sads:DebugSymbol.Symbol>
+  </Flowchart>
+  <sap2010:WorkflowViewState.ViewStateManager>
+    <sap2010:ViewStateManager>
+      <sap2010:ViewStateData Id="Exists_1" sap:VirtualizedContainerService.HintSize="200,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_1" sap:VirtualizedContainerService.HintSize="242,102">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Charge_1" sap:VirtualizedContainerService.HintSize="200,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FetchTweets_1" sap:VirtualizedContainerService.HintSize="200,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ExtractText_1" sap:VirtualizedContainerService.HintSize="200,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="ComputeAverage_1" sap:VirtualizedContainerService.HintSize="200,22">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="WriteLine_2" sap:VirtualizedContainerService.HintSize="211,62">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_6">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">14.4316666666667,911</av:Point>
+            <av:Size x:Key="ShapeSize">211,62</av:Size>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_7">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">20,839</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">120,861 120,891 119.931666666667,891 119.931666666667,911</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="WriteLine_3" sap:VirtualizedContainerService.HintSize="211,62">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Assign_2" sap:VirtualizedContainerService.HintSize="242,62">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_3">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">388.895,401</av:Point>
+            <av:Size x:Key="ShapeSize">242,62</av:Size>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_8">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">424.5,739</av:Point>
+            <av:Size x:Key="ShapeSize">211,62</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">635.5,770 665.5,770 665.5,432 630.895,432</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_3" sap:VirtualizedContainerService.HintSize="89,87">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">255.5,726.5</av:Point>
+            <av:Size x:Key="ShapeSize">89,87</av:Size>
+            <x:String x:Key="FalseLabel">No</x:String>
+            <x:String x:Key="TrueLabel">Yes</x:String>
+            <av:PointCollection x:Key="FalseConnector">344.5,770 424.5,770</av:PointCollection>
+            <av:PointCollection x:Key="TrueConnector">255.5,770 120,770 120,839</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_9">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">20,672</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">220,683 300,683 300,726.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_10">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">20,600</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">120,622 120,672</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="WriteLine_4" sap:VirtualizedContainerService.HintSize="211,62">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_11">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">424.5,509</av:Point>
+            <av:Size x:Key="ShapeSize">211,62</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">635.5,540 665.5,540 665.5,432 630.895,432</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_2" sap:VirtualizedContainerService.HintSize="120,87">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">240,496.5</av:Point>
+            <av:Size x:Key="ShapeSize">120,87</av:Size>
+            <av:PointCollection x:Key="FalseConnector">360,540 424.5,540</av:PointCollection>
+            <x:String x:Key="FalseLabel">No</x:String>
+            <x:String x:Key="TrueLabel">Yes</x:String>
+            <av:PointCollection x:Key="TrueConnector">240,540 120,540 120,600</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_1">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">21,441.01953125</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">221,452.01953125 300,452.01953125 300,496.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_2">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">0,289.01953125</av:Point>
+            <av:Size x:Key="ShapeSize">242,102</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">121,391.01953125 121,441.01953125</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="WriteLine_1" sap:VirtualizedContainerService.HintSize="211,62">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_4">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">404.5,289</av:Point>
+            <av:Size x:Key="ShapeSize">211,62</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">510,351 510,381 509.895,381 509.895,401</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowDecision_1" sap:VirtualizedContainerService.HintSize="89,87">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <av:Point x:Key="ShapeLocation">255.5,196.5</av:Point>
+            <av:Size x:Key="ShapeSize">89,87</av:Size>
+            <x:String x:Key="FalseLabel">No</x:String>
+            <x:String x:Key="TrueLabel">Yes</x:String>
+            <av:PointCollection x:Key="FalseConnector">344.5,240 510,240 510,289</av:PointCollection>
+            <av:PointCollection x:Key="TrueConnector">255.5,240 121,240 121,289.01953125</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="FlowStep_5">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <av:Point x:Key="ShapeLocation">200,127.5</av:Point>
+            <av:Size x:Key="ShapeSize">200,22</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,149.5 300,196.5</av:PointCollection>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="708,1260">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+            <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
+            <av:Size x:Key="ShapeSize">60,75</av:Size>
+            <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
+            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,127.5</av:PointCollection>
+            <x:Double x:Key="Height">1093.92</x:Double>
+            <x:Double x:Key="Width">694</x:Double>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
+      <sap2010:ViewStateData Id="Workflows.QuerySentiment_1" sap:VirtualizedContainerService.HintSize="748,1340" />
+    </sap2010:ViewStateManager>
+  </sap2010:WorkflowViewState.ViewStateManager>
+</Activity>
