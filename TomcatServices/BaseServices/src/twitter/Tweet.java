@@ -1,51 +1,75 @@
 package twitter;
 
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Embeddable
 public final class Tweet {
 	private long id;
 	private String text;
 	private String user;
 	private long reTweets;
-	
+	private Date created;
+
 	public Tweet() {
-		this(0, "", "", 0);
+		this(0, "", "", 0, new Date());
 	}
-	
-	public Tweet(long id, String text, String user, long reTweets) {
+
+	public Tweet(long id, String text, String user, long reTweets, Date created) {
 		this.id = id;
 		this.text = text;
 		this.user = user;
 		this.reTweets = reTweets;
+		this.created = created;
 	}
-	
-	public long getID () {
+
+	@Column
+	public long getID() {
 		return id;
 	}
-	
-	public String getText () {
+
+	@Column
+	public String getText() {
 		return text;
 	}
-	
-	public String getUser () {
+
+	@Column
+	public String getUser() {
 		return user;
 	}
-	
-	public long getReTweets () {
+
+	@Column
+	public long getReTweets() {
 		return reTweets;
 	}
-	
-	public void setID (long id) {
+
+	@Column
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getCreated() {
+		return created;
+	}
+
+	public void setID(long id) {
 		this.id = id;
 	}
-	
-	public void setText (String text) {
+
+	public void setText(String text) {
 		this.text = text;
 	}
-	
-	public void setUser (String user) {
+
+	public void setUser(String user) {
 		this.user = user;
 	}
-	
-	public void setReTweets (long reTweets) {
+
+	public void setReTweets(long reTweets) {
 		this.reTweets = reTweets;
+	}
+
+	public void setCreated(Date created) {
+		this.created = created;
 	}
 }
