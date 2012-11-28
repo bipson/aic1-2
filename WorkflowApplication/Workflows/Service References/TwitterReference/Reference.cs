@@ -52,6 +52,10 @@ namespace Workflows.TwitterReference {
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://aic.service.twitter/")]
     public partial class tweet : object, System.ComponentModel.INotifyPropertyChanged {
         
+        private System.DateTime createdField;
+        
+        private bool createdFieldSpecified;
+        
         private long idField;
         
         private long reTweetsField;
@@ -62,6 +66,30 @@ namespace Workflows.TwitterReference {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
+        public System.DateTime created {
+            get {
+                return this.createdField;
+            }
+            set {
+                this.createdField = value;
+                this.RaisePropertyChanged("created");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool createdSpecified {
+            get {
+                return this.createdFieldSpecified;
+            }
+            set {
+                this.createdFieldSpecified = value;
+                this.RaisePropertyChanged("createdSpecified");
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
         public long ID {
             get {
                 return this.idField;
@@ -73,7 +101,7 @@ namespace Workflows.TwitterReference {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=1)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
         public long reTweets {
             get {
                 return this.reTweetsField;
@@ -85,7 +113,7 @@ namespace Workflows.TwitterReference {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
         public string text {
             get {
                 return this.textField;
@@ -97,7 +125,7 @@ namespace Workflows.TwitterReference {
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
+        [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
         public string user {
             get {
                 return this.userField;

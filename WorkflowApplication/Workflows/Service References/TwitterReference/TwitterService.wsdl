@@ -11,6 +11,7 @@
     <xsd:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://aic.service.twitter/" version="1.0">
       <xs:complexType name="tweet" final="extension restriction">
         <xs:sequence>
+          <xs:element minOccurs="0" name="created" type="xs:dateTime" />
           <xs:element name="ID" type="xs:long" />
           <xs:element name="reTweets" type="xs:long" />
           <xs:element minOccurs="0" name="text" type="xs:string" />
