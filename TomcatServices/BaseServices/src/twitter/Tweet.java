@@ -2,6 +2,12 @@ package twitter;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Embeddable
 public final class Tweet {
 	private long id;
 	private String text;
@@ -21,22 +27,28 @@ public final class Tweet {
 		this.created = created;
 	}
 
+	@Column
 	public long getID() {
 		return id;
 	}
 
+	@Column
 	public String getText() {
 		return text;
 	}
 
+	@Column
 	public String getUser() {
 		return user;
 	}
 
+	@Column
 	public long getReTweets() {
 		return reTweets;
 	}
 
+	@Column
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getCreated() {
 		return created;
 	}
