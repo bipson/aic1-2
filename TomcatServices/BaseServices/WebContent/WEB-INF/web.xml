@@ -16,6 +16,12 @@
     <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
     <load-on-startup>1</load-on-startup>
   </servlet>
+  <servlet>
+    <description>Sentiment Service Initialization</description>
+    <servlet-name>SentimentServiceInitializer</servlet-name>
+    <servlet-class>sentiment.SentimentServiceInitializer</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
   <servlet-mapping>
     <servlet-name>cxf</servlet-name>
     <url-pattern>/services/*</url-pattern>
