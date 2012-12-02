@@ -1,6 +1,11 @@
 package accounting;
 
 import javax.jws.WebService;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import model.CompanyEntity;
 
 @WebService(targetNamespace = "http://aic.service.accounting/",
             endpointInterface = "accounting.IAccounting",
@@ -8,7 +13,9 @@ import javax.jws.WebService;
             serviceName = "AccountingService")
 public final class Accounting implements IAccounting {
 	// Set to true when using mockup accounting service.
-	private static final boolean MOCKUP = true;
+	private static final boolean MOCKUP = false;
+	
+	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("aic.sentiment");
 
 	@Override
 	public Double getBill(String companyName) {
@@ -24,9 +31,24 @@ public final class Accounting implements IAccounting {
 				return Double.NaN;
 			}
 		} else {
-			// Final service code.
-			return 34.5;
+
+			EntityManager manager = emf.createEntityManager();
+			
+			try {
+				CompanyEntity company = manager.find(CompanyEntity.class, companyName);
+				
+				System.out.println("CompanyName: "+company.getCompanyName()+" CurrentBill: "+company.getCurrentBill());
+				
+				if(company != null)
+					return company.getCurrentBill();
+				else
+					return Double.NaN;
+				
+			} finally {	
+				manager.close();
+			}
 		}
+		
 	}
 
 	@Override
@@ -35,8 +57,37 @@ public final class Accounting implements IAccounting {
 			System.out.println("Accounting.charge: companyName=\"" + companyName + "\" amount=\"" + amount + "\"");
 			return companyName.equals("company1") || companyName.equals("company2") || companyName.equals("company6");
 		} else {
-			// Final service code.
-			return true;
+
+			EntityManager manager = emf.createEntityManager();
+			
+			try {
+				
+				manager.getTransaction().begin();
+				
+				CompanyEntity company = manager.find(CompanyEntity.class, companyName);
+				if(company == null){
+					manager.getTransaction().rollback();
+					return false;
+				}
+				
+				Double newBill = company.getCurrentBill() + amount;
+				if(newBill >= 0){
+					company.setCurrentBill(newBill);
+					manager.merge(company);
+					manager.getTransaction().commit();
+					
+					System.out.println("CompanyName: "+company.getCompanyName()+" NewBill: "+ newBill);
+					
+					return true;
+				}else{
+					manager.getTransaction().rollback();
+					return false;
+				}
+				
+			} finally {
+				manager.close();
+			}
+			
 		}
 	}
 
@@ -46,7 +97,7 @@ public final class Accounting implements IAccounting {
 			System.out.println("Accounting.getOurAccountData");
 			return "{Our Company Account Information}";
 		} else {
-			// Final service code.
+
 			return "{Our Company Account Information}";
 		}
 	}
