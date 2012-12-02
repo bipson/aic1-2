@@ -124,6 +124,8 @@ public class Features {
         while ((strLine = br.readLine()) != null) {
         	stop.add(strLine);
         }
+        br.close();
+        
         this.stopwords = stop;
         return stop;
 	}

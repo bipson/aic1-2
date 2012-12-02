@@ -45,15 +45,19 @@ public class WeightedMajority {
 		int i = 1;
 		double pos = 0;
 		double neg = 0;
+		int numNeg = 0;
+		int numPos = 0;
 		while(i<=_id2cl.size()) {
 			String pol = _id2cl.get(i).classify(stringa);
 			if(pol.equals("0")) {
 				neg = neg + _cl2weight.get(i);
 				cl2pol.put(i, "0");
+				numNeg++;
 			}
 			else {
 				pos = pos + _cl2weight.get(i);
 				cl2pol.put(i, "4");
+				numPos++;
 			}
 			i++;
 		}
@@ -69,6 +73,10 @@ public class WeightedMajority {
 			else
 				ist.setPolarity("4");
 		}
+		if(numPos > numNeg)
+			ist.setTarget("4");
+		else
+			ist.setTarget("0");
 		return ist;
 	}
 	

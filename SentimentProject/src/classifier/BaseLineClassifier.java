@@ -53,6 +53,8 @@ public class BaseLineClassifier implements IClassifier {
 		}
 		System.out.println(giuste);
 		System.out.println(sbagliate);
+		
+		br.close();
 	}
 
 	/**
