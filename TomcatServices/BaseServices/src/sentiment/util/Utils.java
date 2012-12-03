@@ -10,7 +10,7 @@ import java.io.File;
 public class Utils {
 
 	// the root for external files
-	private static String filesRoot = Utils.class.getResource("weka.classifiers.bayes.NaiveBayes.model").getPath(); //System.getProperty("user.dir")
+	private static String filesRoot = "/sentiment/files/";
 	//new File(".").getAbsolutePath()
 	
 	/**

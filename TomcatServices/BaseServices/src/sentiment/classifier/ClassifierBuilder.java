@@ -126,7 +126,8 @@ public class ClassifierBuilder {
 	 * @throws ClassNotFoundException
 	 */
 	public WekaClassifier retrieveClassifier(String classifierName) throws FileNotFoundException, IOException, ClassNotFoundException {
-		ObjectInputStream ois = new ObjectInputStream(getClass().getResourceAsStream(classifierName + ".model"));
+		ObjectInputStream ois = new ObjectInputStream(getClass().getResourceAsStream(Utils.getFilesRoot() + classifierName + ".model"));
+	//	ObjectInputStream ois = new ObjectInputStream(new FileInputStream(Utils.getFilesRoot() + classifierName + ".model"));
 		WekaClassifier wc = (WekaClassifier)ois.readObject();
 		ois.close();
 		return wc;

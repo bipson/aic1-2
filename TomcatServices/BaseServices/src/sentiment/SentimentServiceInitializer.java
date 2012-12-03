@@ -45,6 +45,7 @@ public class SentimentServiceInitializer extends HttpServlet {
 			System.out.println("finished initializing!");
 		} catch(Exception e) {
 			System.err.println("Exception in Sentiment: "+e.getMessage());
+			e.printStackTrace();
 		}
 		
 		System.out.println("loaded");
