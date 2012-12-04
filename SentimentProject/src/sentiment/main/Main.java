@@ -43,14 +43,29 @@ public class Main {
 		System.out.println("prepareTest");
 		clb.prepareTest();
 		System.out.println("Naive Bayes");
-		NaiveBayes nb = new NaiveBayes();
-		System.out.println("construct classifier");
-		WekaClassifier wc = clb.constructClassifier(nb);
-	//	WekaClassifier wc = clb.retrieveClassifier("weka.classifiers.bayes.NaiveBayes");
-		System.out.print("classify tweet: \"i am very sad\" \n");
-		String classify = wc.classify(":-(");
-		System.out.println("polarity: " + classify);
 		
+		// --------- NaiveBayes ---------
+		NaiveBayes nb = new NaiveBayes();
+		System.out.println("construct classifier NaiveBayes");
+		WekaClassifier wc1 = clb.constructClassifier(nb);
+		
+		// --------- J48 ----------------
+		J48 j48 = new J48();
+		System.out.println("construct classifier J48");
+		WekaClassifier wc2 = clb.constructClassifier(j48);
+		
+		// --------- VotedPerceptron ----
+		VotedPerceptron vp = new VotedPerceptron();
+		WekaClassifier wc3 = clb.constructClassifier(vp);
+		
+		System.out.print("classify tweet: \"i am very sad\" \n");
+		String classify1 = wc1.classify(":-(");
+		String classify2 = wc2.classify(":-(");
+		String classify3 = wc3.classify(":-(");
+		System.out.println("polarity NB: " + classify1);
+		System.out.println("polarity J48: " + classify2);
+		System.out.println("polarity VP: " + classify3);*/
+	
 		List<IClassifier> classifiers = new LinkedList<IClassifier>();
 		ClassifierBuilder cb = new ClassifierBuilder();
 		
@@ -81,8 +96,11 @@ public class Main {
 			System.out.println("VotedPerceptron: "+item.getCl2pol().get(3));  // weight: wm.get_cl2weight().get(3)
 			
 			System.out.println("Voted Result: "+item.getPolarity());
+			
+			Double result = wm.averageClassify(read);
+			System.out.println("Average Result: "+result);
 		
-		}*/
+		}
 		
 		
 	}

@@ -82,6 +82,27 @@ public class WeightedMajority {
 	
 	
 	/**
+	 * Classifies a text and returns the average result of the registered classifiers
+	 * @param text the text to classify
+	 * @return a Double containing the average sentiment result
+	 * @throws Exception is thrown if the text cannot be classified
+	 */
+	public Double averageClassify(String text) throws Exception {
+		
+		double pos = 0.0;
+		for(int i = 1; i<=_id2cl.size(); i++) {
+			String pol = _id2cl.get(i).classify(text);
+			
+			// positive polarity equals 4
+			if(pol.equals("4"))
+				pos = pos + _cl2weight.get(i);
+			//	pos += 1.0;
+			
+		}
+		return new Double(pos / Double.valueOf(_id2cl.size()));
+	}
+	
+	/**
 	 * modifies classifiers' weights
 	 * @param item the item with setted target polarity
 	 */
