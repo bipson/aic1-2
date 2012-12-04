@@ -1,8 +1,5 @@
 # listing files and directories that should not be tracked
 
-.metadata
-.classpath
-.project
-.settings
-bin
-target
+bin/
+build/
+.metadata/

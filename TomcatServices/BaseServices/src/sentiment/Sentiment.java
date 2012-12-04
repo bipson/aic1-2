@@ -8,7 +8,7 @@ import javax.jws.WebService;
             serviceName = "SentimentService")
 public final class Sentiment implements ISentiment {
 	//Set to true when using mockup sentiment service.
-	private static final boolean MOCKUP = false;
+	private static final boolean MOCKUP = true;
 	
 	@Override
 	public Double compute(String text) {
@@ -17,11 +17,6 @@ public final class Sentiment implements ISentiment {
 			return new Double(text);
 		} else {
 			// Final service code.
-			
-			if(SentimentServiceInitializer.loaded())
-				System.out.println("compute: computation ...");
-			else
-				System.out.println("compute: Init not loaded");
 			return 0.5;
 		}
 	}
