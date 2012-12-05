@@ -16,7 +16,6 @@ public final class User implements IUser {
 	private static final boolean MOCKUP = true;
 	
 	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("aic.sentiment");
-//	private static final EntityManagerFactory emf = null;
 	
 	@Override
 	public Boolean add(String companyName, String password) {
