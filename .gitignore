@@ -2,3 +2,7 @@ target/
 *.jar
 *.war
 *.ear
+
+bin/
+build/
+.metadata/
