@@ -56,6 +56,16 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Runtime.Serialization" />
+    <ProjectReference Include="..\ServiceActivities.Design\ServiceActivities.Design.csproj">
+      <Name>ServiceActivities.Design</Name>
+      <Project>{71315d65-fcef-43d4-b659-f6e50ef8a9dd}</Project>
+      <Private>True</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\ServiceActivities\ServiceActivities.csproj">
+      <Name>ServiceActivities</Name>
+      <Project>{a060fc41-7fe4-413c-8d1f-fa1aea32d9b9}</Project>
+      <Private>True</Private>
+    </ProjectReference>
     <ProjectReference Include="..\Workflows\Workflows.csproj">
       <Name>Workflows</Name>
       <Project>{98ec024c-6439-44b1-8b1e-29e457b2201f}</Project>

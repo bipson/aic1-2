@@ -36,7 +36,7 @@ let grabRecords<'a when 'a :> TrackingRecord> records =
 let grabReferenceRecords =
     let referenceNames = 
         [ "Accounting"; "Payment"; "Sentiment"; "Twitter"; "User" ]
-        |> List.map (sprintf "Workflows.%sReference.Activities")
+        |> List.map (sprintf "ServiceActivities.%sReference.Activities")
     grabRecords<ActivityStateRecord>
     >> List.filter (fun record ->
         record.State = "Executing" &&

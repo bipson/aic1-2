@@ -1,18 +1,18 @@
 ﻿<Activity mc:Ignorable="sads sap sap2010" x:Class="Workflows.GetCurrentBill"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
- xmlns:local="clr-namespace:Workflows.AccountingReference.Activities"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
  xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
  xmlns:p="http://schemas.microsoft.com/netfx/2009/xaml/servicemodel"
+ xmlns:sa="clr-namespace:ServiceActivities.AccountingReference;assembly=ServiceActivities"
+ xmlns:saa="clr-namespace:ServiceActivities.AccountingReference.Activities;assembly=ServiceActivities"
  xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
  xmlns:sc="clr-namespace:System.ComponentModel;assembly=System"
  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
- xmlns:wa="clr-namespace:Workflows.AccountingReference"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="companyName" Type="InArgument(x:String)" />
@@ -32,8 +32,11 @@
   <TextExpression.ReferencesForImplementation>
     <sco:Collection x:TypeArguments="AssemblyReference">
       <AssemblyReference>Microsoft.CSharp</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
       <AssemblyReference>System</AssemblyReference>
       <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Activities.Presentation</AssemblyReference>
       <AssemblyReference>System.Core</AssemblyReference>
       <AssemblyReference>System.Data</AssemblyReference>
       <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
@@ -42,29 +45,33 @@
       <AssemblyReference>System.Xaml</AssemblyReference>
       <AssemblyReference>System.Xml</AssemblyReference>
       <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>ServiceActivities.Design</AssemblyReference>
+      <AssemblyReference>ServiceActivities</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
       <AssemblyReference>Workflows</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Flowchart sap2010:Annotation.AnnotationText="First, we try to get the current bill for the provided user name.&#xA;If we get NaN, this means the user is not registered and we print a message.&#xA;Otherwise, return the received amount and print an according message." sap2010:WorkflowViewState.IdRef="Flowchart_1">
     <Flowchart.StartNode>
-      <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_4">
-        <local:GetBill DisplayName="Get Bill For User" sap2010:WorkflowViewState.IdRef="GetBill_1" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
-          <local:GetBill.companyName>
+      <FlowStep x:Name="__ReferenceID4">
+        <saa:GetBill DisplayName="Get Bill For User" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+          <saa:GetBill.companyName>
             <InArgument x:TypeArguments="x:String">
               <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
             </InArgument>
-          </local:GetBill.companyName>
-          <local:GetBill.currentBill>
+          </saa:GetBill.companyName>
+          <saa:GetBill.currentBill>
             <OutArgument x:TypeArguments="x:Double">
               <mca:CSharpReference x:TypeArguments="x:Double">currentBill</mca:CSharpReference>
             </OutArgument>
-          </local:GetBill.currentBill>
-        </local:GetBill>
+          </saa:GetBill.currentBill>
+          <sap2010:WorkflowViewState.IdRef>GetBill_2</sap2010:WorkflowViewState.IdRef>
+        </saa:GetBill>
         <FlowStep.Next>
-          <FlowSwitch x:TypeArguments="x:String" x:Name="__ReferenceID1" DisplayName="Check Bill" sap2010:WorkflowViewState.IdRef="FlowSwitch`1_1">
+          <FlowSwitch x:TypeArguments="x:String" x:Name="__ReferenceID0" DisplayName="Check Bill" sap2010:WorkflowViewState.IdRef="FlowSwitch`1_1">
             <FlowSwitch.Default>
-              <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_1">
+              <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_1">
                 <WriteLine DisplayName="Bill Is Positive" sap2010:WorkflowViewState.IdRef="WriteLine_1">
                   <InArgument x:TypeArguments="x:String">
                     <mca:CSharpValue x:TypeArguments="x:String">"Pending payment: " + currentBill + "€"</mca:CSharpValue>
@@ -75,18 +82,19 @@
             <FlowSwitch.Expression>
               <mca:CSharpValue x:TypeArguments="x:String">currentBill.ToString(System.Globalization.CultureInfo.InvariantCulture)</mca:CSharpValue>
             </FlowSwitch.Expression>
-            <FlowStep x:Key="NaN" x:Name="__ReferenceID3" sap2010:WorkflowViewState.IdRef="FlowStep_2">
+            <FlowStep x:Key="NaN" x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_2">
               <WriteLine DisplayName="User Not Registered" sap2010:WorkflowViewState.IdRef="WriteLine_2">
                 <InArgument x:TypeArguments="x:String">
                   <mca:CSharpValue x:TypeArguments="x:String">"The company \"" + companyName + "\" is not registered."</mca:CSharpValue>
                 </InArgument>
               </WriteLine>
             </FlowStep>
-            <FlowStep x:Key="0" x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_3">
+            <FlowStep x:Key="0" x:Name="__ReferenceID3" sap2010:WorkflowViewState.IdRef="FlowStep_3">
               <WriteLine DisplayName="No Payment Pending" sap2010:WorkflowViewState.IdRef="WriteLine_3" Text="No payment pending." />
             </FlowStep>
           </FlowSwitch>
         </FlowStep.Next>
+        <sap2010:WorkflowViewState.IdRef>FlowStep_5</sap2010:WorkflowViewState.IdRef>
       </FlowStep>
     </Flowchart.StartNode>
     <x:Reference>__ReferenceID0</x:Reference>
@@ -94,11 +102,11 @@
     <x:Reference>__ReferenceID2</x:Reference>
     <x:Reference>__ReferenceID3</x:Reference>
     <x:Reference>__ReferenceID4</x:Reference>
-    <sads:DebugSymbol.Symbol>d09DOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xHZXRDdXJyZW50QmlsbC54YW1sCzEDYg8CAQE0CT8ZAgEPTA9MlAECAQxEEUgdAgEIVg9WhgECAQZPD1MbAgECNw83WAIBEzwPPGACARBGFUZ6AgEJVm5WgwECAQdRE1GJAQIBAw==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d09DOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xHZXRDdXJyZW50QmlsbC54YW1sCzcDag8CAQE6CUYXAgEPUw9TlAECAQxLEU8dAgEIXQ9dhgECAQZWD1obAgECPQ89WAIBE0IPQmACARBNFU16AgEJXW5dgwECAQdYE1iJAQIBAw==</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="GetBill_1" sap:VirtualizedContainerService.HintSize="200,22">
+      <sap2010:ViewStateData Id="GetBill_2" sap:VirtualizedContainerService.HintSize="231,93">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -115,7 +123,7 @@
       <sap2010:ViewStateData Id="FlowStep_1">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">374.5,299</av:Point>
+            <av:Point x:Key="ShapeLocation">374.5,369</av:Point>
             <av:Size x:Key="ShapeSize">211,62</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -130,7 +138,7 @@
       <sap2010:ViewStateData Id="FlowStep_2">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">14.5,299</av:Point>
+            <av:Point x:Key="ShapeLocation">14.5,369</av:Point>
             <av:Size x:Key="ShapeSize">211,62</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -145,7 +153,7 @@
       <sap2010:ViewStateData Id="FlowStep_3">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">194.431666666667,396.5</av:Point>
+            <av:Point x:Key="ShapeLocation">194.431666666667,466.5</av:Point>
             <av:Size x:Key="ShapeSize">211,62</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -154,35 +162,36 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <av:Point x:Key="ShapeLocation">265,199.5</av:Point>
+            <av:Point x:Key="ShapeLocation">265,269.5</av:Point>
             <av:Size x:Key="ShapeSize">70,87</av:Size>
-            <av:PointCollection x:Key="Default">335,243 480,243 480,299</av:PointCollection>
-            <av:PointCollection x:Key="NaNConnector">265,243 120,243 120,299</av:PointCollection>
-            <av:PointCollection x:Key="0Connector">300,286.5 300,316.5 299.931666666667,316.5 299.931666666667,396.5</av:PointCollection>
+            <av:PointCollection x:Key="Default">335,313 480,313 480,369</av:PointCollection>
+            <av:PointCollection x:Key="NaNConnector">265,313 120,313 120,369</av:PointCollection>
+            <av:PointCollection x:Key="0Connector">300,356.5 300,386.5 299.931666666667,386.5 299.931666666667,466.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_4">
+      <sap2010:ViewStateData Id="FlowStep_5">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">200,127.5</av:Point>
-            <av:Size x:Key="ShapeSize">200,22</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">300,149.5 300,199.5</av:PointCollection>
+            <av:Point x:Key="ShapeLocation">184.5,123.5</av:Point>
+            <av:Size x:Key="ShapeSize">231,93</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,216.5 300,269.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="614,691">
+      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="660,691">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
             <av:Size x:Key="ShapeSize">60,75</av:Size>
             <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,127.5</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,123.5</av:PointCollection>
+            <x:Double x:Key="Width">645.5</x:Double>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Workflows.GetCurrentBill_1" sap:VirtualizedContainerService.HintSize="654,771" />
+      <sap2010:ViewStateData Id="Workflows.GetCurrentBill_1" sap:VirtualizedContainerService.HintSize="700,771" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

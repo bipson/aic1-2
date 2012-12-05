@@ -1,0 +1,79 @@
+<Activity mc:Ignorable="sap2010 sads" x:Class="ServiceActivities.AccountingReference.Activities.GetBill" this:GetBill.EndpointConfigurationName="Accounting"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:p="http://aic.service.accounting/"
+ xmlns:p1="http://schemas.microsoft.com/netfx/2009/xaml/servicemodel"
+ xmlns:sa="clr-namespace:ServiceActivities.AccountingReference;assembly=ServiceActivities, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+ xmlns:sa1="clr-namespace:ServiceActivities.AccountingReference;assembly=ServiceActivities"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:sc="clr-namespace:System.ComponentModel;assembly=System"
+ xmlns:this="clr-namespace:ServiceActivities.AccountingReference.Activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="EndpointConfigurationName" Type="x:String">
+      <x:Property.Attributes>
+        <sc:DefaultValueAttribute>
+          <x:Arguments>
+            <x:String>Accounting</x:String>
+          </x:Arguments>
+        </sc:DefaultValueAttribute>
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="companyName" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="currentBill" Type="OutArgument(x:Double)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces serialized as XML namespaces</mva:VisualBasic.Settings>
+  <Sequence>
+    <Sequence.Variables>
+      <x:Reference>__ReferenceID1</x:Reference>
+      <x:Reference>__ReferenceID2</x:Reference>
+    </Sequence.Variables>
+    <p1:Send x:Name="__ReferenceID0" Action="urn:GetBill" OperationName="GetBill" ServiceContractName="p:IAccounting">
+      <p1:Send.CorrelationInitializers>
+        <p1:RequestReplyCorrelationInitializer>
+          <p1:RequestReplyCorrelationInitializer.CorrelationHandle>
+            <InArgument x:TypeArguments="p1:CorrelationHandle">
+              <VariableValue x:TypeArguments="p1:CorrelationHandle">
+                <VariableValue.Variable>
+                  <Variable x:TypeArguments="p1:CorrelationHandle" x:Name="__ReferenceID2" />
+                </VariableValue.Variable>
+              </VariableValue>
+            </InArgument>
+          </p1:RequestReplyCorrelationInitializer.CorrelationHandle>
+        </p1:RequestReplyCorrelationInitializer>
+      </p1:Send.CorrelationInitializers>
+      <p1:SendMessageContent>
+        <InArgument x:TypeArguments="sa1:GetBill">[New ServiceActivities.AccountingReference.GetBill() With { .companyName = companyName }]</InArgument>
+      </p1:SendMessageContent>
+      <p1:Send.EndpointConfigurationName>
+        <PropertyReference x:TypeArguments="x:String" PropertyName="EndpointConfigurationName" />
+      </p1:Send.EndpointConfigurationName>
+    </p1:Send>
+    <p1:ReceiveReply Request="{x:Reference __ReferenceID0}" Action="*">
+      <p1:ReceiveMessageContent>
+        <OutArgument x:TypeArguments="sa1:GetBillResponse">
+          <VariableReference x:TypeArguments="sa1:GetBillResponse">
+            <VariableReference.Variable>
+              <Variable x:TypeArguments="sa1:GetBillResponse" x:Name="__ReferenceID1" Name="tempResult_a90ceca6fa4246bcaebc2e9eb8293afe" />
+            </VariableReference.Variable>
+          </VariableReference>
+        </OutArgument>
+      </p1:ReceiveMessageContent>
+    </p1:ReceiveReply>
+    <Assign>
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:Double">[currentBill]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:Double">[tempResult_a90ceca6fa4246bcaebc2e9eb8293afe.currentBill]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <sads:DebugSymbol.Symbol>d6kBQzpcVXNlcnNcQUlDXERvY3VtZW50c1xhaWMxLTJcV29ya2Zsb3dBcHBsaWNhdGlvblxTZXJ2aWNlQWN0aXZpdGllc1xTZXJ2aWNlIFJlZmVyZW5jZXNcQWNjb3VudGluZ1JlZmVyZW5jZVxTZXJ2aWNlQWN0aXZpdGllcy5BY2NvdW50aW5nUmVmZXJlbmNlLklBY2NvdW50aW5nLkdldEJpbGwueGFtbAkgA04OAgEBJQU5DwIBCjoFRBcCAQdFBUwOAgECNDM0jAECAQwqDy4fAgELPQtBHwIBCUowSmkCAQVHMUc+AgED</sads:DebugSymbol.Symbol>
+  </Sequence>
+</Activity>

@@ -1,20 +1,24 @@
 ﻿<Activity mc:Ignorable="sads sap sap2010" x:Class="Workflows.PayCurrentBill"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
- xmlns:local="clr-namespace:Workflows.AccountingReference.Activities"
- xmlns:local1="clr-namespace:Workflows.PaymentReference.Activities"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
  xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
  xmlns:p="http://schemas.microsoft.com/netfx/2009/xaml/servicemodel"
+ xmlns:sa="clr-namespace:ServiceActivities.AccountingReference;assembly=ServiceActivities"
+ xmlns:saa="clr-namespace:ServiceActivities.AccountingReference.Activities;assembly=ServiceActivities"
  xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
  xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation"
  xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
  xmlns:sc="clr-namespace:System.ComponentModel;assembly=System"
  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
+ xmlns:sp="clr-namespace:ServiceActivities.PaymentReference;assembly=ServiceActivities"
+ xmlns:spa="clr-namespace:ServiceActivities.PaymentReference.Activities;assembly=ServiceActivities"
  xmlns:wa="clr-namespace:Workflows.AccountingReference"
+ xmlns:waa="clr-namespace:Workflows.AccountingReference.Activities"
  xmlns:wp="clr-namespace:Workflows.PaymentReference"
+ xmlns:wpa="clr-namespace:Workflows.PaymentReference.Activities"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="companyName" Type="InArgument(x:String)" />
@@ -36,8 +40,11 @@
   <TextExpression.ReferencesForImplementation>
     <sco:Collection x:TypeArguments="AssemblyReference">
       <AssemblyReference>Microsoft.CSharp</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
       <AssemblyReference>System</AssemblyReference>
       <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Activities.Presentation</AssemblyReference>
       <AssemblyReference>System.Core</AssemblyReference>
       <AssemblyReference>System.Data</AssemblyReference>
       <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
@@ -46,6 +53,9 @@
       <AssemblyReference>System.Xaml</AssemblyReference>
       <AssemblyReference>System.Xml</AssemblyReference>
       <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>ServiceActivities.Design</AssemblyReference>
+      <AssemblyReference>ServiceActivities</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
       <AssemblyReference>Workflows</AssemblyReference>
     </sco:Collection>
@@ -58,32 +68,32 @@
       <Variable x:TypeArguments="CompensationToken" Name="settleUserBillsCompensationToken" />
     </Flowchart.Variables>
     <Flowchart.StartNode>
-      <FlowStep x:Name="__ReferenceID0" sap2010:WorkflowViewState.IdRef="FlowStep_6">
-        <local:GetBill DisplayName="Get Current Bill" sap2010:WorkflowViewState.IdRef="GetBill_1" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
-          <local:GetBill.companyName>
+      <FlowStep x:Name="__ReferenceID13" sap2010:WorkflowViewState.IdRef="FlowStep_15">
+        <saa:GetBill DisplayName="Get Current Bill" sap2010:WorkflowViewState.IdRef="GetBill_2" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+          <saa:GetBill.companyName>
             <InArgument x:TypeArguments="x:String">
               <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
             </InArgument>
-          </local:GetBill.companyName>
-          <local:GetBill.currentBill>
+          </saa:GetBill.companyName>
+          <saa:GetBill.currentBill>
             <OutArgument x:TypeArguments="x:Double">
               <mca:CSharpReference x:TypeArguments="x:Double">currentBill</mca:CSharpReference>
             </OutArgument>
-          </local:GetBill.currentBill>
-        </local:GetBill>
+          </saa:GetBill.currentBill>
+        </saa:GetBill>
         <FlowStep.Next>
-          <FlowSwitch x:TypeArguments="x:String" x:Name="__ReferenceID1" DisplayName="Check Bill" sap2010:WorkflowViewState.IdRef="FlowSwitch`1_1">
+          <FlowSwitch x:TypeArguments="x:String" x:Name="__ReferenceID0" DisplayName="Check Bill" sap2010:WorkflowViewState.IdRef="FlowSwitch`1_1">
             <FlowSwitch.Default>
-              <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_1">
-                <local:GetOurAccountData DisplayName="Get Our Account Data" sap2010:WorkflowViewState.IdRef="GetOurAccountData_1" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
-                  <local:GetOurAccountData.ourAccountData>
+              <FlowStep x:Name="__ReferenceID14" sap2010:WorkflowViewState.IdRef="FlowStep_14">
+                <saa:GetOurAccountData DisplayName="Get Our Account Data" sap2010:WorkflowViewState.IdRef="GetOurAccountData_2" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+                  <saa:GetOurAccountData.ourAccountData>
                     <OutArgument x:TypeArguments="x:String">
                       <mca:CSharpReference x:TypeArguments="x:String">ourAccountData</mca:CSharpReference>
                     </OutArgument>
-                  </local:GetOurAccountData.ourAccountData>
-                </local:GetOurAccountData>
+                  </saa:GetOurAccountData.ourAccountData>
+                </saa:GetOurAccountData>
                 <FlowStep.Next>
-                  <FlowStep x:Name="__ReferenceID7" sap2010:WorkflowViewState.IdRef="FlowStep_7">
+                  <FlowStep x:Name="__ReferenceID5" sap2010:WorkflowViewState.IdRef="FlowStep_7">
                     <CompensableActivity sap2010:Annotation.AnnotationText="If the subsequent payment process fails this can be undone." DisplayName="Settle User Bills" sap2010:WorkflowViewState.IdRef="CompensableActivity_1">
                       <CompensableActivity.Result>
                         <OutArgument x:TypeArguments="CompensationToken">
@@ -91,73 +101,74 @@
                         </OutArgument>
                       </CompensableActivity.Result>
                       <CompensableActivity.CompensationHandler>
-                        <local:Charge chargingSucceeded="{x:Null}" DisplayName="Recharge Bills" sap2010:WorkflowViewState.IdRef="Charge_1" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
-                          <local:Charge.amount>
+                        <saa:Charge chargingSucceeded="{x:Null}" DisplayName="Recharge Bills" sap2010:WorkflowViewState.IdRef="Charge_3" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+                          <saa:Charge.amount>
                             <InArgument x:TypeArguments="x:Double">
                               <mca:CSharpValue x:TypeArguments="x:Double">currentBill</mca:CSharpValue>
                             </InArgument>
-                          </local:Charge.amount>
-                          <local:Charge.companyName>
+                          </saa:Charge.amount>
+                          <saa:Charge.companyName>
                             <InArgument x:TypeArguments="x:String">
                               <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
                             </InArgument>
-                          </local:Charge.companyName>
-                        </local:Charge>
+                          </saa:Charge.companyName>
+                        </saa:Charge>
                       </CompensableActivity.CompensationHandler>
-                      <local:Charge DisplayName="Charge To Zero" sap2010:WorkflowViewState.IdRef="Charge_2" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
-                        <local:Charge.amount>
+                      <saa:Charge DisplayName="Charge To Zero" sap2010:WorkflowViewState.IdRef="Charge_4" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+                        <saa:Charge.amount>
                           <InArgument x:TypeArguments="x:Double">
                             <mca:CSharpValue x:TypeArguments="x:Double">-currentBill</mca:CSharpValue>
                           </InArgument>
-                        </local:Charge.amount>
-                        <local:Charge.chargingSucceeded>
+                        </saa:Charge.amount>
+                        <saa:Charge.chargingSucceeded>
                           <OutArgument x:TypeArguments="x:Boolean">
                             <mca:CSharpReference x:TypeArguments="x:Boolean">chargingSucceeded</mca:CSharpReference>
                           </OutArgument>
-                        </local:Charge.chargingSucceeded>
-                        <local:Charge.companyName>
+                        </saa:Charge.chargingSucceeded>
+                        <saa:Charge.companyName>
                           <InArgument x:TypeArguments="x:String">
                             <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
                           </InArgument>
-                        </local:Charge.companyName>
-                      </local:Charge>
+                        </saa:Charge.companyName>
+                      </saa:Charge>
                     </CompensableActivity>
                     <FlowStep.Next>
-                      <FlowDecision x:Name="__ReferenceID8" DisplayName="Bill Settled?" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
+                      <FlowDecision x:Name="__ReferenceID6" DisplayName="Bill Settled?" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
                         <FlowDecision.Condition>
                           <mca:CSharpValue x:TypeArguments="x:Boolean">chargingSucceeded</mca:CSharpValue>
                         </FlowDecision.Condition>
                         <FlowDecision.True>
-                          <FlowStep x:Name="__ReferenceID10" sap2010:WorkflowViewState.IdRef="FlowStep_8">
-                            <local1:Pay sap2010:Annotation.AnnotationText="Here the accrued amount of money is transferred." DisplayName="Perform Payment" sap2010:WorkflowViewState.IdRef="Pay_1" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
-                              <local1:Pay.amount>
+                          <FlowStep x:Name="__ReferenceID15">
+                            <spa:Pay sap2010:Annotation.AnnotationText="Here the accrued amount of money is transferred." DisplayName="Perform Payment" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+                              <spa:Pay.amount>
                                 <InArgument x:TypeArguments="x:Double">
                                   <mca:CSharpValue x:TypeArguments="x:Double">currentBill</mca:CSharpValue>
                                 </InArgument>
-                              </local1:Pay.amount>
-                              <local1:Pay.ourAccountData>
+                              </spa:Pay.amount>
+                              <spa:Pay.ourAccountData>
                                 <InArgument x:TypeArguments="x:String">
                                   <mca:CSharpValue x:TypeArguments="x:String">ourAccountData</mca:CSharpValue>
                                 </InArgument>
-                              </local1:Pay.ourAccountData>
-                              <local1:Pay.paymentSucceeded>
+                              </spa:Pay.ourAccountData>
+                              <spa:Pay.paymentSucceeded>
                                 <OutArgument x:TypeArguments="x:Boolean">
                                   <mca:CSharpReference x:TypeArguments="x:Boolean">paymentSucceeded</mca:CSharpReference>
                                 </OutArgument>
-                              </local1:Pay.paymentSucceeded>
-                              <local1:Pay.userAccountData>
+                              </spa:Pay.paymentSucceeded>
+                              <spa:Pay.userAccountData>
                                 <InArgument x:TypeArguments="x:String">
                                   <mca:CSharpValue x:TypeArguments="x:String">userAccountData</mca:CSharpValue>
                                 </InArgument>
-                              </local1:Pay.userAccountData>
-                            </local1:Pay>
+                              </spa:Pay.userAccountData>
+                              <sap2010:WorkflowViewState.IdRef>Pay_2</sap2010:WorkflowViewState.IdRef>
+                            </spa:Pay>
                             <FlowStep.Next>
-                              <FlowDecision x:Name="__ReferenceID11" DisplayName="Payment Succeeded?" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
+                              <FlowDecision x:Name="__ReferenceID8" DisplayName="Payment Succeeded?" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
                                 <FlowDecision.Condition>
                                   <mca:CSharpValue x:TypeArguments="x:Boolean">paymentSucceeded</mca:CSharpValue>
                                 </FlowDecision.Condition>
                                 <FlowDecision.True>
-                                  <FlowStep x:Name="__ReferenceID14" sap2010:WorkflowViewState.IdRef="FlowStep_11">
+                                  <FlowStep x:Name="__ReferenceID11" sap2010:WorkflowViewState.IdRef="FlowStep_11">
                                     <WriteLine DisplayName="Payment Succeeded" sap2010:WorkflowViewState.IdRef="WriteLine_4">
                                       <InArgument x:TypeArguments="x:String">
                                         <mca:CSharpValue x:TypeArguments="x:String">currentBill + "€ have successfully been transferred."</mca:CSharpValue>
@@ -166,7 +177,7 @@
                                   </FlowStep>
                                 </FlowDecision.True>
                                 <FlowDecision.False>
-                                  <FlowStep x:Name="__ReferenceID13" sap2010:WorkflowViewState.IdRef="FlowStep_13">
+                                  <FlowStep x:Name="__ReferenceID10" sap2010:WorkflowViewState.IdRef="FlowStep_13">
                                     <Compensate DisplayName="Compensate Bill Settlement" sap2010:WorkflowViewState.IdRef="Compensate_1">
                                       <Compensate.Target>
                                         <InArgument x:TypeArguments="CompensationToken">
@@ -175,7 +186,7 @@
                                       </Compensate.Target>
                                     </Compensate>
                                     <FlowStep.Next>
-                                      <FlowStep x:Name="__ReferenceID15" sap2010:WorkflowViewState.IdRef="FlowStep_12">
+                                      <FlowStep x:Name="__ReferenceID12" sap2010:WorkflowViewState.IdRef="FlowStep_12">
                                         <WriteLine DisplayName="Payment Failed" sap2010:WorkflowViewState.IdRef="WriteLine_5" Text="Payment failed. The payment provider was not available." />
                                       </FlowStep>
                                     </FlowStep.Next>
@@ -183,13 +194,14 @@
                                 </FlowDecision.False>
                               </FlowDecision>
                             </FlowStep.Next>
+                            <sap2010:WorkflowViewState.IdRef>FlowStep_16</sap2010:WorkflowViewState.IdRef>
                           </FlowStep>
                         </FlowDecision.True>
                         <FlowDecision.False>
-                          <FlowStep x:Name="__ReferenceID9" sap2010:WorkflowViewState.IdRef="FlowStep_10">
+                          <FlowStep x:Name="__ReferenceID7" sap2010:WorkflowViewState.IdRef="FlowStep_10">
                             <WriteLine DisplayName="Settling Bill Failed" sap2010:WorkflowViewState.IdRef="WriteLine_3" Text="Payment failed. Please try again." />
                             <FlowStep.Next>
-                              <FlowStep x:Name="__ReferenceID12" sap2010:WorkflowViewState.IdRef="FlowStep_9">
+                              <FlowStep x:Name="__ReferenceID9" sap2010:WorkflowViewState.IdRef="FlowStep_9">
                                 <Assign DisplayName="Set Result" sap2010:WorkflowViewState.IdRef="Assign_3">
                                   <Assign.To>
                                     <OutArgument x:TypeArguments="x:Boolean">
@@ -213,10 +225,10 @@
             <FlowSwitch.Expression>
               <mca:CSharpValue x:TypeArguments="x:String">currentBill.ToString(System.Globalization.CultureInfo.InvariantCulture)</mca:CSharpValue>
             </FlowSwitch.Expression>
-            <FlowStep x:Key="0" x:Name="__ReferenceID5" sap2010:WorkflowViewState.IdRef="FlowStep_5">
+            <FlowStep x:Key="0" x:Name="__ReferenceID3" sap2010:WorkflowViewState.IdRef="FlowStep_5">
               <WriteLine DisplayName="No Payment Pending" sap2010:WorkflowViewState.IdRef="WriteLine_2" Text="No payment pending." />
               <FlowStep.Next>
-                <FlowStep x:Name="__ReferenceID6" sap2010:WorkflowViewState.IdRef="FlowStep_4">
+                <FlowStep x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_4">
                   <Assign DisplayName="Set Result" sap2010:WorkflowViewState.IdRef="Assign_2">
                     <Assign.To>
                       <OutArgument x:TypeArguments="x:Boolean">
@@ -230,14 +242,14 @@
                 </FlowStep>
               </FlowStep.Next>
             </FlowStep>
-            <FlowStep x:Key="NaN" x:Name="__ReferenceID3" sap2010:WorkflowViewState.IdRef="FlowStep_3">
+            <FlowStep x:Key="NaN" x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_3">
               <WriteLine DisplayName="User Not Registered" sap2010:WorkflowViewState.IdRef="WriteLine_1">
                 <InArgument x:TypeArguments="x:String">
                   <mca:CSharpValue x:TypeArguments="x:String">"The company \"" + companyName + "\" is not registered."</mca:CSharpValue>
                 </InArgument>
               </WriteLine>
               <FlowStep.Next>
-                <FlowStep x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_2">
+                <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_2">
                   <Assign DisplayName="Set Result" sap2010:WorkflowViewState.IdRef="Assign_1">
                     <Assign.To>
                       <OutArgument x:TypeArguments="x:Boolean">
@@ -271,26 +283,33 @@
     <x:Reference>__ReferenceID13</x:Reference>
     <x:Reference>__ReferenceID14</x:Reference>
     <x:Reference>__ReferenceID15</x:Reference>
-    <sads:DebugSymbol.Symbol>d09DOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xQYXlDdXJyZW50QmlsbC54YW1sLDUDkwIPAgEBPglJGQMBtgHWAQ/WAZQBAwGuAU4RVCsDAaUBVxV8KwIBcoABG4ABawIBar4BHb4BpAECAWjBASHKASoCAV6EAR2ZASoCAT2dASOdAXICATWqASWwATICASyzASmzAcABAgEqoQElpQExAgEh6gEP7gEbAgEY8QET+gEcAgEO2QEP2QGGAQIBDNwBE+UBHAIBAkEPQVgDAb8BRg9GYAMBtwFRF1FrAwGmAVobWooBAgFzaxd7JgMBjAFeGWkoAgF7vgF+vgGhAQIBacgBTcgBUgIBZ8QBJ8QBfgIBX5EBI5EBegIBVpYBI5YBcAIBTocBI4cBbAIBRowBI4wBbwIBPq0BK60BkgECAS2zAYQBswG9AQIBK6MBKaMBnAECASLsARPsAYkBAgEZ+AE/+AFEAgEX9AEZ9AFwAgEP2QFu2QGDAQIBDeMBP+MBQwIBC98BGd8BcAIBA3Mdc3UDAZ0BeB14ZgMBlQFuHW5nAwGNAWYfZmgDAYQBYR9haAIBfA==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d09DOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xQYXlDdXJyZW50QmlsbC54YW1sLD8DnwIPAgEBSAlTFwMBtgHiAQ/iAZQBAwGuAVgRXikDAaUBYRWGASsCAXKKARuKAWsCAWrKAR3KAaQBAgFozQEh1gEqAgFejgEdpAEnAgE9qAEjqAFyAgE1tQEluwEyAgEsvgEpvgHAAQIBKqwBJbABMQIBIfYBD/oBGwIBGP0BE4YCHAIBDuUBD+UBhgECAQzoARPxARwCAQJLD0tYAwG/AVAPUGADAbcBWxdbawMBpgFkG2SKAQIBc3UXhQEkAwGMAWgZcyYCAXvKAX7KAaEBAgFp1AFN1AFSAgFn0AEn0AF+AgFfmwEjmwF6AgFWoAEjoAFwAgFOkQEjkQFsAgFGlgEjlgFvAgE+uAEruAGSAQIBLb4BhAG+Ab0BAgErrgEprgGcAQIBIvgBE/gBiQECARmEAj+EAkQCAReAAhmAAnACAQ/lAW7lAYMBAgEN7wE/7wFDAgEL6wEZ6wFwAgEDfR19dQMBnQGCAR2CAWYDAZUBeB14ZwMBjQFwH3BoAwGEAWsfa2gCAXw=</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="GetBill_1" sap:VirtualizedContainerService.HintSize="200,22">
+      <sap2010:ViewStateData Id="GetBill_2" sap:VirtualizedContainerService.HintSize="231,93">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="GetOurAccountData_1" sap:VirtualizedContainerService.HintSize="200,22">
+      <sap2010:ViewStateData Id="GetOurAccountData_2" sap:VirtualizedContainerService.HintSize="200,62">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Charge_1" sap:VirtualizedContainerService.HintSize="200,22" />
-      <sap2010:ViewStateData Id="Charge_2" sap:VirtualizedContainerService.HintSize="200,22" />
+      <sap2010:ViewStateData Id="Charge_3" sap:VirtualizedContainerService.HintSize="231,124" />
+      <sap2010:ViewStateData Id="Charge_4" sap:VirtualizedContainerService.HintSize="231,124">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+            <x:Boolean x:Key="IsPinned">False</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="CompensableActivity_1" sap:VirtualizedContainerService.HintSize="210,116">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -299,7 +318,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Pay_1" sap:VirtualizedContainerService.HintSize="200,62">
+      <sap2010:ViewStateData Id="Pay_2" sap:VirtualizedContainerService.HintSize="242,195">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -317,7 +336,7 @@
       <sap2010:ViewStateData Id="FlowStep_11">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">0,1089.01953125</av:Point>
+            <av:Point x:Key="ShapeLocation">0,1309.01953125</av:Point>
             <av:Size x:Key="ShapeSize">211,62</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -339,7 +358,7 @@
       <sap2010:ViewStateData Id="FlowStep_12">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">403.431666666667,1162</av:Point>
+            <av:Point x:Key="ShapeLocation">403.431666666667,1382</av:Point>
             <av:Size x:Key="ShapeSize">211,62</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -347,9 +366,9 @@
       <sap2010:ViewStateData Id="FlowStep_13">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">409,1090</av:Point>
+            <av:Point x:Key="ShapeLocation">409,1310</av:Point>
             <av:Size x:Key="ShapeSize">200,22</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">509,1112 509,1142 508.931666666667,1142 508.931666666667,1162</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">509,1332 509,1362 508.931666666667,1362 508.931666666667,1382</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -357,21 +376,21 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <av:Point x:Key="ShapeLocation">241,996.5</av:Point>
+            <av:Point x:Key="ShapeLocation">241,1216.5</av:Point>
             <av:Size x:Key="ShapeSize">118,87</av:Size>
             <x:String x:Key="FalseLabel">No</x:String>
             <x:String x:Key="TrueLabel">Yes</x:String>
-            <av:PointCollection x:Key="FalseConnector">359,1040 509,1040 509,1090</av:PointCollection>
-            <av:PointCollection x:Key="TrueConnector">241,1040 105.5,1040 105.5,1089.01953125</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">359,1260 509,1260 509,1310</av:PointCollection>
+            <av:PointCollection x:Key="TrueConnector">241,1260 105.5,1260 105.5,1309.01953125</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_8">
+      <sap2010:ViewStateData Id="FlowStep_16">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">5,838</av:Point>
-            <av:Size x:Key="ShapeSize">200,62</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">205,869 300,869 300,996.5</av:PointCollection>
+            <av:Point x:Key="ShapeLocation">9,982.5</av:Point>
+            <av:Size x:Key="ShapeSize">242,195</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">251,1080 300,1080 300,1216.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -392,7 +411,7 @@
       <sap2010:ViewStateData Id="FlowStep_9">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">379.395,929.01953125</av:Point>
+            <av:Point x:Key="ShapeLocation">379.395,1059.01953125</av:Point>
             <av:Size x:Key="ShapeSize">242,62</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -400,9 +419,9 @@
       <sap2010:ViewStateData Id="FlowStep_10">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">395,837.01953125</av:Point>
+            <av:Point x:Key="ShapeLocation">395,967.01953125</av:Point>
             <av:Size x:Key="ShapeSize">211,62</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">500.5,899.01953125 500.395,899.01953125 500.395,929.01953125</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">500.5,1029.01953125 500.395,1029.01953125 500.395,1059.01953125</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -410,30 +429,30 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <av:Point x:Key="ShapeLocation">265,744.5</av:Point>
+            <av:Point x:Key="ShapeLocation">265,874.5</av:Point>
             <av:Size x:Key="ShapeSize">70,87</av:Size>
             <x:String x:Key="FalseLabel">No</x:String>
             <x:String x:Key="TrueLabel">Yes</x:String>
-            <av:PointCollection x:Key="FalseConnector">335,788 500.5,788 500.5,837.01953125</av:PointCollection>
-            <av:PointCollection x:Key="TrueConnector">265,788 105,788 105,838</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">335,918 500.5,918 500.5,967.01953125</av:PointCollection>
+            <av:PointCollection x:Key="TrueConnector">265,918 130,918 130,982.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="FlowStep_7">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">195,578.5</av:Point>
+            <av:Point x:Key="ShapeLocation">195,708.5</av:Point>
             <av:Size x:Key="ShapeSize">210,116</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">300,694.5 300,744.5</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">300,824.5 300,874.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_1">
+      <sap2010:ViewStateData Id="FlowStep_14">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">200,506.5</av:Point>
-            <av:Size x:Key="ShapeSize">200,22</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">300,528.5 300,578.5</av:PointCollection>
+            <av:Point x:Key="ShapeLocation">200,599</av:Point>
+            <av:Size x:Key="ShapeSize">200,62</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,661 300,708.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -454,7 +473,7 @@
       <sap2010:ViewStateData Id="FlowStep_4">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">268.895,401</av:Point>
+            <av:Point x:Key="ShapeLocation">268.895,471</av:Point>
             <av:Size x:Key="ShapeSize">242,62</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -462,9 +481,9 @@
       <sap2010:ViewStateData Id="FlowStep_5">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">284.5,309</av:Point>
+            <av:Point x:Key="ShapeLocation">284.5,379</av:Point>
             <av:Size x:Key="ShapeSize">211,62</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">390,371 389.895,371 389.895,401</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">390,441 389.895,441 389.895,471</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -485,7 +504,7 @@
       <sap2010:ViewStateData Id="FlowStep_2">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">8.895,401</av:Point>
+            <av:Point x:Key="ShapeLocation">8.895,471</av:Point>
             <av:Size x:Key="ShapeSize">242,62</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -493,9 +512,9 @@
       <sap2010:ViewStateData Id="FlowStep_3">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">24.5,309</av:Point>
+            <av:Point x:Key="ShapeLocation">24.5,379</av:Point>
             <av:Size x:Key="ShapeSize">211,62</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">130,371 129.895,371 129.895,401</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">130,441 129.895,441 129.895,471</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -503,37 +522,37 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <av:Point x:Key="ShapeLocation">265,199.5</av:Point>
+            <av:Point x:Key="ShapeLocation">265,269.5</av:Point>
             <av:Size x:Key="ShapeSize">70,87</av:Size>
-            <av:PointCollection x:Key="Default">335,221.25 552.5,221.25 552.5,517.5 400,517.5</av:PointCollection>
-            <av:PointCollection x:Key="NaNConnector">265,264.75 130,264.75 130,309</av:PointCollection>
-            <av:PointCollection x:Key="0Connector">335,264.75 390,264.75 390,309</av:PointCollection>
+            <av:PointCollection x:Key="Default">335,291.25 583,291.25 583,630 400,630</av:PointCollection>
+            <av:PointCollection x:Key="NaNConnector">265,334.75 130,334.75 130,379</av:PointCollection>
+            <av:PointCollection x:Key="0Connector">335,334.75 390,334.75 390,379</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_6">
+      <sap2010:ViewStateData Id="FlowStep_15">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">200,127.5</av:Point>
-            <av:Size x:Key="ShapeSize">200,22</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">300,149.5 300,199.5</av:PointCollection>
+            <av:Point x:Key="ShapeLocation">184.5,123.5</av:Point>
+            <av:Size x:Key="ShapeSize">231,93</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,216.5 300,269.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="635,1375">
+      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="675,1595">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
             <av:Size x:Key="ShapeSize">60,75</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,127.5</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,123.5</av:PointCollection>
             <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-            <x:Double x:Key="Width">621.395</x:Double>
-            <x:Double x:Key="Height">1224</x:Double>
+            <x:Double x:Key="Width">661</x:Double>
+            <x:Double x:Key="Height">1444</x:Double>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Workflows.PayCurrentBill_1" sap:VirtualizedContainerService.HintSize="675,1455" />
+      <sap2010:ViewStateData Id="Workflows.PayCurrentBill_1" sap:VirtualizedContainerService.HintSize="676,1585" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

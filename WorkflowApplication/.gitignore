@@ -4,3 +4,7 @@ Workflows/obj/
 WorkflowTests/bin/
 WorkflowTests/obj/
 TestResults/
+ServiceActivities/bin/
+ServiceActivities/obj/
+ServiceActivities.Design/bin/
+ServiceActivities.Design/obj/

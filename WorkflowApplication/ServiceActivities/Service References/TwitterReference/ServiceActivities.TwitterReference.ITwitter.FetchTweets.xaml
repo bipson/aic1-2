@@ -1,0 +1,90 @@
+<Activity mc:Ignorable="sap2010 sads" x:Class="ServiceActivities.TwitterReference.Activities.FetchTweets" this:FetchTweets.EndpointConfigurationName="Twitter"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:p="http://aic.service.twitter/"
+ xmlns:p1="http://schemas.microsoft.com/netfx/2009/xaml/servicemodel"
+ xmlns:s="clr-namespace:System;assembly=mscorlib"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:sc="clr-namespace:System.ComponentModel;assembly=System"
+ xmlns:st="clr-namespace:ServiceActivities.TwitterReference;assembly=ServiceActivities"
+ xmlns:st1="clr-namespace:ServiceActivities.TwitterReference;assembly=ServiceActivities, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+ xmlns:this="clr-namespace:ServiceActivities.TwitterReference.Activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="EndpointConfigurationName" Type="x:String">
+      <x:Property.Attributes>
+        <sc:DefaultValueAttribute>
+          <x:Arguments>
+            <x:String>Twitter</x:String>
+          </x:Arguments>
+        </sc:DefaultValueAttribute>
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="searchString" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="from" Type="InArgument(s:DateTime)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="_to" Type="InArgument(s:DateTime)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="tweets" Type="OutArgument(st:tweet[])" />
+  </x:Members>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces serialized as XML namespaces</mva:VisualBasic.Settings>
+  <Sequence>
+    <Sequence.Variables>
+      <x:Reference>__ReferenceID1</x:Reference>
+      <x:Reference>__ReferenceID2</x:Reference>
+    </Sequence.Variables>
+    <p1:Send x:Name="__ReferenceID0" Action="urn:FetchTweets" OperationName="FetchTweets" SerializerOption="XmlSerializer" ServiceContractName="p:ITwitter">
+      <p1:Send.CorrelationInitializers>
+        <p1:RequestReplyCorrelationInitializer>
+          <p1:RequestReplyCorrelationInitializer.CorrelationHandle>
+            <InArgument x:TypeArguments="p1:CorrelationHandle">
+              <VariableValue x:TypeArguments="p1:CorrelationHandle">
+                <VariableValue.Variable>
+                  <Variable x:TypeArguments="p1:CorrelationHandle" x:Name="__ReferenceID2" />
+                </VariableValue.Variable>
+              </VariableValue>
+            </InArgument>
+          </p1:RequestReplyCorrelationInitializer.CorrelationHandle>
+        </p1:RequestReplyCorrelationInitializer>
+      </p1:Send.CorrelationInitializers>
+      <p1:SendMessageContent>
+        <InArgument x:TypeArguments="st:FetchTweets">[New ServiceActivities.TwitterReference.FetchTweets() With { .searchString = searchString, .from = from, .to = _to }]</InArgument>
+      </p1:SendMessageContent>
+      <p1:Send.EndpointConfigurationName>
+        <PropertyReference x:TypeArguments="x:String" PropertyName="EndpointConfigurationName" />
+      </p1:Send.EndpointConfigurationName>
+    </p1:Send>
+    <p1:ReceiveReply Request="{x:Reference __ReferenceID0}" Action="*">
+      <p1:ReceiveMessageContent>
+        <OutArgument x:TypeArguments="st:FetchTweetsResponse">
+          <VariableReference x:TypeArguments="st:FetchTweetsResponse">
+            <VariableReference.Variable>
+              <Variable x:TypeArguments="st:FetchTweetsResponse" x:Name="__ReferenceID1" Name="tempResult_09d39a23c1bf409792b79446b2657f71" />
+            </VariableReference.Variable>
+          </VariableReference>
+        </OutArgument>
+      </p1:ReceiveMessageContent>
+    </p1:ReceiveReply>
+    <Assign>
+      <Assign.To>
+        <OutArgument x:TypeArguments="st:tweet[]">[tweets]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="st:tweet[]">[tempResult_09d39a23c1bf409792b79446b2657f71.tweets]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <sads:DebugSymbol.Symbol>d6QBQzpcVXNlcnNcQUlDXERvY3VtZW50c1xhaWMxLTJcV29ya2Zsb3dBcHBsaWNhdGlvblxTZXJ2aWNlQWN0aXZpdGllc1xTZXJ2aWNlIFJlZmVyZW5jZXNcVHdpdHRlclJlZmVyZW5jZVxTZXJ2aWNlQWN0aXZpdGllcy5Ud2l0dGVyUmVmZXJlbmNlLklUd2l0dGVyLkZldGNoVHdlZXRzLnhhbWwJKwNZDgIBATAFRA8CAQpFBU8XAgEHUAVXDgIBAj82P6sBAgEMNQ85HwIBC0gLTB8CAQlVMlVmAgEFUjNSOwIBAw==</sads:DebugSymbol.Symbol>
+  </Sequence>
+</Activity>

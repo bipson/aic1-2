@@ -1,0 +1,84 @@
+<Activity mc:Ignorable="sap2010 sads" x:Class="ServiceActivities.UserReference.Activities.Add" this:Add.EndpointConfigurationName="User"
+ xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
+ xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+ xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
+ xmlns:p="http://aic.service.user/"
+ xmlns:p1="http://schemas.microsoft.com/netfx/2009/xaml/servicemodel"
+ xmlns:sads="http://schemas.microsoft.com/netfx/2010/xaml/activities/debugger"
+ xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation"
+ xmlns:sc="clr-namespace:System.ComponentModel;assembly=System"
+ xmlns:su="clr-namespace:ServiceActivities.UserReference;assembly=ServiceActivities, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null"
+ xmlns:su1="clr-namespace:ServiceActivities.UserReference;assembly=ServiceActivities"
+ xmlns:this="clr-namespace:ServiceActivities.UserReference.Activities"
+ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <x:Members>
+    <x:Property Name="EndpointConfigurationName" Type="x:String">
+      <x:Property.Attributes>
+        <sc:DefaultValueAttribute>
+          <x:Arguments>
+            <x:String>User</x:String>
+          </x:Arguments>
+        </sc:DefaultValueAttribute>
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="companyName" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="password" Type="InArgument(x:String)">
+      <x:Property.Attributes>
+        <RequiredArgumentAttribute />
+      </x:Property.Attributes>
+    </x:Property>
+    <x:Property Name="userAdded" Type="OutArgument(x:Boolean)" />
+  </x:Members>
+  <mva:VisualBasic.Settings>Assembly references and imported namespaces serialized as XML namespaces</mva:VisualBasic.Settings>
+  <Sequence>
+    <Sequence.Variables>
+      <x:Reference>__ReferenceID1</x:Reference>
+      <x:Reference>__ReferenceID2</x:Reference>
+    </Sequence.Variables>
+    <p1:Send x:Name="__ReferenceID0" Action="urn:Add" OperationName="Add" ServiceContractName="p:IUser">
+      <p1:Send.CorrelationInitializers>
+        <p1:RequestReplyCorrelationInitializer>
+          <p1:RequestReplyCorrelationInitializer.CorrelationHandle>
+            <InArgument x:TypeArguments="p1:CorrelationHandle">
+              <VariableValue x:TypeArguments="p1:CorrelationHandle">
+                <VariableValue.Variable>
+                  <Variable x:TypeArguments="p1:CorrelationHandle" x:Name="__ReferenceID2" />
+                </VariableValue.Variable>
+              </VariableValue>
+            </InArgument>
+          </p1:RequestReplyCorrelationInitializer.CorrelationHandle>
+        </p1:RequestReplyCorrelationInitializer>
+      </p1:Send.CorrelationInitializers>
+      <p1:SendMessageContent>
+        <InArgument x:TypeArguments="su1:Add">[New ServiceActivities.UserReference.Add() With { .companyName = companyName, .password = password }]</InArgument>
+      </p1:SendMessageContent>
+      <p1:Send.EndpointConfigurationName>
+        <PropertyReference x:TypeArguments="x:String" PropertyName="EndpointConfigurationName" />
+      </p1:Send.EndpointConfigurationName>
+    </p1:Send>
+    <p1:ReceiveReply Request="{x:Reference __ReferenceID0}" Action="*">
+      <p1:ReceiveMessageContent>
+        <OutArgument x:TypeArguments="su1:AddResponse">
+          <VariableReference x:TypeArguments="su1:AddResponse">
+            <VariableReference.Variable>
+              <Variable x:TypeArguments="su1:AddResponse" x:Name="__ReferenceID1" Name="tempResult_d2aa785e1a624464a73c054f3ea2853e" />
+            </VariableReference.Variable>
+          </VariableReference>
+        </OutArgument>
+      </p1:ReceiveMessageContent>
+    </p1:ReceiveReply>
+    <Assign>
+      <Assign.To>
+        <OutArgument x:TypeArguments="x:Boolean">[userAdded]</OutArgument>
+      </Assign.To>
+      <Assign.Value>
+        <InArgument x:TypeArguments="x:Boolean">[tempResult_d2aa785e1a624464a73c054f3ea2853e.userAdded]</InArgument>
+      </Assign.Value>
+    </Assign>
+    <sads:DebugSymbol.Symbol>d5MBQzpcVXNlcnNcQUlDXERvY3VtZW50c1xhaWMxLTJcV29ya2Zsb3dBcHBsaWNhdGlvblxTZXJ2aWNlQWN0aXZpdGllc1xTZXJ2aWNlIFJlZmVyZW5jZXNcVXNlclJlZmVyZW5jZVxTZXJ2aWNlQWN0aXZpdGllcy5Vc2VyUmVmZXJlbmNlLklVc2VyLkFkZC54YW1sCSUDUw4CAQEqBT4PAgEKPwVJFwIBB0oFUQ4CAQI5LzmUAQIBDC8PMx8CAQtCC0YfAgEJTzFPaAIBBUwyTD0CAQM=</sads:DebugSymbol.Symbol>
+  </Sequence>
+</Activity>

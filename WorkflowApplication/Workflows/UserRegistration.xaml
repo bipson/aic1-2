@@ -1,8 +1,6 @@
 ﻿<Activity mc:Ignorable="sads sap sap2010" x:Class="Workflows.UserRegistration"
  xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities"
  xmlns:av="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
- xmlns:local="clr-namespace:Workflows.UserReference.Activities"
- xmlns:local1="clr-namespace:Workflows.TwitterReference.Activities"
  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
  xmlns:mca="clr-namespace:Microsoft.CSharp.Activities;assembly=System.Activities"
  xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities"
@@ -13,7 +11,10 @@
  xmlns:sc="clr-namespace:System.ComponentModel;assembly=System"
  xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib"
  xmlns:sco="clr-namespace:System.Collections.ObjectModel;assembly=mscorlib"
- xmlns:wu="clr-namespace:Workflows.UserReference"
+ xmlns:st="clr-namespace:ServiceActivities.TwitterReference;assembly=ServiceActivities"
+ xmlns:sta="clr-namespace:ServiceActivities.TwitterReference.Activities;assembly=ServiceActivities"
+ xmlns:su="clr-namespace:ServiceActivities.UserReference;assembly=ServiceActivities"
+ xmlns:sua="clr-namespace:ServiceActivities.UserReference.Activities;assembly=ServiceActivities"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
     <x:Property Name="companyName" Type="InArgument(x:String)" />
@@ -29,15 +30,17 @@
       <x:String>System.Data</x:String>
       <x:String>System.Linq</x:String>
       <x:String>System.Text</x:String>
-      <x:String>Workflows.UserReference</x:String>
       <x:String>System.Activities.Statements</x:String>
     </sco:Collection>
   </TextExpression.NamespacesForImplementation>
   <TextExpression.ReferencesForImplementation>
     <sco:Collection x:TypeArguments="AssemblyReference">
       <AssemblyReference>Microsoft.CSharp</AssemblyReference>
+      <AssemblyReference>PresentationCore</AssemblyReference>
+      <AssemblyReference>PresentationFramework</AssemblyReference>
       <AssemblyReference>System</AssemblyReference>
       <AssemblyReference>System.Activities</AssemblyReference>
+      <AssemblyReference>System.Activities.Presentation</AssemblyReference>
       <AssemblyReference>System.Core</AssemblyReference>
       <AssemblyReference>System.Data</AssemblyReference>
       <AssemblyReference>System.Runtime.Serialization</AssemblyReference>
@@ -46,6 +49,9 @@
       <AssemblyReference>System.Xaml</AssemblyReference>
       <AssemblyReference>System.Xml</AssemblyReference>
       <AssemblyReference>System.Xml.Linq</AssemblyReference>
+      <AssemblyReference>WindowsBase</AssemblyReference>
+      <AssemblyReference>ServiceActivities.Design</AssemblyReference>
+      <AssemblyReference>ServiceActivities</AssemblyReference>
       <AssemblyReference>mscorlib</AssemblyReference>
       <AssemblyReference>Workflows</AssemblyReference>
     </sco:Collection>
@@ -57,19 +63,19 @@
       <Variable x:TypeArguments="CompensationToken" Name="registerUserCompensationToken" />
     </Flowchart.Variables>
     <Flowchart.StartNode>
-      <FlowStep x:Name="__ReferenceID7" sap2010:WorkflowViewState.IdRef="FlowStep_7">
-        <local:Exists DisplayName="Check If User Exists" sap2010:WorkflowViewState.IdRef="Exists_1" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
-          <local:Exists.companyName>
+      <FlowStep x:Name="__ReferenceID10" sap2010:WorkflowViewState.IdRef="FlowStep_11">
+        <sua:Exists DisplayName="Check If User Exists" sap2010:WorkflowViewState.IdRef="Exists_2" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+          <sua:Exists.companyName>
             <InArgument x:TypeArguments="x:String">
               <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
             </InArgument>
-          </local:Exists.companyName>
-          <local:Exists.userExists>
+          </sua:Exists.companyName>
+          <sua:Exists.userExists>
             <OutArgument x:TypeArguments="x:Boolean">
               <mca:CSharpReference x:TypeArguments="x:Boolean">doesUserExist</mca:CSharpReference>
             </OutArgument>
-          </local:Exists.userExists>
-        </local:Exists>
+          </sua:Exists.userExists>
+        </sua:Exists>
         <FlowStep.Next>
           <FlowDecision x:Name="__ReferenceID0" DisplayName="User Already Exists?" sap2010:WorkflowViewState.IdRef="FlowDecision_2">
             <FlowDecision.Condition>
@@ -107,15 +113,15 @@
                     </OutArgument>
                   </CompensableActivity.Result>
                   <CompensableActivity.CompensationHandler>
-                    <Sequence DisplayName="Remove User And Set Result">
-                      <local:Remove userRemoved="{x:Null}" DisplayName="Remove User" sap2010:WorkflowViewState.IdRef="Remove_1" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
-                        <local:Remove.companyName>
+                    <Sequence DisplayName="Remove User And Set Result" sap2010:WorkflowViewState.IdRef="Sequence_1">
+                      <sua:Remove userRemoved="{x:Null}" DisplayName="Remove User" sap2010:WorkflowViewState.IdRef="Remove_2" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+                        <sua:Remove.companyName>
                           <InArgument x:TypeArguments="x:String">
                             <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
                           </InArgument>
-                        </local:Remove.companyName>
-                      </local:Remove>
-                      <Assign DisplayName="Set Result">
+                        </sua:Remove.companyName>
+                      </sua:Remove>
+                      <Assign DisplayName="Set Result" sap2010:WorkflowViewState.IdRef="Assign_3">
                         <Assign.To>
                           <OutArgument x:TypeArguments="x:Boolean">
                             <mca:CSharpReference x:TypeArguments="x:Boolean">userRegistered</mca:CSharpReference>
@@ -124,28 +130,26 @@
                         <Assign.Value>
                           <InArgument x:TypeArguments="x:Boolean">False</InArgument>
                         </Assign.Value>
-                        <sap2010:WorkflowViewState.IdRef>Assign_3</sap2010:WorkflowViewState.IdRef>
                       </Assign>
-                      <sap2010:WorkflowViewState.IdRef>Sequence_1</sap2010:WorkflowViewState.IdRef>
                     </Sequence>
                   </CompensableActivity.CompensationHandler>
-                  <local:Add DisplayName="Add User" sap2010:WorkflowViewState.IdRef="Add_1" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
-                    <local:Add.companyName>
+                  <sua:Add DisplayName="Add User" sap2010:WorkflowViewState.IdRef="Add_2" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+                    <sua:Add.companyName>
                       <InArgument x:TypeArguments="x:String">
                         <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
                       </InArgument>
-                    </local:Add.companyName>
-                    <local:Add.password>
+                    </sua:Add.companyName>
+                    <sua:Add.password>
                       <InArgument x:TypeArguments="x:String">
                         <mca:CSharpValue x:TypeArguments="x:String">password</mca:CSharpValue>
                       </InArgument>
-                    </local:Add.password>
-                    <local:Add.userAdded>
+                    </sua:Add.password>
+                    <sua:Add.userAdded>
                       <OutArgument x:TypeArguments="x:Boolean">
                         <mca:CSharpReference x:TypeArguments="x:Boolean">userRegistered</mca:CSharpReference>
                       </OutArgument>
-                    </local:Add.userAdded>
-                  </local:Add>
+                    </sua:Add.userAdded>
+                  </sua:Add>
                 </CompensableActivity>
                 <FlowStep.Next>
                   <FlowDecision x:Name="__ReferenceID4" DisplayName="User Registered?" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
@@ -153,26 +157,27 @@
                       <mca:CSharpValue x:TypeArguments="x:Boolean">userRegistered</mca:CSharpValue>
                     </FlowDecision.Condition>
                     <FlowDecision.True>
-                      <FlowStep x:Name="__ReferenceID6" sap2010:WorkflowViewState.IdRef="FlowStep_3">
-                        <local1:AttachListener DisplayName="Attach Twitter Listener" sap2010:WorkflowViewState.IdRef="AttachListener_1" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
-                          <local1:AttachListener.filter>
+                      <FlowStep x:Name="__ReferenceID11">
+                        <sta:AttachListener DisplayName="Attach Twitter Listener" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+                          <sta:AttachListener.filter>
                             <InArgument x:TypeArguments="x:String">
                               <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
                             </InArgument>
-                          </local1:AttachListener.filter>
-                          <local1:AttachListener.listenerAttached>
+                          </sta:AttachListener.filter>
+                          <sta:AttachListener.listenerAttached>
                             <OutArgument x:TypeArguments="x:Boolean">
                               <mca:CSharpReference x:TypeArguments="x:Boolean">hasListenerBeenAttached</mca:CSharpReference>
                             </OutArgument>
-                          </local1:AttachListener.listenerAttached>
-                        </local1:AttachListener>
+                          </sta:AttachListener.listenerAttached>
+                          <sap2010:WorkflowViewState.IdRef>AttachListener_2</sap2010:WorkflowViewState.IdRef>
+                        </sta:AttachListener>
                         <FlowStep.Next>
-                          <FlowDecision x:Name="__ReferenceID8" DisplayName="Listener Attached?" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
+                          <FlowDecision x:Name="__ReferenceID6" DisplayName="Listener Attached?" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
                             <FlowDecision.Condition>
                               <mca:CSharpValue x:TypeArguments="x:Boolean">hasListenerBeenAttached</mca:CSharpValue>
                             </FlowDecision.Condition>
                             <FlowDecision.True>
-                              <FlowStep x:Name="__ReferenceID11" sap2010:WorkflowViewState.IdRef="FlowStep_8">
+                              <FlowStep x:Name="__ReferenceID9" sap2010:WorkflowViewState.IdRef="FlowStep_8">
                                 <WriteLine DisplayName="Registration Succeeded" sap2010:WorkflowViewState.IdRef="WriteLine_3">
                                   <InArgument x:TypeArguments="x:String">
                                     <mca:CSharpValue x:TypeArguments="x:String">"Company \"" + companyName + "\" has been successfully registered."</mca:CSharpValue>
@@ -181,7 +186,7 @@
                               </FlowStep>
                             </FlowDecision.True>
                             <FlowDecision.False>
-                              <FlowStep x:Name="__ReferenceID9" sap2010:WorkflowViewState.IdRef="FlowStep_10">
+                              <FlowStep x:Name="__ReferenceID7" sap2010:WorkflowViewState.IdRef="FlowStep_10">
                                 <Compensate DisplayName="Compensate User Registration" sap2010:WorkflowViewState.IdRef="Compensate_1">
                                   <Compensate.Target>
                                     <InArgument x:TypeArguments="CompensationToken">
@@ -190,7 +195,7 @@
                                   </Compensate.Target>
                                 </Compensate>
                                 <FlowStep.Next>
-                                  <FlowStep x:Name="__ReferenceID10" sap2010:WorkflowViewState.IdRef="FlowStep_9">
+                                  <FlowStep x:Name="__ReferenceID8" sap2010:WorkflowViewState.IdRef="FlowStep_9">
                                     <WriteLine DisplayName="Attaching Listener Failed" sap2010:WorkflowViewState.IdRef="WriteLine_4" Text="The registration failed because a component is currently unreachable. Please try again at a later time." />
                                   </FlowStep>
                                 </FlowStep.Next>
@@ -198,6 +203,7 @@
                             </FlowDecision.False>
                           </FlowDecision>
                         </FlowStep.Next>
+                        <sap2010:WorkflowViewState.IdRef>FlowStep_12</sap2010:WorkflowViewState.IdRef>
                       </FlowStep>
                     </FlowDecision.True>
                     <FlowDecision.False>
@@ -225,11 +231,11 @@
     <x:Reference>__ReferenceID9</x:Reference>
     <x:Reference>__ReferenceID10</x:Reference>
     <x:Reference>__ReferenceID11</x:Reference>
-    <sads:DebugSymbol.Symbol>d1FDOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xVc2VyUmVnaXN0cmF0aW9uLnhhbWwjNQPlAQ8CAQE9CUgYAgF7TA9MWwIBdGcRlQEnAgFEmQEXmQFkAgE9zQEZzQGtAQIBO50BGagBMQIBLKwBH6wBdQIBJbkBIb8BLgIBHcIBJcIB9wECARuwASG0AS0CARNQEVQdAgELVxVgHgIBAkAPQFgDAYMBRQ9FYwIBfGoXaoMBAgFFhAETlAEfAgFebhWCASACAUzNAX7NAaoBAgE8oAEfoAFoAgE0pQEfpQF9AgEtvAEnvAGLAQIBHsIBiwHCAfQBAgEcsgElsgGmAQIBFFIVUpsBAgEMXkFeRgIBClobWnACAQORARmRAW4CAW2MARmMAV8CAWaHARmHAWICAV9vF3UmAgFWdheAASACAU1yHXJmAgFXfUN9SAIBVXkdeXICAU4=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d1FDOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xVc2VyUmVnaXN0cmF0aW9uLnhhbWwjPAPsAQ8CAQFECU8WAgF7Uw9TWwIBdG4RmgEnAgFEngEXngFkAgE91AEZ1AGtAQIBO6IBGa4BLgIBLLIBH7IBdQIBJb8BIcUBLgIBHcgBJcgB9wECARu2ASG6AS0CARNXEVsdAgELXhVnHgIBAkcPR1gDAYMBTA9MYwIBfHEXcYMBAgFFiQETmQEdAgFedRWHASACAUzUAX7UAaoBAgE8pQEfpQFoAgE0qgEfqgF9AgEtwgEnwgGLAQIBHsgBiwHIAfQBAgEcuAEluAGmAQIBFFkVWZsBAgEMZUFlRgIBCmEbYXACAQOWARmWAW4CAW2RARmRAV8CAWaMARmMAWICAV92F3wkAgFWfReGASACAU15HXlmAgFXhAFDhAFIAgFVgAEdgAFyAgFO</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
-      <sap2010:ViewStateData Id="Exists_1" sap:VirtualizedContainerService.HintSize="200,22">
+      <sap2010:ViewStateData Id="Exists_2" sap:VirtualizedContainerService.HintSize="231,93">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -253,7 +259,7 @@
       <sap2010:ViewStateData Id="FlowStep_1">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">0,439</av:Point>
+            <av:Point x:Key="ShapeLocation">0,499</av:Point>
             <av:Size x:Key="ShapeSize">242,62</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -261,23 +267,23 @@
       <sap2010:ViewStateData Id="FlowStep_2">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">14.5,339</av:Point>
+            <av:Point x:Key="ShapeLocation">14.5,399</av:Point>
             <av:Size x:Key="ShapeSize">211,62</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">120,401 120,431 121,431 121,439</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">120,461 120,491 121,491 121,499</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Remove_1" sap:VirtualizedContainerService.HintSize="242,22" />
+      <sap2010:ViewStateData Id="Remove_2" sap:VirtualizedContainerService.HintSize="242,93" />
       <sap2010:ViewStateData Id="Assign_3" sap:VirtualizedContainerService.HintSize="242,62" />
-      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="264,248">
+      <sap2010:ViewStateData Id="Sequence_1" sap:VirtualizedContainerService.HintSize="264,319">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Add_1" sap:VirtualizedContainerService.HintSize="200,22" />
-      <sap2010:ViewStateData Id="CompensableActivity_1" sap:VirtualizedContainerService.HintSize="300,753">
+      <sap2010:ViewStateData Id="Add_2" sap:VirtualizedContainerService.HintSize="231,124" />
+      <sap2010:ViewStateData Id="CompensableActivity_1" sap:VirtualizedContainerService.HintSize="210,116">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -285,7 +291,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="AttachListener_1" sap:VirtualizedContainerService.HintSize="200,22">
+      <sap2010:ViewStateData Id="AttachListener_2" sap:VirtualizedContainerService.HintSize="200,93">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -302,7 +308,7 @@
       <sap2010:ViewStateData Id="FlowStep_8">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">4.5,799</av:Point>
+            <av:Point x:Key="ShapeLocation">4.5,919</av:Point>
             <av:Size x:Key="ShapeSize">211,62</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -324,7 +330,7 @@
       <sap2010:ViewStateData Id="FlowStep_9">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">474.431666666667,801</av:Point>
+            <av:Point x:Key="ShapeLocation">474.431666666667,921</av:Point>
             <av:Size x:Key="ShapeSize">211,62</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -332,9 +338,9 @@
       <sap2010:ViewStateData Id="FlowStep_10">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">480,729</av:Point>
+            <av:Point x:Key="ShapeLocation">480,849</av:Point>
             <av:Size x:Key="ShapeSize">200,22</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">580,751 580,781 579.931666666667,781 579.931666666667,801</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">580,871 580,901 579.931666666667,901 579.931666666667,921</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -342,21 +348,21 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <av:Point x:Key="ShapeLocation">258.5,696.5</av:Point>
+            <av:Point x:Key="ShapeLocation">258.5,816.5</av:Point>
             <av:Size x:Key="ShapeSize">103,87</av:Size>
             <x:String x:Key="FalseLabel">No</x:String>
             <x:String x:Key="TrueLabel">Yes</x:String>
-            <av:PointCollection x:Key="FalseConnector">361.5,740 480,740</av:PointCollection>
-            <av:PointCollection x:Key="TrueConnector">258.5,740 110,740 110,799</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">361.5,860 480,860</av:PointCollection>
+            <av:PointCollection x:Key="TrueConnector">258.5,860 110,860 110,919</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_3">
+      <sap2010:ViewStateData Id="FlowStep_12">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">210,619</av:Point>
-            <av:Size x:Key="ShapeSize">200,22</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">310,641 310,696.5</av:PointCollection>
+            <av:Point x:Key="ShapeLocation">210,673.5390625</av:Point>
+            <av:Size x:Key="ShapeSize">200,93</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">310,766.5390625 310,816.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -370,7 +376,7 @@
       <sap2010:ViewStateData Id="FlowStep_5">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">664.5,509</av:Point>
+            <av:Point x:Key="ShapeLocation">664.5,569</av:Point>
             <av:Size x:Key="ShapeSize">211,62</av:Size>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
@@ -379,21 +385,21 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <av:Point x:Key="ShapeLocation">434,496.5</av:Point>
+            <av:Point x:Key="ShapeLocation">434,556.5</av:Point>
             <av:Size x:Key="ShapeSize">92,87</av:Size>
             <x:String x:Key="FalseLabel">No</x:String>
             <x:String x:Key="TrueLabel">Yes</x:String>
-            <av:PointCollection x:Key="FalseConnector">526,540 664.5,540</av:PointCollection>
-            <av:PointCollection x:Key="TrueConnector">434,540 310,540 310,619</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">526,600 664.5,600</av:PointCollection>
+            <av:PointCollection x:Key="TrueConnector">434,600 310,600 310,673.5390625</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
       <sap2010:ViewStateData Id="FlowStep_6">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">375,329.5</av:Point>
+            <av:Point x:Key="ShapeLocation">375,389.5</av:Point>
             <av:Size x:Key="ShapeSize">210,116</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">480,445.5 480,496.5</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">480,505.5 480,556.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
@@ -401,38 +407,38 @@
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
-            <av:Point x:Key="ShapeLocation">246,206.5</av:Point>
+            <av:Point x:Key="ShapeLocation">246,266.5</av:Point>
             <av:Size x:Key="ShapeSize">108,87</av:Size>
             <x:String x:Key="FalseLabel">No</x:String>
             <x:String x:Key="TrueLabel">Yes</x:String>
-            <av:PointCollection x:Key="TrueConnector">246,250 120,250 120,339</av:PointCollection>
-            <av:PointCollection x:Key="FalseConnector">354,250 480,250 480,329.5</av:PointCollection>
+            <av:PointCollection x:Key="TrueConnector">246,310 120,310 120,399</av:PointCollection>
+            <av:PointCollection x:Key="FalseConnector">354,310 480,310 480,389.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="FlowStep_7">
+      <sap2010:ViewStateData Id="FlowStep_11">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
-            <av:Point x:Key="ShapeLocation">200,127.5</av:Point>
-            <av:Size x:Key="ShapeSize">200,22</av:Size>
-            <av:PointCollection x:Key="ConnectorLocation">300,149.5 300,206.5</av:PointCollection>
+            <av:Point x:Key="ShapeLocation">184.5,123.5</av:Point>
+            <av:Size x:Key="ShapeSize">231,93</av:Size>
+            <av:PointCollection x:Key="ConnectorLocation">300,216.5 300,266.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="918,1027">
+      <sap2010:ViewStateData Id="Flowchart_1" sap:VirtualizedContainerService.HintSize="918,1089">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">False</x:Boolean>
             <av:Point x:Key="ShapeLocation">270,2.5</av:Point>
             <av:Size x:Key="ShapeSize">60,75</av:Size>
             <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
-            <x:Double x:Key="Height">920.91999999999985</x:Double>
+            <x:Double x:Key="Height">983</x:Double>
             <x:Double x:Key="Width">904</x:Double>
-            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,127.5</av:PointCollection>
+            <av:PointCollection x:Key="ConnectorLocation">300,77.5 300,123.5</av:PointCollection>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Workflows.UserRegistration_1" sap:VirtualizedContainerService.HintSize="958,1107" />
+      <sap2010:ViewStateData Id="Workflows.UserRegistration_1" sap:VirtualizedContainerService.HintSize="958,1109" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

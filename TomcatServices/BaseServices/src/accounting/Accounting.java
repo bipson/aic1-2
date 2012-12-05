@@ -13,7 +13,7 @@ import model.CompanyEntity;
             serviceName = "AccountingService")
 public final class Accounting implements IAccounting {
 	// Set to true when using mockup accounting service.
-	private static final boolean MOCKUP = false;
+	private static final boolean MOCKUP = true;
 	
 	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("aic.sentiment");
 
