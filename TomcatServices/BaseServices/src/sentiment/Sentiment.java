@@ -24,7 +24,7 @@ public final class Sentiment implements ISentiment {
 			Double result = 0.0;
 			
 			if(SentimentServiceInitializer.loaded()) {
-				System.out.println("Sentiment.compute: computation ...");
+				System.out.println("Sentiment.compute: "+text);
 				WeightedMajority wm = SentimentServiceInitializer.getWeightedMajority();
 				
 				
