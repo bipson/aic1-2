@@ -20,8 +20,7 @@ public class TweetEntity {
     public TweetEntity() {
     }
 
-    public TweetEntity(Long id, CompanyEntity company, Tweet tweet) {
-            this.id = id;
+    public TweetEntity(CompanyEntity company, Tweet tweet) {
             this.company = company;
             this.tweet = tweet;
     }

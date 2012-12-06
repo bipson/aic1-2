@@ -1,5 +1,6 @@
 package twitter;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.TemporalType;
 
 @Embeddable
 public final class Tweet {
+
 	private long id;
 	private String text;
 	private String user;
