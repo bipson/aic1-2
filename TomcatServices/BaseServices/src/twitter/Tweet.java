@@ -1,6 +1,5 @@
 package twitter;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -29,7 +28,7 @@ public final class Tweet {
 		this.created = created;
 	}
 
-	@Column
+	@Column(name = "external_id")
 	public long getID() {
 		return id;
 	}
