@@ -1,0 +1,23 @@
+﻿@model Website.Models.Credentials
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Login or Register</h2>
+
+<div>
+    @foreach (String message in ((IEnumerable<String>)TempData["WorkflowMessages"] ?? new String[0]))
+    {
+        <p>
+            @message
+        </p>
+    }
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.EditorForModel()
+    <input type="submit" value="Login" />
+    @Html.ActionLink("Register", "Index", "Register")
+}

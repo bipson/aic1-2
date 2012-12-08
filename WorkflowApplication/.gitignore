@@ -8,3 +8,7 @@ ServiceActivities/bin/
 ServiceActivities/obj/
 ServiceActivities.Design/bin/
 ServiceActivities.Design/obj/
+Website/bin/
+Website/obj/
+Website.Infrastructure/bin/
+Website.Infrastructure/obj/
