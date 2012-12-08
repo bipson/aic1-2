@@ -9,18 +9,18 @@
       </xs:complexType>
     </xsd:schema>
     <xsd:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://aic.service.twitter/" version="1.0">
-      <xs:complexType name="tweet" final="extension restriction">
+      <xs:complexType name="Tweet" final="extension restriction">
         <xs:sequence>
-          <xs:element minOccurs="0" name="created" type="xs:dateTime" />
+          <xs:element minOccurs="0" name="Created" type="xs:dateTime" />
           <xs:element name="ID" type="xs:long" />
-          <xs:element name="reTweets" type="xs:long" />
-          <xs:element minOccurs="0" name="text" type="xs:string" />
-          <xs:element minOccurs="0" name="user" type="xs:string" />
+          <xs:element name="ReTweets" type="xs:long" />
+          <xs:element minOccurs="0" name="Text" type="xs:string" />
+          <xs:element minOccurs="0" name="User" type="xs:string" />
         </xs:sequence>
       </xs:complexType>
-      <xs:complexType name="tweetArray" final="#all">
+      <xs:complexType name="TweetArray" final="#all">
         <xs:sequence>
-          <xs:element minOccurs="0" maxOccurs="unbounded" name="item" nillable="true" type="tns:tweet" />
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="item" nillable="true" type="tns:Tweet" />
         </xs:sequence>
       </xs:complexType>
     </xsd:schema>
@@ -35,7 +35,7 @@
     <wsdl:part name="listenerAttached" type="xsd:boolean" />
   </wsdl:message>
   <wsdl:message name="ExtractText">
-    <wsdl:part name="tweets" type="tns:tweetArray" />
+    <wsdl:part name="tweets" type="tns:TweetArray" />
   </wsdl:message>
   <wsdl:message name="ExtractTextResponse">
     <wsdl:part name="texts" type="ns1:stringArray" />
@@ -44,7 +44,7 @@
     <wsdl:part name="filter" type="xsd:string" />
   </wsdl:message>
   <wsdl:message name="FetchTweetsResponse">
-    <wsdl:part name="tweets" type="tns:tweetArray" />
+    <wsdl:part name="tweets" type="tns:TweetArray" />
   </wsdl:message>
   <wsdl:message name="FetchTweets">
     <wsdl:part name="searchString" type="xsd:string" />

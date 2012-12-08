@@ -9,18 +9,18 @@
   </xs:complexType>
 </xs:schema>
     <xs:schema targetNamespace="http://aic.service.twitter/" version="1.0" xmlns:tns="http://aic.service.twitter/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-<xs:complexType final="extension restriction" name="tweet">
+<xs:complexType final="extension restriction" name="Tweet">
     <xs:sequence>
-      <xs:element minOccurs="0" name="created" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="Created" type="xs:dateTime"/>
       <xs:element name="ID" type="xs:long"/>
-      <xs:element name="reTweets" type="xs:long"/>
-      <xs:element minOccurs="0" name="text" type="xs:string"/>
-      <xs:element minOccurs="0" name="user" type="xs:string"/>
+      <xs:element name="ReTweets" type="xs:long"/>
+      <xs:element minOccurs="0" name="Text" type="xs:string"/>
+      <xs:element minOccurs="0" name="User" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
-<xs:complexType final="#all" name="tweetArray">
+<xs:complexType final="#all" name="TweetArray">
     <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="item" nillable="true" type="tns:tweet"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="item" nillable="true" type="tns:Tweet"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>
@@ -38,7 +38,7 @@
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="ExtractText">
-    <wsdl:part name="tweets" type="tns:tweetArray">
+    <wsdl:part name="tweets" type="tns:TweetArray">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="ExtractTextResponse">
@@ -58,7 +58,7 @@
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="FetchTweetsResponse">
-    <wsdl:part name="tweets" type="tns:tweetArray">
+    <wsdl:part name="tweets" type="tns:TweetArray">
     </wsdl:part>
   </wsdl:message>
   <wsdl:portType name="ITwitter">

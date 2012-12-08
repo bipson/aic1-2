@@ -65,7 +65,7 @@
         <TextBlock Grid.Row="3" Grid.Column="0" Text="Result" Margin="0,5,5,0" VerticalAlignment="Center" HorizontalAlignment="Right"/>
         <sapv:ExpressionTextBox Grid.Row="3" Grid.Column="1" Width="125" Margin="0,5,0,0"
             Expression="{Binding Path=ModelItem.tweets, Mode=TwoWay, Converter={StaticResource ArgumentToExpressionConverter}, ConverterParameter=Out}"
-            ExpressionType="tw:tweet[]"
+            ExpressionType="tw:Tweet[]"
             HintText="Result"
             OwnerActivity="{Binding Path=ModelItem}"
             UseLocationExpression="True"

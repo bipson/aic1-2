@@ -37,7 +37,7 @@
         <RequiredArgumentAttribute />
       </x:Property.Attributes>
     </x:Property>
-    <x:Property Name="tweets" Type="OutArgument(st:tweet[])" />
+    <x:Property Name="tweets" Type="OutArgument(st:Tweet[])" />
   </x:Members>
   <mva:VisualBasic.Settings>Assembly references and imported namespaces serialized as XML namespaces</mva:VisualBasic.Settings>
   <Sequence>
@@ -71,7 +71,7 @@
         <OutArgument x:TypeArguments="st:FetchTweetsResponse">
           <VariableReference x:TypeArguments="st:FetchTweetsResponse">
             <VariableReference.Variable>
-              <Variable x:TypeArguments="st:FetchTweetsResponse" x:Name="__ReferenceID1" Name="tempResult_09d39a23c1bf409792b79446b2657f71" />
+              <Variable x:TypeArguments="st:FetchTweetsResponse" x:Name="__ReferenceID1" Name="tempResult_bfa4e79cb83a4b85964a0b27e50add8b" />
             </VariableReference.Variable>
           </VariableReference>
         </OutArgument>
@@ -79,10 +79,10 @@
     </p1:ReceiveReply>
     <Assign>
       <Assign.To>
-        <OutArgument x:TypeArguments="st:tweet[]">[tweets]</OutArgument>
+        <OutArgument x:TypeArguments="st:Tweet[]">[tweets]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="st:tweet[]">[tempResult_09d39a23c1bf409792b79446b2657f71.tweets]</InArgument>
+        <InArgument x:TypeArguments="st:Tweet[]">[tempResult_bfa4e79cb83a4b85964a0b27e50add8b.tweets]</InArgument>
       </Assign.Value>
     </Assign>
     <sads:DebugSymbol.Symbol>d6QBQzpcVXNlcnNcQUlDXERvY3VtZW50c1xhaWMxLTJcV29ya2Zsb3dBcHBsaWNhdGlvblxTZXJ2aWNlQWN0aXZpdGllc1xTZXJ2aWNlIFJlZmVyZW5jZXNcVHdpdHRlclJlZmVyZW5jZVxTZXJ2aWNlQWN0aXZpdGllcy5Ud2l0dGVyUmVmZXJlbmNlLklUd2l0dGVyLkZldGNoVHdlZXRzLnhhbWwJKwNZDgIBATAFRA8CAQpFBU8XAgEHUAVXDgIBAj82P6sBAgEMNQ85HwIBC0gLTB8CAQlVMlVmAgEFUjNSOwIBAw==</sads:DebugSymbol.Symbol>

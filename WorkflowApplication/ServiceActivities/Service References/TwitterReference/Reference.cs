@@ -50,7 +50,7 @@ namespace ServiceActivities.TwitterReference {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]
     [System.Xml.Serialization.XmlTypeAttribute(Namespace="http://aic.service.twitter/")]
-    public partial class tweet : object, System.ComponentModel.INotifyPropertyChanged {
+    public partial class Tweet : object, System.ComponentModel.INotifyPropertyChanged {
         
         private System.DateTime createdField;
         
@@ -66,25 +66,25 @@ namespace ServiceActivities.TwitterReference {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=0)]
-        public System.DateTime created {
+        public System.DateTime Created {
             get {
                 return this.createdField;
             }
             set {
                 this.createdField = value;
-                this.RaisePropertyChanged("created");
+                this.RaisePropertyChanged("Created");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlIgnoreAttribute()]
-        public bool createdSpecified {
+        public bool CreatedSpecified {
             get {
                 return this.createdFieldSpecified;
             }
             set {
                 this.createdFieldSpecified = value;
-                this.RaisePropertyChanged("createdSpecified");
+                this.RaisePropertyChanged("CreatedSpecified");
             }
         }
         
@@ -102,37 +102,37 @@ namespace ServiceActivities.TwitterReference {
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=2)]
-        public long reTweets {
+        public long ReTweets {
             get {
                 return this.reTweetsField;
             }
             set {
                 this.reTweetsField = value;
-                this.RaisePropertyChanged("reTweets");
+                this.RaisePropertyChanged("ReTweets");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=3)]
-        public string text {
+        public string Text {
             get {
                 return this.textField;
             }
             set {
                 this.textField = value;
-                this.RaisePropertyChanged("text");
+                this.RaisePropertyChanged("Text");
             }
         }
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Form=System.Xml.Schema.XmlSchemaForm.Unqualified, Order=4)]
-        public string user {
+        public string User {
             get {
                 return this.userField;
             }
             set {
                 this.userField = value;
-                this.RaisePropertyChanged("user");
+                this.RaisePropertyChanged("User");
             }
         }
         
@@ -178,12 +178,12 @@ namespace ServiceActivities.TwitterReference {
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
         [System.Xml.Serialization.XmlArrayAttribute()]
         [System.Xml.Serialization.XmlArrayItemAttribute("item", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public ServiceActivities.TwitterReference.tweet[] tweets;
+        public ServiceActivities.TwitterReference.Tweet[] tweets;
         
         public FetchTweetsResponse() {
         }
         
-        public FetchTweetsResponse(ServiceActivities.TwitterReference.tweet[] tweets) {
+        public FetchTweetsResponse(ServiceActivities.TwitterReference.Tweet[] tweets) {
             this.tweets = tweets;
         }
     }
@@ -196,12 +196,12 @@ namespace ServiceActivities.TwitterReference {
         [System.ServiceModel.MessageBodyMemberAttribute(Namespace="", Order=0)]
         [System.Xml.Serialization.XmlArrayAttribute()]
         [System.Xml.Serialization.XmlArrayItemAttribute("item", Form=System.Xml.Schema.XmlSchemaForm.Unqualified)]
-        public ServiceActivities.TwitterReference.tweet[] tweets;
+        public ServiceActivities.TwitterReference.Tweet[] tweets;
         
         public ExtractText() {
         }
         
-        public ExtractText(ServiceActivities.TwitterReference.tweet[] tweets) {
+        public ExtractText(ServiceActivities.TwitterReference.Tweet[] tweets) {
             this.tweets = tweets;
         }
     }

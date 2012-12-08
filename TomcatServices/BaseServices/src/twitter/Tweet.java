@@ -6,8 +6,11 @@ import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlType;
 
 @Embeddable
+@XmlType(name = "Tweet")
 public final class Tweet {
 	private long id;
 	private String text;
@@ -33,22 +36,26 @@ public final class Tweet {
 	}
 
 	@Column
+	@XmlElement(name = "Text")
 	public String getText() {
 		return text;
 	}
 
 	@Column
+	@XmlElement(name = "User")
 	public String getUser() {
 		return user;
 	}
 
 	@Column
+	@XmlElement(name = "ReTweets")
 	public long getReTweets() {
 		return reTweets;
 	}
 
 	@Column
 	@Temporal(TemporalType.TIMESTAMP)
+	@XmlElement(name = "Created")
 	public Date getCreated() {
 		return created;
 	}

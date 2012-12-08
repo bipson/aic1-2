@@ -22,7 +22,7 @@
         </sc:DefaultValueAttribute>
       </x:Property.Attributes>
     </x:Property>
-    <x:Property Name="tweets" Type="InArgument(st:tweet[])">
+    <x:Property Name="tweets" Type="InArgument(st:Tweet[])">
       <x:Property.Attributes>
         <RequiredArgumentAttribute />
       </x:Property.Attributes>
@@ -61,7 +61,7 @@
         <OutArgument x:TypeArguments="st:ExtractTextResponse">
           <VariableReference x:TypeArguments="st:ExtractTextResponse">
             <VariableReference.Variable>
-              <Variable x:TypeArguments="st:ExtractTextResponse" x:Name="__ReferenceID1" Name="tempResult_b415ad5b7ca64df7a42d3d6a0bdef375" />
+              <Variable x:TypeArguments="st:ExtractTextResponse" x:Name="__ReferenceID1" Name="tempResult_ab561db8d72547a0bebd0e532a36d33d" />
             </VariableReference.Variable>
           </VariableReference>
         </OutArgument>
@@ -72,7 +72,7 @@
         <OutArgument x:TypeArguments="s:String[]">[texts]</OutArgument>
       </Assign.To>
       <Assign.Value>
-        <InArgument x:TypeArguments="s:String[]">[tempResult_b415ad5b7ca64df7a42d3d6a0bdef375.texts]</InArgument>
+        <InArgument x:TypeArguments="s:String[]">[tempResult_ab561db8d72547a0bebd0e532a36d33d.texts]</InArgument>
       </Assign.Value>
     </Assign>
     <sads:DebugSymbol.Symbol>d6QBQzpcVXNlcnNcQUlDXERvY3VtZW50c1xhaWMxLTJcV29ya2Zsb3dBcHBsaWNhdGlvblxTZXJ2aWNlQWN0aXZpdGllc1xTZXJ2aWNlIFJlZmVyZW5jZXNcVHdpdHRlclJlZmVyZW5jZVxTZXJ2aWNlQWN0aXZpdGllcy5Ud2l0dGVyUmVmZXJlbmNlLklUd2l0dGVyLkV4dHJhY3RUZXh0LnhhbWwJIQNPDgIBASYFOg8CAQo7BUUXAgEHRgVNDgIBAjU2NYYBAgEMKw8vHwIBCz4LQh8CAQlLMktlAgEFSDNIOgIBAw==</sads:DebugSymbol.Symbol>
