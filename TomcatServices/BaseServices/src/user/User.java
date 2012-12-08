@@ -8,7 +8,7 @@ import db.GenericDAO;
 @WebService(targetNamespace = "http://aic.service.user/", endpointInterface = "user.IUser", portName = "User", serviceName = "UserService")
 public final class User implements IUser {
 	// Set to true when using mockup user service.
-	private static final boolean MOCKUP = true;
+	private static final boolean MOCKUP = false;
 
 	private static final String PERSISTENCE_UNIT = "aic.sentiment";
 
@@ -29,6 +29,7 @@ public final class User implements IUser {
 				// if company-name already registered
 				if (companyDAO.get(companyName) != null) {
 					// write to the log
+					System.err.println("Company already exists??");
 					return false;
 				}
 
@@ -39,10 +40,12 @@ public final class User implements IUser {
 				// check if it went through (because we don't get the exception
 				// from the DAO)
 				if (companyDAO.get(companyName) == null) {
-					// write to the log
+					System.err.println("Company was not persisted??");
 					return false;
 				}
 			} catch (Exception ex) {
+				System.err.println(ex.getMessage());
+				ex.printStackTrace();
 				return false;
 			} finally {
 				GenericDAO.shutdown();

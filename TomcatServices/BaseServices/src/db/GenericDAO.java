@@ -37,7 +37,6 @@ public class GenericDAO<EntityType extends IEntity<EntityKeyType>, EntityKeyType
 			em.getTransaction().begin();
 			em.remove(entity);
 			em.getTransaction().commit();
-			em.flush();
 		} catch (RuntimeException e) {
 			rollBackTransaction();
 			throw e;
@@ -55,7 +54,6 @@ public class GenericDAO<EntityType extends IEntity<EntityKeyType>, EntityKeyType
 		try {
 			em.persist(entity);
 			em.getTransaction().commit();
-			em.flush();
 		} catch (RuntimeException e) {
 			rollBackTransaction();
 			throw e;
@@ -70,7 +68,6 @@ public class GenericDAO<EntityType extends IEntity<EntityKeyType>, EntityKeyType
 		try {
 			merged = em.merge(entity);
 			em.getTransaction().commit();
-			em.flush();
 			return merged;
 		} catch (RuntimeException e) {
 			rollBackTransaction();
