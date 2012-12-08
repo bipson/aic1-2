@@ -13,10 +13,10 @@ type UserRegistrationTests () =
     member this.``Try Registering Existing Company`` () =
         let results, track =
             UserRegistration ()
-            |> invokeWith [ ("companyName", "company1"); ("password", "c1password") ]
+            |> invokeWith [ ("CompanyName", "company1"); ("Password", "c1password") ]
 
         results
-        |> getResult "userRegistered"
+        |> getResult "UserRegistered"
         |> assertEqual false
 
         track
@@ -27,10 +27,10 @@ type UserRegistrationTests () =
     member this.``Try Registering Company Where Listener Attachment Fails`` () =
         let results, track =
             UserRegistration ()
-            |> invokeWith [ ("companyName", "company3"); ("password", "c3password") ]
+            |> invokeWith [ ("CompanyName", "company3"); ("Password", "c3password") ]
         
         results
-        |> getResult "userRegistered"
+        |> getResult "UserRegistered"
         |> assertEqual false
 
         track
@@ -41,10 +41,10 @@ type UserRegistrationTests () =
     member this.``Try Registering Company Where Adding Fails`` () =
         let results, track =
             UserRegistration ()
-            |> invokeWith [ ("companyName", "company7"); ("password", "c7password") ]
+            |> invokeWith [ ("CompanyName", "company7"); ("Password", "c7password") ]
 
         results
-        |> getResult "userRegistered"
+        |> getResult "UserRegistered"
         |> assertEqual false
 
         track
@@ -55,10 +55,10 @@ type UserRegistrationTests () =
     member this.``Register New Company`` () =
         let results, track =
             UserRegistration ()
-            |> invokeWith [ ("companyName", "company4"); ("password", "c4password") ]
+            |> invokeWith [ ("CompanyName", "company4"); ("Password", "c4password") ]
 
         results
-        |> getResult "userRegistered"
+        |> getResult "UserRegistered"
         |> assertEqual true
 
         track

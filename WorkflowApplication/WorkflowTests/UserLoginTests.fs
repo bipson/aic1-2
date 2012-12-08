@@ -13,10 +13,10 @@ type UserLoginTests () =
     member this.``Try Logging In Nonexisting Company`` () =
         let results, track =
             UserLogin ()
-            |> invokeWith [ ("companyName", "company4"); ("password", "c4password") ]
+            |> invokeWith [ ("CompanyName", "company4"); ("Password", "c4password") ]
 
         results
-        |> getResult "loggedIn"
+        |> getResult "LoggedIn"
         |> assertEqual false
 
         track
@@ -27,10 +27,10 @@ type UserLoginTests () =
     member this.``Try Logging In Company With Wrong Password`` () =
         let results, track =
             UserLogin ()
-            |> invokeWith [ ("companyName", "company1"); ("password", "c1wrongpassword") ]
+            |> invokeWith [ ("CompanyName", "company1"); ("Password", "c1wrongpassword") ]
 
         results
-        |> getResult "loggedIn"
+        |> getResult "LoggedIn"
         |> assertEqual false
 
         track
@@ -41,10 +41,10 @@ type UserLoginTests () =
     member this.``Login Company`` () =
         let results, track =
             UserLogin ()
-            |> invokeWith [ ("companyName", "company1"); ("password", "c1password") ]
+            |> invokeWith [ ("CompanyName", "company1"); ("Password", "c1password") ]
 
         results
-        |> getResult "loggedIn"
+        |> getResult "LoggedIn"
         |> assertEqual true
 
         track

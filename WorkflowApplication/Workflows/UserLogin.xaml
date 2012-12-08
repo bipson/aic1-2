@@ -15,9 +15,9 @@
  xmlns:sua="clr-namespace:ServiceActivities.UserReference.Activities;assembly=ServiceActivities"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="companyName" Type="InArgument(x:String)" />
-    <x:Property Name="password" Type="InArgument(x:String)" />
-    <x:Property Name="loggedIn" Type="OutArgument(x:Boolean)" />
+    <x:Property Name="CompanyName" Type="InArgument(x:String)" />
+    <x:Property Name="Password" Type="InArgument(x:String)" />
+    <x:Property Name="LoggedIn" Type="OutArgument(x:Boolean)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
   <sap2010:WorkflowViewState.IdRef>Workflows.UserLogin_1</sap2010:WorkflowViewState.IdRef>
@@ -55,35 +55,34 @@
   </TextExpression.ReferencesForImplementation>
   <Flowchart sap2010:Annotation.AnnotationText="We try to validate the prvided credentials.&#xA;If the validation succeeds, we print a message that the user is logged in.&#xA;If the validation fails, we print a message that the login failed." DisplayName="User Login" sap2010:WorkflowViewState.IdRef="Flowchart_1">
     <Flowchart.StartNode>
-      <FlowStep x:Name="__ReferenceID3">
-        <sua:CheckCredentials DisplayName="Check Credentials" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+      <FlowStep x:Name="__ReferenceID3" sap2010:WorkflowViewState.IdRef="FlowStep_4">
+        <sua:CheckCredentials DisplayName="Check Credentials" sap2010:WorkflowViewState.IdRef="CheckCredentials_2" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
           <sua:CheckCredentials.companyName>
             <InArgument x:TypeArguments="x:String">
-              <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
+              <mca:CSharpValue x:TypeArguments="x:String">CompanyName</mca:CSharpValue>
             </InArgument>
           </sua:CheckCredentials.companyName>
           <sua:CheckCredentials.credentialsValid>
             <OutArgument x:TypeArguments="x:Boolean">
-              <mca:CSharpReference x:TypeArguments="x:Boolean">loggedIn</mca:CSharpReference>
+              <mca:CSharpReference x:TypeArguments="x:Boolean">LoggedIn</mca:CSharpReference>
             </OutArgument>
           </sua:CheckCredentials.credentialsValid>
           <sua:CheckCredentials.password>
             <InArgument x:TypeArguments="x:String">
-              <mca:CSharpValue x:TypeArguments="x:String">password</mca:CSharpValue>
+              <mca:CSharpValue x:TypeArguments="x:String">Password</mca:CSharpValue>
             </InArgument>
           </sua:CheckCredentials.password>
-          <sap2010:WorkflowViewState.IdRef>CheckCredentials_2</sap2010:WorkflowViewState.IdRef>
         </sua:CheckCredentials>
         <FlowStep.Next>
           <FlowDecision x:Name="__ReferenceID0" DisplayName="Login Successful?" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
             <FlowDecision.Condition>
-              <mca:CSharpValue x:TypeArguments="x:Boolean">loggedIn</mca:CSharpValue>
+              <mca:CSharpValue x:TypeArguments="x:Boolean">LoggedIn</mca:CSharpValue>
             </FlowDecision.Condition>
             <FlowDecision.True>
               <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_1">
                 <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_1">
                   <InArgument x:TypeArguments="x:String">
-                    <mca:CSharpValue x:TypeArguments="x:String">"You are now logged in as \"" + companyName + "\""</mca:CSharpValue>
+                    <mca:CSharpValue x:TypeArguments="x:String">"You are now logged in as \"" + CompanyName + "\""</mca:CSharpValue>
                   </InArgument>
                 </WriteLine>
               </FlowStep>
@@ -95,14 +94,13 @@
             </FlowDecision.False>
           </FlowDecision>
         </FlowStep.Next>
-        <sap2010:WorkflowViewState.IdRef>FlowStep_4</sap2010:WorkflowViewState.IdRef>
       </FlowStep>
     </Flowchart.StartNode>
     <x:Reference>__ReferenceID0</x:Reference>
     <x:Reference>__ReferenceID1</x:Reference>
     <x:Reference>__ReferenceID2</x:Reference>
     <x:Reference>__ReferenceID3</x:Reference>
-    <sads:DebugSymbol.Symbol>d0pDOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xVc2VyTG9naW4ueGFtbAo4A2oPAgEBOwlMIAIBDVAPUFYCAQldEV1/AgEHVBFYHQIBAkMPQ14CARZID0hVAgESPg8+WAIBDl1PXXwCAQhWFVaFAQIBAw==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d0pDOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xVc2VyTG9naW4ueGFtbAo4A2gPAgEBOwlLIAIBDU8PT1YCAQlcEVx/AgEHUxFXHQIBAkMPQ14CARZID0hVAgESPg8+WAIBDlxPXHwCAQhVFVWFAQIBAw==</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>

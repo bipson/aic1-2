@@ -16,10 +16,10 @@ type QuerySentimentTests () =
     member this.``Try Querying Sentiment Of Nonregistered Company`` () =
         let results, track =
             QuerySentiment ()
-            |> invokeWith [ ("companyName", box "company4"); ("dateFrom", dateFrom); ("dateTo", dateTo) ]
+            |> invokeWith [ ("CompanyName", box "company4"); ("DateFrom", dateFrom); ("DateTo", dateTo) ]
 
         results
-        |> getResult "sentiment"
+        |> getResult "Sentiment"
         |> assertEqual Double.NaN
 
         track
@@ -30,10 +30,10 @@ type QuerySentimentTests () =
     member this.``Try Querying Sentiment Where Charging Fails`` () =
         let results, track =
             QuerySentiment ()
-            |> invokeWith [ ("companyName", box "company5"); ("dateFrom", dateFrom); ("dateTo", dateTo) ]
+            |> invokeWith [ ("CompanyName", box "company5"); ("DateFrom", dateFrom); ("DateTo", dateTo) ]
 
         results
-        |> getResult "sentiment"
+        |> getResult "Sentiment"
         |> assertEqual Double.NaN
 
         track
@@ -44,10 +44,10 @@ type QuerySentimentTests () =
     member this.``Try Querying Sentiment Where No Tweets Are Returned`` () =
         let results, track =
             QuerySentiment ()
-            |> invokeWith [ ("companyName", box "company6"); ("dateFrom", dateFrom); ("dateTo", dateTo) ]
+            |> invokeWith [ ("CompanyName", box "company6"); ("DateFrom", dateFrom); ("DateTo", dateTo) ]
 
         results
-        |> getResult "sentiment"
+        |> getResult "Sentiment"
         |> assertEqual Double.NaN
 
         track
@@ -58,10 +58,10 @@ type QuerySentimentTests () =
     member this.``Query Low Sentiment`` () =
         let results, track =
             QuerySentiment ()
-            |> invokeWith [ ("companyName", box "company1"); ("dateFrom", dateFrom); ("dateTo", dateTo) ]
+            |> invokeWith [ ("CompanyName", box "company1"); ("DateFrom", dateFrom); ("DateTo", dateTo) ]
 
         results
-        |> getResult "sentiment"
+        |> getResult "Sentiment"
         |> assertEqual 0.4
 
         track
@@ -72,10 +72,10 @@ type QuerySentimentTests () =
     member this.``Query High Sentiment`` () =
         let results, track =
             QuerySentiment ()
-            |> invokeWith [ ("companyName", box "company2"); ("dateFrom", dateFrom); ("dateTo", dateTo) ]
+            |> invokeWith [ ("CompanyName", box "company2"); ("DateFrom", dateFrom); ("DateTo", dateTo) ]
 
         results
-        |> getResult "sentiment"
+        |> getResult "Sentiment"
         |> assertEqual 0.7
 
         track

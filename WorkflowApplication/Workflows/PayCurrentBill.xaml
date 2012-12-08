@@ -21,9 +21,9 @@
  xmlns:wpa="clr-namespace:Workflows.PaymentReference.Activities"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="companyName" Type="InArgument(x:String)" />
-    <x:Property Name="userAccountData" Type="InArgument(x:String)" />
-    <x:Property Name="paymentSucceeded" Type="OutArgument(x:Boolean)" />
+    <x:Property Name="CompanyName" Type="InArgument(x:String)" />
+    <x:Property Name="UserAccountData" Type="InArgument(x:String)" />
+    <x:Property Name="PaymentSucceeded" Type="OutArgument(x:Boolean)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
   <sap2010:WorkflowViewState.IdRef>Workflows.PayCurrentBill_1</sap2010:WorkflowViewState.IdRef>
@@ -72,7 +72,7 @@
         <saa:GetBill DisplayName="Get Current Bill" sap2010:WorkflowViewState.IdRef="GetBill_2" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
           <saa:GetBill.companyName>
             <InArgument x:TypeArguments="x:String">
-              <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
+              <mca:CSharpValue x:TypeArguments="x:String">CompanyName</mca:CSharpValue>
             </InArgument>
           </saa:GetBill.companyName>
           <saa:GetBill.currentBill>
@@ -109,7 +109,7 @@
                           </saa:Charge.amount>
                           <saa:Charge.companyName>
                             <InArgument x:TypeArguments="x:String">
-                              <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
+                              <mca:CSharpValue x:TypeArguments="x:String">CompanyName</mca:CSharpValue>
                             </InArgument>
                           </saa:Charge.companyName>
                         </saa:Charge>
@@ -127,7 +127,7 @@
                         </saa:Charge.chargingSucceeded>
                         <saa:Charge.companyName>
                           <InArgument x:TypeArguments="x:String">
-                            <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
+                            <mca:CSharpValue x:TypeArguments="x:String">CompanyName</mca:CSharpValue>
                           </InArgument>
                         </saa:Charge.companyName>
                       </saa:Charge>
@@ -138,8 +138,8 @@
                           <mca:CSharpValue x:TypeArguments="x:Boolean">chargingSucceeded</mca:CSharpValue>
                         </FlowDecision.Condition>
                         <FlowDecision.True>
-                          <FlowStep x:Name="__ReferenceID15">
-                            <spa:Pay sap2010:Annotation.AnnotationText="Here the accrued amount of money is transferred." DisplayName="Perform Payment" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+                          <FlowStep x:Name="__ReferenceID15" sap2010:WorkflowViewState.IdRef="FlowStep_16">
+                            <spa:Pay sap2010:Annotation.AnnotationText="Here the accrued amount of money is transferred." DisplayName="Perform Payment" sap2010:WorkflowViewState.IdRef="Pay_2" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
                               <spa:Pay.amount>
                                 <InArgument x:TypeArguments="x:Double">
                                   <mca:CSharpValue x:TypeArguments="x:Double">currentBill</mca:CSharpValue>
@@ -152,20 +152,19 @@
                               </spa:Pay.ourAccountData>
                               <spa:Pay.paymentSucceeded>
                                 <OutArgument x:TypeArguments="x:Boolean">
-                                  <mca:CSharpReference x:TypeArguments="x:Boolean">paymentSucceeded</mca:CSharpReference>
+                                  <mca:CSharpReference x:TypeArguments="x:Boolean">PaymentSucceeded</mca:CSharpReference>
                                 </OutArgument>
                               </spa:Pay.paymentSucceeded>
                               <spa:Pay.userAccountData>
                                 <InArgument x:TypeArguments="x:String">
-                                  <mca:CSharpValue x:TypeArguments="x:String">userAccountData</mca:CSharpValue>
+                                  <mca:CSharpValue x:TypeArguments="x:String">UserAccountData</mca:CSharpValue>
                                 </InArgument>
                               </spa:Pay.userAccountData>
-                              <sap2010:WorkflowViewState.IdRef>Pay_2</sap2010:WorkflowViewState.IdRef>
                             </spa:Pay>
                             <FlowStep.Next>
                               <FlowDecision x:Name="__ReferenceID8" DisplayName="Payment Succeeded?" sap2010:WorkflowViewState.IdRef="FlowDecision_1">
                                 <FlowDecision.Condition>
-                                  <mca:CSharpValue x:TypeArguments="x:Boolean">paymentSucceeded</mca:CSharpValue>
+                                  <mca:CSharpValue x:TypeArguments="x:Boolean">PaymentSucceeded</mca:CSharpValue>
                                 </FlowDecision.Condition>
                                 <FlowDecision.True>
                                   <FlowStep x:Name="__ReferenceID11" sap2010:WorkflowViewState.IdRef="FlowStep_11">
@@ -194,7 +193,6 @@
                                 </FlowDecision.False>
                               </FlowDecision>
                             </FlowStep.Next>
-                            <sap2010:WorkflowViewState.IdRef>FlowStep_16</sap2010:WorkflowViewState.IdRef>
                           </FlowStep>
                         </FlowDecision.True>
                         <FlowDecision.False>
@@ -205,7 +203,7 @@
                                 <Assign DisplayName="Set Result" sap2010:WorkflowViewState.IdRef="Assign_3">
                                   <Assign.To>
                                     <OutArgument x:TypeArguments="x:Boolean">
-                                      <mca:CSharpReference x:TypeArguments="x:Boolean">paymentSucceeded</mca:CSharpReference>
+                                      <mca:CSharpReference x:TypeArguments="x:Boolean">PaymentSucceeded</mca:CSharpReference>
                                     </OutArgument>
                                   </Assign.To>
                                   <Assign.Value>
@@ -232,7 +230,7 @@
                   <Assign DisplayName="Set Result" sap2010:WorkflowViewState.IdRef="Assign_2">
                     <Assign.To>
                       <OutArgument x:TypeArguments="x:Boolean">
-                        <mca:CSharpReference x:TypeArguments="x:Boolean">paymentSucceeded</mca:CSharpReference>
+                        <mca:CSharpReference x:TypeArguments="x:Boolean">PaymentSucceeded</mca:CSharpReference>
                       </OutArgument>
                     </Assign.To>
                     <Assign.Value>
@@ -245,7 +243,7 @@
             <FlowStep x:Key="NaN" x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_3">
               <WriteLine DisplayName="User Not Registered" sap2010:WorkflowViewState.IdRef="WriteLine_1">
                 <InArgument x:TypeArguments="x:String">
-                  <mca:CSharpValue x:TypeArguments="x:String">"The company \"" + companyName + "\" is not registered."</mca:CSharpValue>
+                  <mca:CSharpValue x:TypeArguments="x:String">"The company \"" + CompanyName + "\" is not registered."</mca:CSharpValue>
                 </InArgument>
               </WriteLine>
               <FlowStep.Next>
@@ -253,7 +251,7 @@
                   <Assign DisplayName="Set Result" sap2010:WorkflowViewState.IdRef="Assign_1">
                     <Assign.To>
                       <OutArgument x:TypeArguments="x:Boolean">
-                        <mca:CSharpReference x:TypeArguments="x:Boolean">paymentSucceeded</mca:CSharpReference>
+                        <mca:CSharpReference x:TypeArguments="x:Boolean">PaymentSucceeded</mca:CSharpReference>
                       </OutArgument>
                     </Assign.To>
                     <Assign.Value>
@@ -283,7 +281,7 @@
     <x:Reference>__ReferenceID13</x:Reference>
     <x:Reference>__ReferenceID14</x:Reference>
     <x:Reference>__ReferenceID15</x:Reference>
-    <sads:DebugSymbol.Symbol>d09DOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xQYXlDdXJyZW50QmlsbC54YW1sLD8DnwIPAgEBSAlTFwMBtgHiAQ/iAZQBAwGuAVgRXikDAaUBYRWGASsCAXKKARuKAWsCAWrKAR3KAaQBAgFozQEh1gEqAgFejgEdpAEnAgE9qAEjqAFyAgE1tQEluwEyAgEsvgEpvgHAAQIBKqwBJbABMQIBIfYBD/oBGwIBGP0BE4YCHAIBDuUBD+UBhgECAQzoARPxARwCAQJLD0tYAwG/AVAPUGADAbcBWxdbawMBpgFkG2SKAQIBc3UXhQEkAwGMAWgZcyYCAXvKAX7KAaEBAgFp1AFN1AFSAgFn0AEn0AF+AgFfmwEjmwF6AgFWoAEjoAFwAgFOkQEjkQFsAgFGlgEjlgFvAgE+uAEruAGSAQIBLb4BhAG+Ab0BAgErrgEprgGcAQIBIvgBE/gBiQECARmEAj+EAkQCAReAAhmAAnACAQ/lAW7lAYMBAgEN7wE/7wFDAgEL6wEZ6wFwAgEDfR19dQMBnQGCAR2CAWYDAZUBeB14ZwMBjQFwH3BoAwGEAWsfa2gCAXw=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d09DOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xQYXlDdXJyZW50QmlsbC54YW1sLD8DnQIPAgEBSAlTFwMBtgHgAQ/gAZQBAwGuAVgRXikDAaUBYRWGASsCAXKKARuKAWsCAWrIAR3IAaQBAgFoywEh1AEqAgFejgEdowEnAgE9pwEjpwFyAgE1tAElugEyAgEsvQEpvQHAAQIBKqsBJa8BMQIBIfQBD/gBGwIBGPsBE4QCHAIBDuMBD+MBhgECAQzmARPvARwCAQJLD0tYAwG/AVAPUGADAbcBWxdbawMBpgFkG2SKAQIBc3UXhQEkAwGMAWgZcyYCAXvIAX7IAaEBAgFp0gFN0gFSAgFnzgEnzgF+AgFfmwEjmwF6AgFWoAEjoAFwAgFOkQEjkQFsAgFGlgEjlgFvAgE+twErtwGSAQIBLb0BhAG9Ab0BAgErrQEprQGcAQIBIvYBE/YBiQECARmCAj+CAkQCARf+ARn+AXACAQ/jAW7jAYMBAgEN7QE/7QFDAgEL6QEZ6QFwAgEDfR19dQMBnQGCAR2CAWYDAZUBeB14ZwMBjQFwH3BoAwGEAWsfa2gCAXw=</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>
@@ -552,7 +550,7 @@
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
       </sap2010:ViewStateData>
-      <sap2010:ViewStateData Id="Workflows.PayCurrentBill_1" sap:VirtualizedContainerService.HintSize="676,1585" />
+      <sap2010:ViewStateData Id="Workflows.PayCurrentBill_1" sap:VirtualizedContainerService.HintSize="715,1675" />
     </sap2010:ViewStateManager>
   </sap2010:WorkflowViewState.ViewStateManager>
 </Activity>

@@ -13,10 +13,10 @@ type UserUnregistrationTests () =
     member this.``Try Unregistering Not Registered Company`` () =
         let results, track =
             UserUnregistration ()
-            |> invokeWith [ ("companyName", "company4") ]
+            |> invokeWith [ ("CompanyName", "company4") ]
         
         results
-        |> getResult "userUnregistered"
+        |> getResult "UserUnregistered"
         |> assertEqual false
 
         track
@@ -27,10 +27,10 @@ type UserUnregistrationTests () =
     member this.``Try Unregistering Company With Pending Payment`` () =
         let results, track =
             UserUnregistration ()
-            |> invokeWith [ ("companyName", "company1") ]
+            |> invokeWith [ ("CompanyName", "company1") ]
 
         results
-        |> getResult "userUnregistered"
+        |> getResult "UserUnregistered"
         |> assertEqual false
 
         track
@@ -41,10 +41,10 @@ type UserUnregistrationTests () =
     member this.``Try Unregistering Company Where Listener Detachment Fails`` () =
         let results, track =
             UserUnregistration ()
-            |> invokeWith [ ("companyName", "company2") ]
+            |> invokeWith [ ("CompanyName", "company2") ]
 
         results
-        |> getResult "userUnregistered"
+        |> getResult "UserUnregistered"
         |> assertEqual false
 
         track
@@ -55,10 +55,10 @@ type UserUnregistrationTests () =
     member this.``Try Unregistering Company Where Removal Fails`` () =
         let results, track =
             UserUnregistration ()
-            |> invokeWith [ ("companyName", "company5") ]
+            |> invokeWith [ ("CompanyName", "company5") ]
 
         results
-        |> getResult "userUnregistered"
+        |> getResult "UserUnregistered"
         |> assertEqual false
 
         track
@@ -69,10 +69,10 @@ type UserUnregistrationTests () =
     member this.``Unregister Company`` () =
         let results, track =
             UserUnregistration ()
-            |> invokeWith [ ("companyName", "company6") ]
+            |> invokeWith [ ("CompanyName", "company6") ]
 
         results
-        |> getResult "userUnregistered"
+        |> getResult "UserUnregistered"
         |> assertEqual true
 
         track

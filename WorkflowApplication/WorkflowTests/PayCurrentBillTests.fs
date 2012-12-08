@@ -13,10 +13,10 @@ type PayCurrentBillTests () =
     member this.``Try Paying Bill Of Nonexisting Company`` () =
         let results, track =
             PayCurrentBill ()
-            |> invokeWith [ ("companyName", "company4"); ("userAccountData", "{User Account Information}") ]
+            |> invokeWith [ ("CompanyName", "company4"); ("UserAccountData", "{User Account Information}") ]
 
         results
-        |> getResult "paymentSucceeded"
+        |> getResult "PaymentSucceeded"
         |> assertEqual false
 
         track
@@ -27,10 +27,10 @@ type PayCurrentBillTests () =
     member this.``Pay Empty Bill`` () =
         let results, track =
             PayCurrentBill ()
-            |> invokeWith [ ("companyName", "company2"); ("userAccountData", "{User Account Information}") ]
+            |> invokeWith [ ("CompanyName", "company2"); ("UserAccountData", "{User Account Information}") ]
 
         results
-        |> getResult "paymentSucceeded"
+        |> getResult "PaymentSucceeded"
         |> assertEqual true
 
         track
@@ -41,10 +41,10 @@ type PayCurrentBillTests () =
     member this.``Try Paying Bill Where Settlement Fails`` () =
         let results, track =
             PayCurrentBill ()
-            |> invokeWith [ ("companyName", "company3"); ("userAccountData", "{User Account Information}") ]
+            |> invokeWith [ ("CompanyName", "company3"); ("UserAccountData", "{User Account Information}") ]
 
         results
-        |> getResult "paymentSucceeded"
+        |> getResult "PaymentSucceeded"
         |> assertEqual false
 
         track
@@ -55,10 +55,10 @@ type PayCurrentBillTests () =
     member this.``Try Paying Bill Where Money Transfer Fails`` () =
         let results, track =
             PayCurrentBill ()
-            |> invokeWith [ ("companyName", "company1"); ("userAccountData", "{Faulty User Account Information}") ]
+            |> invokeWith [ ("CompanyName", "company1"); ("UserAccountData", "{Faulty User Account Information}") ]
 
         results
-        |> getResult "paymentSucceeded"
+        |> getResult "PaymentSucceeded"
         |> assertEqual false
 
         track
@@ -69,10 +69,10 @@ type PayCurrentBillTests () =
     member this.``Pay Bill`` () =
         let results, track =
             PayCurrentBill ()
-            |> invokeWith [ ("companyName", "company1"); ("userAccountData", "{User Account Information}") ]
+            |> invokeWith [ ("CompanyName", "company1"); ("UserAccountData", "{User Account Information}") ]
 
         results
-        |> getResult "paymentSucceeded"
+        |> getResult "PaymentSucceeded"
         |> assertEqual true
 
         track

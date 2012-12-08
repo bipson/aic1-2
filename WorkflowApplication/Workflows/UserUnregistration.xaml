@@ -19,8 +19,8 @@
  xmlns:sua="clr-namespace:ServiceActivities.UserReference.Activities;assembly=ServiceActivities"
  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <x:Members>
-    <x:Property Name="companyName" Type="InArgument(x:String)" />
-    <x:Property Name="userUnregistered" Type="OutArgument(x:Boolean)" />
+    <x:Property Name="CompanyName" Type="InArgument(x:String)" />
+    <x:Property Name="UserUnregistered" Type="OutArgument(x:Boolean)" />
   </x:Members>
   <sap2010:ExpressionActivityEditor.ExpressionActivityEditor>C#</sap2010:ExpressionActivityEditor.ExpressionActivityEditor>
   <sap2010:WorkflowViewState.IdRef>Workflows.UserUnregistration_1</sap2010:WorkflowViewState.IdRef>
@@ -69,7 +69,7 @@
         <sua:Exists DisplayName="Check If User Exists" sap2010:WorkflowViewState.IdRef="Exists_2" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
           <sua:Exists.companyName>
             <InArgument x:TypeArguments="x:String">
-              <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
+              <mca:CSharpValue x:TypeArguments="x:String">CompanyName</mca:CSharpValue>
             </InArgument>
           </sua:Exists.companyName>
           <sua:Exists.userExists>
@@ -88,7 +88,7 @@
                 <saa:GetBill DisplayName="Get Current Bill" sap2010:WorkflowViewState.IdRef="GetBill_2" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
                   <saa:GetBill.companyName>
                     <InArgument x:TypeArguments="x:String">
-                      <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
+                      <mca:CSharpValue x:TypeArguments="x:String">CompanyName</mca:CSharpValue>
                     </InArgument>
                   </saa:GetBill.companyName>
                   <saa:GetBill.currentBill>
@@ -106,7 +106,7 @@
                       <FlowStep x:Name="__ReferenceID4" sap2010:WorkflowViewState.IdRef="FlowStep_2">
                         <WriteLine DisplayName="Payment Pending" sap2010:WorkflowViewState.IdRef="WriteLine_1">
                           <InArgument x:TypeArguments="x:String">
-                            <mca:CSharpValue x:TypeArguments="x:String">"The company \"" + companyName + "\" still has open bills."</mca:CSharpValue>
+                            <mca:CSharpValue x:TypeArguments="x:String">"The company \"" + CompanyName + "\" still has open bills."</mca:CSharpValue>
                           </InArgument>
                         </WriteLine>
                         <FlowStep.Next>
@@ -114,7 +114,7 @@
                             <Assign DisplayName="Set Result" sap2010:WorkflowViewState.IdRef="Assign_3">
                               <Assign.To>
                                 <OutArgument x:TypeArguments="x:Boolean">
-                                  <mca:CSharpReference x:TypeArguments="x:Boolean">userUnregistered</mca:CSharpReference>
+                                  <mca:CSharpReference x:TypeArguments="x:Boolean">UserUnregistered</mca:CSharpReference>
                                 </OutArgument>
                               </Assign.To>
                               <Assign.Value>
@@ -137,7 +137,7 @@
                             <sta:AttachListener listenerAttached="{x:Null}" DisplayName="Reattach Twitter Listener" sap2010:WorkflowViewState.IdRef="AttachListener_2" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
                               <sta:AttachListener.filter>
                                 <InArgument x:TypeArguments="x:String">
-                                  <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
+                                  <mca:CSharpValue x:TypeArguments="x:String">CompanyName</mca:CSharpValue>
                                 </InArgument>
                               </sta:AttachListener.filter>
                             </sta:AttachListener>
@@ -145,7 +145,7 @@
                           <sta:DetachListener DisplayName="Detach Twitter Listener" sap2010:WorkflowViewState.IdRef="DetachListener_2" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
                             <sta:DetachListener.filter>
                               <InArgument x:TypeArguments="x:String">
-                                <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
+                                <mca:CSharpValue x:TypeArguments="x:String">CompanyName</mca:CSharpValue>
                               </InArgument>
                             </sta:DetachListener.filter>
                             <sta:DetachListener.listenerDetached>
@@ -161,30 +161,29 @@
                               <mca:CSharpValue x:TypeArguments="x:Boolean">wasListenerDetached</mca:CSharpValue>
                             </FlowDecision.Condition>
                             <FlowDecision.True>
-                              <FlowStep x:Name="__ReferenceID14">
-                                <sua:Remove DisplayName="Remove User" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
+                              <FlowStep x:Name="__ReferenceID14" sap2010:WorkflowViewState.IdRef="FlowStep_16">
+                                <sua:Remove DisplayName="Remove User" sap2010:WorkflowViewState.IdRef="Remove_2" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
                                   <sua:Remove.companyName>
                                     <InArgument x:TypeArguments="x:String">
-                                      <mca:CSharpValue x:TypeArguments="x:String">companyName</mca:CSharpValue>
+                                      <mca:CSharpValue x:TypeArguments="x:String">CompanyName</mca:CSharpValue>
                                     </InArgument>
                                   </sua:Remove.companyName>
                                   <sua:Remove.userRemoved>
                                     <OutArgument x:TypeArguments="x:Boolean">
-                                      <mca:CSharpReference x:TypeArguments="x:Boolean">userUnregistered</mca:CSharpReference>
+                                      <mca:CSharpReference x:TypeArguments="x:Boolean">UserUnregistered</mca:CSharpReference>
                                     </OutArgument>
                                   </sua:Remove.userRemoved>
-                                  <sap2010:WorkflowViewState.IdRef>Remove_2</sap2010:WorkflowViewState.IdRef>
                                 </sua:Remove>
                                 <FlowStep.Next>
                                   <FlowDecision x:Name="__ReferenceID8" DisplayName="User Removed?" sap2010:WorkflowViewState.IdRef="FlowDecision_3">
                                     <FlowDecision.Condition>
-                                      <mca:CSharpValue x:TypeArguments="x:Boolean">userUnregistered</mca:CSharpValue>
+                                      <mca:CSharpValue x:TypeArguments="x:Boolean">UserUnregistered</mca:CSharpValue>
                                     </FlowDecision.Condition>
                                     <FlowDecision.True>
                                       <FlowStep x:Name="__ReferenceID10" sap2010:WorkflowViewState.IdRef="FlowStep_9">
                                         <WriteLine DisplayName="Unregistration Succeeded" sap2010:WorkflowViewState.IdRef="WriteLine_3">
                                           <InArgument x:TypeArguments="x:String">
-                                            <mca:CSharpValue x:TypeArguments="x:String">"Company \"" + companyName + "\" has been successfully unregistered."</mca:CSharpValue>
+                                            <mca:CSharpValue x:TypeArguments="x:String">"Company \"" + CompanyName + "\" has been successfully unregistered."</mca:CSharpValue>
                                           </InArgument>
                                         </WriteLine>
                                       </FlowStep>
@@ -207,7 +206,6 @@
                                     </FlowDecision.False>
                                   </FlowDecision>
                                 </FlowStep.Next>
-                                <sap2010:WorkflowViewState.IdRef>FlowStep_16</sap2010:WorkflowViewState.IdRef>
                               </FlowStep>
                             </FlowDecision.True>
                             <FlowDecision.False>
@@ -230,7 +228,7 @@
               <FlowStep x:Name="__ReferenceID2" sap2010:WorkflowViewState.IdRef="FlowStep_6">
                 <WriteLine DisplayName="User Not Registered" sap2010:WorkflowViewState.IdRef="WriteLine_2">
                   <InArgument x:TypeArguments="x:String">
-                    <mca:CSharpValue x:TypeArguments="x:String">"The company \"" + companyName + "\" is not registered."</mca:CSharpValue>
+                    <mca:CSharpValue x:TypeArguments="x:String">"The company \"" + CompanyName + "\" is not registered."</mca:CSharpValue>
                   </InArgument>
                 </WriteLine>
                 <FlowStep.Next>
@@ -257,7 +255,7 @@
     <x:Reference>__ReferenceID12</x:Reference>
     <x:Reference>__ReferenceID13</x:Reference>
     <x:Reference>__ReferenceID14</x:Reference>
-    <sads:DebugSymbol.Symbol>d1NDOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xVc2VyVW5yZWdpc3RyYXRpb24ueGFtbCQ8A4UCDwIBAUUJUBYDAYgBVA9UWwMBgQHnARHrAR0CAXlyHXsmAgFwWBFjHwIBYWcXZ2gCAVqCARmdAS8CATuhAR+hAXECATTXASHXAfYBAgEypQEhsQEuAgEjtQEntQF2AgEcwgEpyAE2AgEUywEtywG/AQIBErkBKb0BNQIBCmsZbyUCAQJID0hYAwGQAU0PTWMDAYkB6QEV6QGLAQIBenlJeU4CAXh1I3V6AgFxWxdbYAIBaWAXYGgCAWKFAR+FAY0BAgE8kQEbnAEwAgFLiQEdjwEyAgFD1wGIAdcB8wECATOoASeoAXACASutASetAX4CASTFAS/FAZUBAgEVywGOAcsBvAECARO7AS27AbABAgELbR1tlgECAQOUASGUAWoCAVOZASGZAXsCAUyMASOMAWwCAUQ=</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d1NDOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xVc2VyVW5yZWdpc3RyYXRpb24ueGFtbCQ8A4MCDwIBAUUJUBYDAYgBVA9UWwMBgQHlARHpAR0CAXlyHXsmAgFwWBFjHwIBYWcXZ2gCAVqCARmdAS8CATuhAR+hAXECATTVASHVAfYBAgEypQEhsAEuAgEjtAEntAF2AgEcwQEpxwE2AgEUygEtygG/AQIBErgBKbwBNQIBCmsZbyUCAQJID0hYAwGQAU0PTWMDAYkB5wEV5wGLAQIBenlJeU4CAXh1I3V6AgFxWxdbYAIBaWAXYGgCAWKFAR+FAY0BAgE8kQEbnAEwAgFLiQEdjwEyAgFD1QGIAdUB8wECATOoASeoAXACASutASetAX4CASTEAS/EAZUBAgEVygGOAcoBvAECARO6AS26AbABAgELbR1tlgECAQOUASGUAWoCAVOZASGZAXsCAUyMASOMAWwCAUQ=</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>

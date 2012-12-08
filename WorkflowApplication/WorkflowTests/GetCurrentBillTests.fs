@@ -13,10 +13,10 @@ type GetCurrentBillTests () =
     member this.``Try Getting Bill Of Nonexisting Company`` () =
         let results, track =
             GetCurrentBill ()
-            |> invokeWith [ ("companyName", "company4") ]
+            |> invokeWith [ ("CompanyName", "company4") ]
 
         results
-        |> getResult "currentBill"
+        |> getResult "CurrentBill"
         |> assertEqual Double.NaN
 
         track
@@ -27,10 +27,10 @@ type GetCurrentBillTests () =
     member this.``Get Empty Bill`` () =
         let results, track =
             GetCurrentBill ()
-            |> invokeWith [ ("companyName", "company2") ]
+            |> invokeWith [ ("CompanyName", "company2") ]
 
         results
-        |> getResult "currentBill"
+        |> getResult "CurrentBill"
         |> assertEqual 0.0
 
         track
@@ -41,10 +41,10 @@ type GetCurrentBillTests () =
     member this.``Get Nonempty Bill`` () =
         let results, track =
             GetCurrentBill ()
-            |> invokeWith [ ("companyName", "company1") ]
+            |> invokeWith [ ("CompanyName", "company1") ]
 
         results
-        |> getResult "currentBill"
+        |> getResult "CurrentBill"
         |> assertEqual 34.5
 
         track
