@@ -1,0 +1,46 @@
+﻿@model Website.Models.Credentials
+
+@if (false)
+{
+    <script src="@Url.Content("~/Scripts/jquery-1.8.3-vsdoc.js")" type="text/javascript"></script>
+}
+
+<script type="text/javascript">
+    $(function () {
+        $('#loginForm :submit').button();
+        $('#loginForm :text, #loginForm :password').addClass('ui-corner-all');
+    });
+
+    function LoginCallback(data) {
+        if (data.Success) {
+            window.location.replace(data.RedirectURL);
+        } else {
+            ShowFormErrors('loginForm', data);
+        }
+    }
+
+    function DisableInput() {
+        $('#loginForm :enabled').prop('disabled', true);
+    }
+
+    function EnableInput() {
+        $('#loginForm :disabled').prop('disabled', false);
+    }
+</script>
+
+@using (Ajax.BeginForm("Login", null, new AjaxOptions
+    {
+        HttpMethod = "Post",
+        OnSuccess = "LoginCallback",
+        OnBegin = "DisableInput",
+        OnComplete = "EnableInput"
+    }, new { id = "loginForm" }))
+{
+    foreach (var message in (IEnumerable<String>)TempData["Messages"] ?? new String[0])
+    {
+         <p>@message</p>
+    }
+    <div class="field-validation-error"></div>
+    @Html.EditorForModel()
+    <input type="submit" value="Login" />
+}

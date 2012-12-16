@@ -8,7 +8,7 @@ import javax.jws.WebService;
             serviceName = "PaymentService")
 public final class Payment implements IPayment {
 	// Set to true when using mockup payment service.
-	private static final boolean MOCKUP = true;
+	private static final boolean MOCKUP = false;
 	
     @Override
     public Boolean pay(String ourAccountData, String userAccountData, Double amount) {

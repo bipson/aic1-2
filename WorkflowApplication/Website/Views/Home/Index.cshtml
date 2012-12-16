@@ -1,23 +1,38 @@
 ﻿@model Website.Models.Credentials
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Twitter Sentiment Analyzer";
 }
 
-<h2>Login or Register</h2>
+@if (false)
+{
+    <script src="@Url.Content("~/Scripts/jquery-1.8.3-vsdoc.js")" type="text/javascript"></script>
+}
 
-<div>
-    @foreach (String message in ((IEnumerable<String>)TempData["WorkflowMessages"] ?? new String[0]))
-    {
-        <p>
-            @message
-        </p>
+<script type="text/javascript">
+    function DisplayMessage(message) {
+        $('<li></li>').html(message).hide().appendTo('#messagecontainer')
+            .fadeIn('fast').delay(8000).fadeOut('slow');
     }
+
+    $(function () {
+        $('#tabs').tabs();
+        @foreach (var message in (IEnumerable<String>)TempData["Messages"] ?? new String[0])
+        {
+            @:DisplayMessage('@message');
+        }
+    });
+</script>
+
+<div id="tabs">
+    <ul>
+        <li><a href="#sentiment-tab">Sentiment Query</a></li>
+        <li><a href="@Url.Action("Billing")">Billing</a></li>
+        <li><a href="@Url.Action("Account")">Account</a></li>
+    </ul>
+    <div id="sentiment-tab">
+        @Html.Action("SentimentQuery")
+    </div>
 </div>
 
-@using (Html.BeginForm())
-{
-    @Html.EditorForModel()
-    <input type="submit" value="Login" />
-    @Html.ActionLink("Register", "Index", "Register")
-}
+<ul id="messagecontainer" class="ui-widget"></ul>

@@ -82,7 +82,7 @@
               <FlowStep x:Name="__ReferenceID1" sap2010:WorkflowViewState.IdRef="FlowStep_1">
                 <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_1">
                   <InArgument x:TypeArguments="x:String">
-                    <mca:CSharpValue x:TypeArguments="x:String">"You are now logged in as \"" + CompanyName + "\""</mca:CSharpValue>
+                    <mca:CSharpValue x:TypeArguments="x:String">"You are now logged in as \"" + CompanyName + "\"."</mca:CSharpValue>
                   </InArgument>
                 </WriteLine>
               </FlowStep>
@@ -100,7 +100,7 @@
     <x:Reference>__ReferenceID1</x:Reference>
     <x:Reference>__ReferenceID2</x:Reference>
     <x:Reference>__ReferenceID3</x:Reference>
-    <sads:DebugSymbol.Symbol>d0pDOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xVc2VyTG9naW4ueGFtbAo4A2gPAgEBOwlLIAIBDU8PT1YCAQlcEVx/AgEHUxFXHQIBAkMPQ14CARZID0hVAgESPg8+WAIBDlxPXHwCAQhVFVWFAQIBAw==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d0pDOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xVc2VyTG9naW4ueGFtbAo4A2gPAgEBOwlLIAIBDU8PT1YCAQlcEVx/AgEHUxFXHQIBAkMPQ14CARZID0hVAgESPg8+WAIBDlxPXHwCAQhVFVWGAQIBAw==</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>

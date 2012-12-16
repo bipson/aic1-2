@@ -1,0 +1,98 @@
+﻿@model Website.Models.DateInterval
+
+@{
+    var rootDate = new DateTime(1970, 1, 1);
+    var dateFrom = Convert.ToInt64((Model.DateFrom - rootDate).TotalMilliseconds);
+    var dateTo = Convert.ToInt64((Model.DateTo - rootDate).TotalMilliseconds);
+}
+
+@if (false)
+{
+    <script src="@Url.Content("~/Scripts/jquery-1.8.3-vsdoc.js")" type="text/javascript"></script>
+}
+
+<script type="text/javascript">
+    function p(s) { return parseInt(s, 10); }
+    $(function () {
+        $.datepicker.setDefaults($.datepicker.regional["de"]);
+        $('#DateFrom').datepicker({
+            dateFormat: 'dd.mm.yy',
+            defaultDate: new Date(@dateFrom),
+            maxDate: new Date(@dateTo),
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            changeMonth: true,
+            changeYear: true,
+            onClose: function (selectedDate) {
+                $('#DateTo').datepicker('option', 'minDate', selectedDate);
+            }
+        });
+        $('#DateTo').datepicker({
+            dateFormat: 'dd.mm.yy',
+            defaultDate: new Date(@dateTo),
+            minDate: new Date(@dateFrom),
+            maxDate: new Date(),
+            showOtherMonths: true,
+            selectOtherMonths: true,
+            changeMonth: true,
+            changeYear: true,
+            onClose: function (selectedDate) {
+                $('#DateFrom').datepicker('option', 'maxDate', selectedDate);
+            }
+        });
+        $('#queryForm :submit').button();
+        $('#queryForm :text').addClass('ui-corner-all');
+        $('#sentimentresults').hide();
+    });
+
+    function QueryInProgressCallback(data) {
+        if (data.Error) {
+            DisplayMessage(data.Error);
+            alert('I am terribly sorry to tell you that the sentiment query failed unexpectedly.');
+        } else {
+            $.each(data.Messages, function (idx, message) {
+                DisplayMessage(message);
+            });
+            if (data.IsFinished) {
+                $.post('@Url.Action("SentimentQueryResult")', '', function (result) {
+                    $('#sentimentresults').slideDown();
+                    $(result).hide().appendTo('#sentimentresults').slideDown();
+                });
+            } else {
+                $.post('@Url.Action("SentimentQueryProgress")', '', QueryInProgressCallback);
+            }
+        }
+    }
+
+    function QueryInProgressFailure(data) {
+        alert(data);
+        window.eee = data;
+    }
+
+    function DisableQueryInput() {
+        $('#queryForm :enabled').prop('disabled', true);
+    }
+
+    function EnableQueryInput() {
+        $('#queryForm :disabled').prop('disabled', false);
+    }
+</script>
+
+<p>
+    Please select the interval you want to query and click on the button to launch the query.
+</p>
+@using (Ajax.BeginForm("SentimentQueryLaunch", null, new AjaxOptions
+    {
+        HttpMethod = "Post",
+        OnSuccess = "QueryInProgressCallback",
+        OnFailure = "QueryInProgressFailure",
+        OnBegin = "DisableQueryInput",
+        OnComplete = "EnableQueryInput"
+    }, new { id = "queryForm" }))
+{
+    @Html.EditorForModel()
+    <input type="submit" value="Query" />
+}
+<fieldset id="sentimentresults" class="ui-corner-all">
+    <legend>Query Results:</legend>
+</fieldset>

@@ -7,7 +7,7 @@ import javax.jws.WebService;
 @WebService(targetNamespace = "http://aic.service.twitter/", endpointInterface = "twitter.ITwitter", portName = "Twitter", serviceName = "TwitterService")
 public final class Twitter implements ITwitter {
 	// Set to true when using mockup twitter service.
-	private static final boolean MOCKUP = true;
+	private static final boolean MOCKUP = false;
 
 	@Override
 	public Tweet[] fetchTweets(String searchString, Date from, Date to) {

@@ -13,7 +13,7 @@ import model.CompanyEntity;
             serviceName = "AccountingService")
 public final class Accounting implements IAccounting {
 	// Set to true when using mockup accounting service.
-	private static final boolean MOCKUP = true;
+	private static final boolean MOCKUP = false;
 	
 	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("aic.sentiment");
 
@@ -37,10 +37,10 @@ public final class Accounting implements IAccounting {
 			try {
 				CompanyEntity company = manager.find(CompanyEntity.class, companyName);
 				
-				System.out.println("CompanyName: "+company.getCompanyName()+" CurrentBill: "+company.getCurrentBill());
-				
-				if(company != null)
+				if(company != null) {
+					System.out.println("CompanyName: "+company.getCompanyName()+" CurrentBill: "+company.getCurrentBill());
 					return company.getCurrentBill();
+				}
 				else
 					return Double.NaN;
 				

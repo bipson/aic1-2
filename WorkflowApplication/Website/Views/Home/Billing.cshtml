@@ -1,0 +1,66 @@
+﻿@model Website.Models.BillingInformation
+
+@if (false)
+{
+    <script src="@Url.Content("~/Scripts/jquery-1.8.3-vsdoc.js")" type="text/javascript"></script>
+}
+
+<script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#payForm :submit').button();
+        $('#payForm :text').addClass('ui-corner-all');
+        @foreach (var message in ViewBag.Messages ?? new String[0])
+        {
+            @:DisplayMessage('@message');
+        }
+        @if (Model.CurrentBill == 0.0)
+        {
+            @:DisablePaymentInput();
+        }
+    });
+
+    function PaymentCallback(data) {
+        if (data.Success) {
+            $.each(data.Messages, function (idx, message) {
+                DisplayMessage(message);
+            });
+            $('#tabs').tabs('load', '@Url.Action("Billing")');
+            $('#payForm :submit').button();
+            $('#payForm :text').addClass('ui-corner-all');
+        } else {
+            ShowFormErrors('payForm', data);
+        }
+    }
+
+    function DisablePaymentInput() {
+        $('#payForm :enabled').prop('disabled', true);
+    }
+
+    function EnablePaymentInput() {
+        $('#payForm :disabled').prop('disabled', false);
+    }
+</script>
+
+<div>Your current bill is: <b>@Html.DisplayFor(m => m.CurrentBill)€</b></div>
+@if (Model.CurrentBill == 0.0)
+{
+    <div>No payment required.</div>
+}
+else
+{
+    <div>To pay the current bill, please enter your account data below and click on the button to proceed.</div>
+}
+
+@using (Ajax.BeginForm("PayBill", null, new AjaxOptions
+    {
+        HttpMethod = "Post",
+        OnSuccess = "PaymentCallback",
+        OnBegin = "DisablePaymentInput",
+        OnComplete = "EnablePaymentInput"
+    }, new { id = "payForm" }))
+{
+    <div class="field-validation-error"></div>
+    @Html.EditorForModel();
+    <input type="submit" value="Pay Current Bill" />
+}

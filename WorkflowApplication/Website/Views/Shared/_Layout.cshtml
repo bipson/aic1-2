@@ -3,10 +3,29 @@
 <head>
     <title>@ViewBag.Title</title>
     <link href="@Url.Content("~/Content/Site.css")" rel="stylesheet" type="text/css" />
-    <script src="@Url.Content("~/Scripts/jquery-1.7.1.min.js")" type="text/javascript"></script>
+    <link href="@Url.Content("~/Content/themes/redmond/jquery-ui-1.9.2.redmond.min.css")" rel="stylesheet" type="text/css" />
+    <script src="@Url.Content("~/Scripts/jquery-1.8.3.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery-ui-1.9.2.twitter.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.min.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+    <script type="text/javascript">
+        function ShowFormErrors(formID, errors) {
+            var errorField = $('#' + formID + ' > div:first-child').empty();
+            $.each(errors, function (idx, error) {
+                $('<p>' + error.Error + '</p>').appendTo(errorField);
+            });
+        }
+    </script>
 </head>
 
 <body>
-    @RenderBody()
+    <div id="page-wrap">
+        <div id="header" class="ui-widget ui-widget-header ui-corner-all">
+            <img src="@Url.Content("~/Content/images/logo.png")" />
+            <span>@ViewBag.Title</span>
+        </div>
+        @RenderBody()
+    </div>
 </body>
 </html>

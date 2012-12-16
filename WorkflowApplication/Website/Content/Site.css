@@ -1,33 +1,52 @@
-﻿body
-{
-    font-size: .85em;
-    font-family: "Trebuchet MS", Verdana, Helvetica, Sans-Serif;
-    color: #232323;
-    background-color: #fff;
+﻿#page-wrap {
+    margin: 0 auto;
+    width: 550px;
 }
 
-header,
-footer,
-nav,
-section {
-    display: block;
+#header {
+    margin-bottom: 10px;
+}
+
+    #header img {
+        vertical-align: middle;
+        margin: 0 5px;
+    }
+
+    #header span {
+        font-size: 20pt;
+        white-space: pre;
+    }
+
+#queryForm table {
+    width: 100%;
+}
+
+#queryForm td:nth-child(2) {
+    width: 100%;
+    padding: 0 1em;
+}
+
+#messagecontainer {
+    font-size: 10pt;
+    color: darkslategray;
+}
+
+#sentimentresults {
+    border: 1px solid #c5dbec;
+    margin-top: 1em;
+}
+
+    #sentimentresults legend {
+        font-weight: bold;
+        color: #2e6e9e;
+    }
+
+#unregister {
+    margin: 1em;
 }
 
 /* Styles for basic forms
 -----------------------------------------------------------*/
-
-fieldset 
-{
-    border:1px solid #ddd;
-    padding:0 1.4em 1.4em 1.4em;
-    margin:0 0 1.5em 0;
-}
-
-legend 
-{
-    font-size:1.2em;
-    font-weight: bold;
-}
 
 textarea 
 {
@@ -39,9 +58,17 @@ textarea
     margin: 1em 0 0 0;
 }
 
+    .editor-label:after {
+        content: ":";
+    }
+
 .editor-field 
 {
     margin:0.5em 0 0 0;
+}
+
+input[type=submit] {
+    margin:1em 0 0 0;
 }
 
 
@@ -49,7 +76,10 @@ textarea
 -----------------------------------------------------------*/
 .field-validation-error
 {
-    color: #ff0000;
+    color: #c73737;
+    font-size: 11pt;
+    display: block;
+    margin: 5px 0 0 5px;
 }
 
 .field-validation-valid
@@ -59,14 +89,13 @@ textarea
 
 .input-validation-error
 {
-    border: 1px solid #ff0000;
-    background-color: #ffeeee;
+    background-color: #f3bebe;
 }
 
 .validation-summary-errors
 {
     font-weight: bold;
-    color: #ff0000;
+    color: #c73737;
 }
 
 .validation-summary-valid

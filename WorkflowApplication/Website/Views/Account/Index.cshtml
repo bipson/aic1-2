@@ -1,0 +1,26 @@
+﻿@model Website.Models.Credentials
+
+@{
+    ViewBag.Title = "Twitter Sentiment Analyzer";
+}
+
+@if (false)
+{
+    <script src="@Url.Content("~/Scripts/jquery-1.8.3-vsdoc.js")" type="text/javascript"></script>
+}
+
+<script type="text/javascript">
+    $(function () {
+        $('#tabs').tabs({ cache: true });
+    });
+</script>
+
+<div id="tabs">
+    <ul>
+        <li><a href="#login-tab">Login</a></li>
+        <li><a href="@Url.Action("Register")">Register</a></li>
+    </ul>
+    <div id="login-tab">
+        @Html.Action("Login")
+    </div>
+</div>

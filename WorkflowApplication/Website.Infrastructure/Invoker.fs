@@ -15,6 +15,7 @@ type InvokerContext (workflow, parameters, messageProcessor, trackProcessor) =
     member val Results : Object = null with get, set
     member val Messages : seq<String> = null with get, set
     member val Track : seq<TrackingRecord> = null with get, set
+    member val IsFinished : Boolean = false with get, set
 
 type IInvoker = abstract Invoke : InvokerContext -> InvokerContext
 
@@ -56,4 +57,5 @@ type Invoker () =
             ctx.Results  <- ResultDynamicObject (invoker.Invoke inputs) :> obj
             ctx.Track    <- tracker.WorkflowTrack
             ctx.Messages <- writer.WorkflowMessages
+            ctx.IsFinished <- true
             ctx
