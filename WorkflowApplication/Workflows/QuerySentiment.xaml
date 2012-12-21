@@ -206,7 +206,7 @@
                                               <FlowStep x:Name="__ReferenceID7" sap2010:WorkflowViewState.IdRef="FlowStep_8">
                                                 <WriteLine DisplayName="No Tweets Fetched" sap2010:WorkflowViewState.IdRef="WriteLine_3">
                                                   <InArgument x:TypeArguments="x:String">
-                                                    <mca:CSharpValue x:TypeArguments="x:String">"No tweets are available from " + DateFrom + " to " + DateTo + "."</mca:CSharpValue>
+                                                    <mca:CSharpValue x:TypeArguments="x:String">"No tweets are available from " + DateFrom.ToShortDateString() + " to " + DateTo.ToShortDateString() + "."</mca:CSharpValue>
                                                   </InArgument>
                                                 </WriteLine>
                                                 <FlowStep.Next>
@@ -284,7 +284,7 @@
     <x:Reference>__ReferenceID14</x:Reference>
     <x:Reference>__ReferenceID15</x:Reference>
     <x:Reference>__ReferenceID16</x:Reference>
-    <sads:DebugSymbol.Symbol>d09DOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xRdWVyeVNlbnRpbWVudC54YW1sKkEDoAIPAgEBSwlWFgMB3AFaD1pbAwHSAYACEYQCHQMBxwHWATXhAT4DAbIBXhFpGgMBnQFsFXwiAgF+gAEbgAFrAgF08gEd8gG4AQIBcoQBHYQBigECAXCHASGcATMCAUefASWfAYwBAgFFogEprQE7AgEwsQEvsQGKAQIBJs8BMdMBPQIBG7UBMbUBnAECARm4ATXDAUoCAQTGATnGAZsBAgECTg9OWAMB5wFTD1NjAwHdAYICFYICiwEDAcgB3gE73gGDAQMBvQHZATvZAYoBAwGzAWYXZlkDAagBYRdhagMBngF0G3RzAwGTAXkbeWQDAYkBbxtvZgIBf/IBefIBtQECAXOEAVuEAYcBAgFxjwEnjwFvAgFmmQEnmQF8AgFclAEnlAFwAgFSigEnigFtAgFInwFjnwGJAQIBRqUBL6UBhQECATuqAS+qAXwCATHRATXRAbUBAgEctQFvtQGZAQIBGsABO8ABiQECAQ+7ATu7AYoBAgEFxgF3xgGYAQIBAw==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d09DOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xRdWVyeVNlbnRpbWVudC54YW1sKkEDoAIPAgEBSwlWFgMB3AFaD1pbAwHSAYACEYQCHQMBxwHWATXhAT4DAbIBXhFpGgMBnQFsFXwiAgF+gAEbgAFrAgF08gEd8gG4AQIBcoQBHYQBigECAXCHASGcATMCAUefASWfAYwBAgFFogEprQE7AgEwsQEvsQGKAQIBJs8BMdMBPQIBG7UBMbUBnAECARm4ATXDAUoCAQTGATnGAZsBAgECTg9OWAMB5wFTD1NjAwHdAYICFYICiwEDAcgB3gE73gGDAQMBvQHZATvZAYoBAwGzAWYXZlkDAagBYRdhagMBngF0G3RzAwGTAXkbeWQDAYkBbxtvZgIBf/IBefIBtQECAXOEAVuEAYcBAgFxjwEnjwFvAgFmmQEnmQF8AgFclAEnlAFwAgFSigEnigFtAgFInwFjnwGJAQIBRqUBL6UBhQECATuqAS+qAXwCATHRATXRAd0BAgEctQFvtQGZAQIBGsABO8ABiQECAQ+7ATu7AYoBAgEFxgF3xgGYAQIBAw==</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>

@@ -1,5 +1,9 @@
 ﻿@model Double
 
+@{
+    var paymentName = "dialog-payment" + new Random().Next();
+}
+
 @if (false)
 {
     <script src="@Url.Content("~/Scripts/jquery-1.8.3-vsdoc.js")" type="text/javascript"></script>
@@ -13,10 +17,10 @@
         }
 
         $('#unregister').button().click(function () {
-            $('#dialog-@(Model == 0.0 ? "unregister" : "payment")').dialog('open');
+            $('#@(Model == 0.0 ? "dialog-unregister" : paymentName)').dialog('open');
         });
 
-        $("#dialog-unregister").dialog({
+        $('#dialog-unregister').dialog({
             resizable: false,
             width: 400,
             modal: true,
@@ -42,7 +46,7 @@
             }
         });
 
-        $('#dialog-payment').dialog({
+        $('#@paymentName').dialog({
             resizable: false,
             width: 400,
             modal: true,
@@ -65,7 +69,7 @@
     </p>
 </div>
 
-<div id="dialog-payment" title="Pending payment">
+<div id="@paymentName" title="Pending payment">
     <p>
         You have <b>@Model€</b> of outstanding payment. You can only unregister when all your bills have been paid.
     </p>
