@@ -12,6 +12,7 @@ import javax.xml.bind.annotation.XmlType;
 @Embeddable
 @XmlType(name = "Tweet")
 public final class Tweet {
+
 	private long id;
 	private String text;
 	private String user;
@@ -30,7 +31,7 @@ public final class Tweet {
 		this.created = created;
 	}
 
-	@Column
+	@Column(name = "external_id")
 	public long getID() {
 		return id;
 	}

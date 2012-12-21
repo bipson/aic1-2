@@ -1,13 +1,13 @@
 package model;
 
+import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.GenericGenerator;
 
 import twitter.Tweet;
 import db.interfaces.IEntity;
@@ -22,15 +22,14 @@ public class TweetEntity implements IEntity<Long> {
 	public TweetEntity() {
 	}
 
-	public TweetEntity(Long id, CompanyEntity company, Tweet tweet) {
-		this.id = id;
+	public TweetEntity(CompanyEntity company, Tweet tweet) {
 		this.company = company;
 		this.tweet = tweet;
 	}
 
 	@Id
-	@GeneratedValue(generator = "increment")
-	@GenericGenerator(name = "increment", strategy = "increment")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "tweet_id")
 	public Long getId() {
 		return id;
 	}

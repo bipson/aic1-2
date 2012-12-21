@@ -18,5 +18,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/libsvm.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/weka.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/wlsvm.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/twitter4j-core-3.0.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/twitter4j-stream-3.0.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

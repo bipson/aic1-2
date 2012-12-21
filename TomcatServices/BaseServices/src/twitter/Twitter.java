@@ -1,15 +1,26 @@
 package twitter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.jws.WebService;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import model.TweetEntity;
 
 @WebService(targetNamespace = "http://aic.service.twitter/", endpointInterface = "twitter.ITwitter", portName = "Twitter", serviceName = "TwitterService")
 public final class Twitter implements ITwitter {
 	// Set to true when using mockup twitter service.
 	private static final boolean MOCKUP = false;
-
+	
+	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("aic.sentiment");
+	
 	@Override
+	@SuppressWarnings("unchecked")
 	public Tweet[] fetchTweets(String searchString, Date from, Date to) {
 		if (MOCKUP) {
 			System.out.println("Twitter.fetchTweets: searchString=\""
@@ -17,7 +28,7 @@ public final class Twitter implements ITwitter {
 					+ "\"");
 			if (searchString.equals("company1")) {
 				return new Tweet[] {
-						new Tweet(1, "0.1", "user", 0, new Date()),
+						new Tweet(1, "0.2", "user", 0, new Date()),
 						new Tweet(2, "0.1", "user", 0, new Date()),
 						new Tweet(3, "0.2", "user", 0, new Date()),
 						new Tweet(4, "0.3", "user", 0, new Date()),
@@ -39,8 +50,24 @@ public final class Twitter implements ITwitter {
 				return new Tweet[0];
 			}
 		} else {
-			// Final service code.
-			return null;
+			EntityManager manager = emf.createEntityManager();
+			String queryString = "SELECT DISTINCT tweet FROM TweetEntity tweet " +
+					"INNER JOIN tweet.company c " +
+                    "WHERE c.companyName = :company " +
+					"AND :from <= tweet.tweet.created " +
+					"AND tweet.tweet.created < :to ";
+			Query query = manager.createQuery(queryString);
+
+			query.setParameter("company", searchString);
+			query.setParameter("from", from);
+			query.setParameter("to", to);
+			List<TweetEntity> result = query.getResultList();
+			ArrayList<Tweet> tweets = new ArrayList<Tweet>();
+			Iterator<TweetEntity> it = result.iterator();
+			while(it.hasNext()) {
+				tweets.add(it.next().getTweet());
+			}				
+			return tweets.toArray(new Tweet[0]);
 		}
 	}
 
@@ -59,6 +86,7 @@ public final class Twitter implements ITwitter {
 					+ "\"");
 			return !filter.equals("company3");
 		} else {
+			TwitterReg.put(filter);
 			// Final service code.
 			return true;
 		}
@@ -71,6 +99,7 @@ public final class Twitter implements ITwitter {
 					+ "\"");
 			return !filter.equals("company2");
 		} else {
+			TwitterReg.remove(filter);
 			// Final service code.
 			return true;
 		}
