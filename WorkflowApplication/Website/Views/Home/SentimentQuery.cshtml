@@ -12,7 +12,6 @@
 }
 
 <script type="text/javascript">
-    function p(s) { return parseInt(s, 10); }
     $(function () {
         $.datepicker.setDefaults($.datepicker.regional["de"]);
         $('#DateFrom').datepicker({
@@ -47,8 +46,8 @@
 
     function QueryInProgressCallback(data) {
         if (data.Error) {
-            DisplayMessage(data.Error);
             alert('I am terribly sorry to tell you that the sentiment query failed unexpectedly.');
+            DisplayMessage(data.Error);
         } else {
             $.each(data.Messages, function (idx, message) {
                 DisplayMessage(message);

@@ -36,11 +36,13 @@
         OnComplete = "EnableInput"
     }, new { id = "loginForm" }))
 {
-    foreach (var message in (IEnumerable<String>)TempData["Messages"] ?? new String[0])
-    {
-         <p>@message</p>
-    }
-    <div class="field-validation-error"></div>
+
+    <div class="field-validation-error">
+        @foreach (var message in (IEnumerable<String>)TempData["Messages"] ?? new String[0])
+        {
+            <p>@message</p>
+        }
+    </div>
     @Html.EditorForModel()
     <input type="submit" value="Login" />
 }

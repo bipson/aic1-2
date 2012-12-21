@@ -31,7 +31,6 @@ public class BaseLineClassifier implements IClassifier {
 		int pos = 0;
 		int neg = 0;
 		String strLine, pol;
-		int i = 0;
 		while((strLine = br.readLine()) != null) {
 			String[] items = strLine.split(";;");
     		pol = items[0];
@@ -43,7 +42,6 @@ public class BaseLineClassifier implements IClassifier {
 				else if(res_neg.contains(s))
 					neg++;
     		}
-			i++;
 			if(pos>=neg && pol.equals("4") || pos<neg && pol.equals("0"))
 				giuste++;
 			else

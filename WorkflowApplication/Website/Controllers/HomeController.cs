@@ -113,6 +113,7 @@ namespace Website.Controllers
         }
         #endregion
 
+        #region Account
         public PartialViewResult Account()
         {
             var context = invoker.Invoke(new InvokerContext(
@@ -137,5 +138,6 @@ namespace Website.Controllers
             FormsAuthentication.SignOut();
             return Json(new { Success = true, RedirectURL = Url.Action("Index", "Account") });
         }
+        #endregion
     }
 }

@@ -1,7 +1,5 @@
 package sentiment.util;
 
-import java.io.File;
-
 /**
  * Class with utility methods
  * @author AIC
