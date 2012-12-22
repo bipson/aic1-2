@@ -2,6 +2,10 @@ package twitter;
 
 import model.CompanyEntity;
 import model.TweetEntity;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import twitter4j.StallWarning;
 import twitter4j.Status;
 import twitter4j.StatusDeletionNotice;
@@ -10,6 +14,10 @@ import db.GenericDAO;
 
 public class StatusPersister implements StatusListener {
 	private static final String PERSISTENCE_UNIT = "aic.sentiment";
+
+	private static Logger logger = LoggerFactory
+			.getLogger(StatusPersister.class.getSimpleName());
+
 	private CompanyEntity company;
 	private GenericDAO<TweetEntity, Long> tweetDAO;
 	private GenericDAO<CompanyEntity, String> companyDAO;
@@ -54,7 +62,7 @@ public class StatusPersister implements StatusListener {
 
 		TweetEntity t = new TweetEntity(company, tweet);
 		company.getTweets().add(t);
-		System.out.println(tweet.getUser() + " - " + tweet.getText());
+		logger.debug(tweet.getUser() + " - " + tweet.getText());
 		tweetDAO.persist(t);
 		companyDAO.update(company);
 	}

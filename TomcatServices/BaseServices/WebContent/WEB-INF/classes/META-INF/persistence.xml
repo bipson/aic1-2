@@ -25,7 +25,7 @@
 		    <property name="hibernate.cache.provider_class" value="org.hibernate.cache.internal.NoCacheProvider"/>
 		
 		    <!-- Echo all executed SQL to stdout -->
-		    <property name="hibernate.show_sql" value="true"/>
+		    <property name="hibernate.show_sql" value="false"/>	
 		
 		    <!-- Drop and re-create the database schema on startup -->
 		    <property name="hibernate.hbm2ddl.auto" value="update"/>

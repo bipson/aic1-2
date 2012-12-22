@@ -2,6 +2,9 @@ package twitter;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import twitter4j.FilterQuery;
 import twitter4j.StatusListener;
 import twitter4j.StatusStream;
@@ -11,6 +14,9 @@ import twitter4j.TwitterStreamFactory;
 import twitter4j.conf.ConfigurationBuilder;
 
 public class TwitterListeningThread extends Thread {
+
+	private static Logger logger = LoggerFactory
+			.getLogger(TwitterListeningThread.class.getSimpleName());
 
 	private String search;
 	private StatusStream stream;
@@ -48,12 +54,13 @@ public class TwitterListeningThread extends Thread {
 			stream.close();
 			((StatusPersister) listener).shutdown();
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.info("Error while closing Listener: {}, {}", e.getCause(),
+					e.getMessage());
 		}
 	}
 
 	public void run() {
-		System.out.println("new listener " + search);
+		logger.debug("new listener {}", search);
 		listener = new StatusPersister(search);
 
 		try {
@@ -61,7 +68,10 @@ public class TwitterListeningThread extends Thread {
 				stream.next(listener);
 			}
 		} catch (TwitterException e) {
-			// done
+			logger.debug(
+					"TwitterListeningThread caught TwitterException: {}, {}",
+					e.getCause(), e.getMessage());
+			logger.debug("TwitterListeningThread exciting...");
 		} finally {
 			this.close();
 		}
