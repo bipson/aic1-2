@@ -1,9 +1,6 @@
 package twitter;
 
-import java.io.IOException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import twitter4j.FilterQuery;
 import twitter4j.StatusListener;
@@ -15,7 +12,7 @@ import twitter4j.conf.ConfigurationBuilder;
 
 public class TwitterListeningThread extends Thread {
 
-	private static Logger logger = LoggerFactory
+	private static Logger logger = Logger
 			.getLogger(TwitterListeningThread.class.getSimpleName());
 
 	private String search;
@@ -37,6 +34,7 @@ public class TwitterListeningThread extends Thread {
 		try {
 			TwitterStream twitterStream = new TwitterStreamFactory(cb.build())
 					.getInstance();
+			logger.debug("New TwitterStream configured and created");
 
 			long[] followArray = new long[0];
 			String[] trackArray = new String[1];
@@ -44,7 +42,9 @@ public class TwitterListeningThread extends Thread {
 
 			stream = twitterStream.getFilterStream(new FilterQuery(0,
 					followArray, trackArray));
+			logger.debug("New filterStream for term \"" + search + "\" created");
 		} catch (TwitterException te) {
+			logger.error("Error while trying to create Stream");
 			te.printStackTrace();
 		}
 	}
@@ -53,14 +53,16 @@ public class TwitterListeningThread extends Thread {
 		try {
 			stream.close();
 			((StatusPersister) listener).shutdown();
-		} catch (IOException e) {
-			logger.info("Error while closing Listener: {}, {}", e.getCause(),
-					e.getMessage());
+		} catch (Exception e) {
+			logger.error("Error while closing Listerner: " + e.getCause()
+					+ " , " + e.getMessage());
+		} finally {
+			logger.debug("Listener for \"" + search + "\" closed");
 		}
 	}
 
 	public void run() {
-		logger.debug("new listener {}", search);
+		logger.debug("New Listener for term \"" + search + "\" started");
 		listener = new StatusPersister(search);
 
 		try {
@@ -68,11 +70,13 @@ public class TwitterListeningThread extends Thread {
 				stream.next(listener);
 			}
 		} catch (TwitterException e) {
-			logger.debug(
-					"TwitterListeningThread caught TwitterException: {}, {}",
-					e.getCause(), e.getMessage());
-			logger.debug("TwitterListeningThread exciting...");
+			logger.error("Listener-Thread caught TwitterException: "
+					+ e.getCause() + ", " + e.getMessage());
+		} catch (Exception ex) {
+			logger.error("Listener-Thread caught Exception: " + ex.getCause()
+					+ ", " + ex.getMessage());
 		} finally {
+			logger.debug("Listener exciting...");
 			this.close();
 		}
 

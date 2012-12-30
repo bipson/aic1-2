@@ -3,8 +3,7 @@ package twitter;
 import model.CompanyEntity;
 import model.TweetEntity;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 
 import twitter4j.StallWarning;
 import twitter4j.Status;
@@ -15,8 +14,8 @@ import db.GenericDAO;
 public class StatusPersister implements StatusListener {
 	private static final String PERSISTENCE_UNIT = "aic.sentiment";
 
-	private static Logger logger = LoggerFactory
-			.getLogger(StatusPersister.class.getSimpleName());
+	private static Logger logger = Logger.getLogger(StatusPersister.class
+			.getSimpleName());
 
 	private CompanyEntity company;
 	private GenericDAO<TweetEntity, Long> tweetDAO;
@@ -62,7 +61,8 @@ public class StatusPersister implements StatusListener {
 
 		TweetEntity t = new TweetEntity(company, tweet);
 		company.getTweets().add(t);
-		logger.debug(tweet.getUser() + " - " + tweet.getText());
+		logger.debug("Received tweet: " + tweet.getUser() + " - "
+				+ tweet.getText());
 		tweetDAO.persist(t);
 		companyDAO.update(company);
 	}
