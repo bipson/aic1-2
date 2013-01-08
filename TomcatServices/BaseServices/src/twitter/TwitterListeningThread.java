@@ -15,12 +15,12 @@ public class TwitterListeningThread extends Thread {
 	private static Logger logger = Logger
 			.getLogger(TwitterListeningThread.class.getSimpleName());
 
-	private String search;
+	private String[] search;
 	private StatusStream stream;
 	private StatusListener listener;
 
 	TwitterListeningThread(String[] search) {
-		// this.search = search;
+		this.search = search;
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setDebugEnabled(true)
 				.setOAuthConsumerKey("cAbjgmy3Lc9t1GCCrvTdg")
@@ -37,14 +37,12 @@ public class TwitterListeningThread extends Thread {
 			logger.debug("New TwitterStream configured and created");
 
 			long[] followArray = new long[0];
-			// String[] trackArray = new String[1];
-			// trackArray[0] = search;
 
 			stream = twitterStream.getFilterStream(new FilterQuery(0,
 					followArray, search));
-			String searches = "" + search.length;
-			logger.debug("New filterStream for term \"" + searches
-					+ "\" words created");
+
+			logger.debug("New filterStream for " + search.length
+					+ " word(s) created");
 		} catch (TwitterException te) {
 			logger.error("Error while trying to create Stream");
 			te.printStackTrace();
@@ -59,12 +57,12 @@ public class TwitterListeningThread extends Thread {
 			logger.error("Error while closing Listerner: " + e.getCause()
 					+ " , " + e.getMessage());
 		} finally {
-			logger.debug("Listener for \"" + search + "\" closed");
+			logger.debug("Listener for " + search.length + " word(s) closed");
 		}
 	}
 
 	public void run() {
-		logger.debug("New Listener for term \"" + search + "\" started");
+		logger.debug("New Listener for " + search.length + " word(s) started");
 		listener = new StatusPersister(search);
 
 		try {

@@ -57,7 +57,6 @@ public final class Twitter implements ITwitter {
 		} else {
 			EntityManager manager = emf.createEntityManager();
 			String queryString = "SELECT DISTINCT tweet FROM TweetEntity tweet "
-					// + "INNER JOIN tweet.company c "
 					+ "WHERE ("
 					+ "tweet.tweet.text like :companyBegin "
 					+ "OR tweet.tweet.text like :company "

@@ -14,14 +14,12 @@ import db.interfaces.IEntity;
 public class TweetEntity implements IEntity<Long> {
 	private static final long serialVersionUID = -7413330675922692688L;
 	private Long id;
-	// private CompanyEntity company;
 	private Tweet tweet;
 
 	public TweetEntity() {
 	}
 
 	public TweetEntity(Tweet tweet) {
-		/* this.company = company; */
 		this.tweet = tweet;
 	}
 
@@ -32,13 +30,6 @@ public class TweetEntity implements IEntity<Long> {
 		return id;
 	}
 
-	/*
-	 * @ManyToOne(optional = false)
-	 * 
-	 * @JoinColumn
-	 * 
-	 * public CompanyEntity getCompany() { return company; }
-	 */
 	@Embedded
 	public Tweet getTweet() {
 		return tweet;
@@ -47,10 +38,6 @@ public class TweetEntity implements IEntity<Long> {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	/*
-	 * public void setCompany(CompanyEntity company) { this.company = company; }
-	 */
 
 	public void setTweet(Tweet tweet) {
 		this.tweet = tweet;

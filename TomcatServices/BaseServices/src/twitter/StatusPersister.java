@@ -16,18 +16,11 @@ public class StatusPersister implements StatusListener {
 	private static Logger logger = Logger.getLogger(StatusPersister.class
 			.getSimpleName());
 
-	// private CompanyEntity company;
 	private GenericDAO<TweetEntity, Long> tweetDAO;
 
-	// private GenericDAO<CompanyEntity, String> companyDAO;
-
-	StatusPersister(String search) {
+	StatusPersister(String[] search) {
 		GenericDAO.init(PERSISTENCE_UNIT);
 		tweetDAO = new GenericDAO<TweetEntity, Long>(TweetEntity.class);
-		// companyDAO = new GenericDAO<CompanyEntity,
-		// String>(CompanyEntity.class);
-
-		// this.company = companyDAO.get(search);
 	}
 
 	@Override
@@ -61,11 +54,11 @@ public class StatusPersister implements StatusListener {
 				status.getCreatedAt());
 
 		TweetEntity t = new TweetEntity(tweet);
-		// company.getTweets().add(t);
+
 		logger.debug("Received tweet: " + tweet.getUser() + " - "
 				+ tweet.getText());
 		tweetDAO.persist(t);
-		// companyDAO.update(company);
+
 	}
 
 	@Override
