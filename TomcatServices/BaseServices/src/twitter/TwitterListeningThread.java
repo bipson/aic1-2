@@ -19,8 +19,8 @@ public class TwitterListeningThread extends Thread {
 	private StatusStream stream;
 	private StatusListener listener;
 
-	TwitterListeningThread(String search) {
-		this.search = search;
+	TwitterListeningThread(String[] search) {
+		// this.search = search;
 		ConfigurationBuilder cb = new ConfigurationBuilder();
 		cb.setDebugEnabled(true)
 				.setOAuthConsumerKey("cAbjgmy3Lc9t1GCCrvTdg")
@@ -37,12 +37,14 @@ public class TwitterListeningThread extends Thread {
 			logger.debug("New TwitterStream configured and created");
 
 			long[] followArray = new long[0];
-			String[] trackArray = new String[1];
-			trackArray[0] = search;
+			// String[] trackArray = new String[1];
+			// trackArray[0] = search;
 
 			stream = twitterStream.getFilterStream(new FilterQuery(0,
-					followArray, trackArray));
-			logger.debug("New filterStream for term \"" + search + "\" created");
+					followArray, search));
+			String searches = "" + search.length;
+			logger.debug("New filterStream for term \"" + searches
+					+ "\" words created");
 		} catch (TwitterException te) {
 			logger.error("Error while trying to create Stream");
 			te.printStackTrace();

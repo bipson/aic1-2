@@ -6,8 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 import twitter.Tweet;
 import db.interfaces.IEntity;
@@ -16,14 +14,14 @@ import db.interfaces.IEntity;
 public class TweetEntity implements IEntity<Long> {
 	private static final long serialVersionUID = -7413330675922692688L;
 	private Long id;
-	private CompanyEntity company;
+	// private CompanyEntity company;
 	private Tweet tweet;
 
 	public TweetEntity() {
 	}
 
-	public TweetEntity(CompanyEntity company, Tweet tweet) {
-		this.company = company;
+	public TweetEntity(Tweet tweet) {
+		/* this.company = company; */
 		this.tweet = tweet;
 	}
 
@@ -34,12 +32,13 @@ public class TweetEntity implements IEntity<Long> {
 		return id;
 	}
 
-	@ManyToOne(optional = false)
-	@JoinColumn
-	public CompanyEntity getCompany() {
-		return company;
-	}
-
+	/*
+	 * @ManyToOne(optional = false)
+	 * 
+	 * @JoinColumn
+	 * 
+	 * public CompanyEntity getCompany() { return company; }
+	 */
 	@Embedded
 	public Tweet getTweet() {
 		return tweet;
@@ -49,9 +48,9 @@ public class TweetEntity implements IEntity<Long> {
 		this.id = id;
 	}
 
-	public void setCompany(CompanyEntity company) {
-		this.company = company;
-	}
+	/*
+	 * public void setCompany(CompanyEntity company) { this.company = company; }
+	 */
 
 	public void setTweet(Tweet tweet) {
 		this.tweet = tweet;
