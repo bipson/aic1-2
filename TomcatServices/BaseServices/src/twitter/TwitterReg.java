@@ -1,35 +1,53 @@
 package twitter;
 
-import java.util.HashMap;
+import java.util.HashSet;
+
+import org.apache.log4j.Logger;
 
 public class TwitterReg {
-	private static HashMap<String, TwitterListeningThread> registry = null;
-	
+	private static HashSet<String> registry = null;
+	private static Logger logger = Logger.getLogger(TwitterReg.class
+			.getSimpleName());
+	private static TwitterListeningThread curListener = null;
+
 	private static void init() {
 		if (registry == null) {
-			registry = new HashMap<String, TwitterListeningThread>();
+			registry = new HashSet<String>();
 		}
 	}
-	
+
 	public static void put(String s) {
 		try {
 			init();
-			TwitterListeningThread n = new TwitterListeningThread(s); 
-			registry.put(s, n);
-			n.start();
+
+			registry.add(s);
+			restartListener();
+			logger.debug("Listener " + s + " started.");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
+	private static void restartListener() {
+		TwitterListeningThread oldListener = curListener;
+
+		if (registry.size() > 0) {
+			curListener = new TwitterListeningThread(
+					registry.toArray(new String[0]));
+			curListener.start();
+		}
+		if (oldListener != null)
+			oldListener.close();
+	}
+
 	public static void remove(String s) {
 		init();
-		if (registry.containsKey(s)) {
-			TwitterListeningThread n = registry.get(s);
-			n.close();
+		if (registry.contains(s)) {
 			registry.remove(s);
+			restartListener();
+			logger.debug("Listener " + s + " removed.");
 		}
-		
+
 	}
-	
+
 }

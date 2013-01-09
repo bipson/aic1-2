@@ -7,7 +7,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jst.ws.cxf.core.CXF_CLASSPATH_CONTAINER">
+	<classpathentry kind="con" path="org.eclipse.jst.ws.cxf.core.CXF_CLASSPATH_CONTAINER/Apache CXF/2.7.1">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="/WEB-INF/lib"/>
 		</attributes>
@@ -20,5 +20,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/wlsvm.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/twitter4j-core-3.0.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/twitter4j-stream-3.0.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/slf4j-log4j12-1.6.2.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

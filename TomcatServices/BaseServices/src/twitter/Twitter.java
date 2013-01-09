@@ -10,22 +10,27 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+
 import model.TweetEntity;
+
+import org.apache.log4j.Logger;
 
 @WebService(targetNamespace = "http://aic.service.twitter/", endpointInterface = "twitter.ITwitter", portName = "Twitter", serviceName = "TwitterService")
 public final class Twitter implements ITwitter {
 	// Set to true when using mockup twitter service.
 	private static final boolean MOCKUP = false;
-	
-	private static final EntityManagerFactory emf = Persistence.createEntityManagerFactory("aic.sentiment");
-	
+
+	private static Logger logger = Logger.getLogger(Twitter.class
+			.getSimpleName());
+	private static final EntityManagerFactory emf = Persistence
+			.createEntityManagerFactory("aic.sentiment");
+
 	@Override
 	@SuppressWarnings("unchecked")
 	public Tweet[] fetchTweets(String searchString, Date from, Date to) {
 		if (MOCKUP) {
-			System.out.println("Twitter.fetchTweets: searchString=\""
-					+ searchString + "\" from=\"" + from + "\" to=\"" + to
-					+ "\"");
+			logger.debug("Twitter.fetchTweets: searchString=\"" + searchString
+					+ "\" from=\"" + from + "\" to=\"" + to + "\"");
 			if (searchString.equals("company1")) {
 				return new Tweet[] {
 						new Tweet(1, "0.2", "user", 0, new Date()),
@@ -51,22 +56,27 @@ public final class Twitter implements ITwitter {
 			}
 		} else {
 			EntityManager manager = emf.createEntityManager();
-			String queryString = "SELECT DISTINCT tweet FROM TweetEntity tweet " +
-					"INNER JOIN tweet.company c " +
-                    "WHERE c.companyName = :company " +
-					"AND :from <= tweet.tweet.created " +
-					"AND tweet.tweet.created < :to ";
+			String queryString = "SELECT DISTINCT tweet FROM TweetEntity tweet "
+					+ "WHERE ("
+					+ "tweet.tweet.text like :companyBegin "
+					+ "OR tweet.tweet.text like :company "
+					+ "OR tweet.tweet.text like :companyEnd "
+					+ ")"
+					+ "AND :from <= tweet.tweet.created "
+					+ "AND tweet.tweet.created < :to ";
 			Query query = manager.createQuery(queryString);
 
-			query.setParameter("company", searchString);
+			query.setParameter("companyBegin", "" + searchString + " %");
+			query.setParameter("company", "% " + searchString + " %");
+			query.setParameter("companyEnd", "% " + searchString);
 			query.setParameter("from", from);
 			query.setParameter("to", to);
 			List<TweetEntity> result = query.getResultList();
 			ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 			Iterator<TweetEntity> it = result.iterator();
-			while(it.hasNext()) {
+			while (it.hasNext()) {
 				tweets.add(it.next().getTweet());
-			}				
+			}
 			return tweets.toArray(new Tweet[0]);
 		}
 	}
@@ -81,26 +91,22 @@ public final class Twitter implements ITwitter {
 
 	@Override
 	public Boolean attachListener(String filter) {
+		logger.debug("Twitter.attachListener: filter=\"" + filter + "\"");
 		if (MOCKUP) {
-			System.out.println("Twitter.attachListener: filter=\"" + filter
-					+ "\"");
 			return !filter.equals("company3");
 		} else {
 			TwitterReg.put(filter);
-			// Final service code.
 			return true;
 		}
 	}
 
 	@Override
 	public Boolean detachListener(String filter) {
+		logger.debug("Twitter.detachListener: filter=\"" + filter + "\"");
 		if (MOCKUP) {
-			System.out.println("Twitter.detachListener: filter=\"" + filter
-					+ "\"");
 			return !filter.equals("company2");
 		} else {
 			TwitterReg.remove(filter);
-			// Final service code.
 			return true;
 		}
 	}

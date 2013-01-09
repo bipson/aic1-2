@@ -1,7 +1,9 @@
 package twitter;
 
-import model.CompanyEntity;
 import model.TweetEntity;
+
+import org.apache.log4j.Logger;
+
 import twitter4j.StallWarning;
 import twitter4j.Status;
 import twitter4j.StatusDeletionNotice;
@@ -10,16 +12,15 @@ import db.GenericDAO;
 
 public class StatusPersister implements StatusListener {
 	private static final String PERSISTENCE_UNIT = "aic.sentiment";
-	private CompanyEntity company;
-	private GenericDAO<TweetEntity, Long> tweetDAO;
-	private GenericDAO<CompanyEntity, String> companyDAO;
 
-	StatusPersister(String search) {
+	private static Logger logger = Logger.getLogger(StatusPersister.class
+			.getSimpleName());
+
+	private GenericDAO<TweetEntity, Long> tweetDAO;
+
+	StatusPersister(String[] search) {
 		GenericDAO.init(PERSISTENCE_UNIT);
 		tweetDAO = new GenericDAO<TweetEntity, Long>(TweetEntity.class);
-		companyDAO = new GenericDAO<CompanyEntity, String>(CompanyEntity.class);
-
-		this.company = companyDAO.get(search);
 	}
 
 	@Override
@@ -52,11 +53,12 @@ public class StatusPersister implements StatusListener {
 				.getUser().getName(), status.getRetweetCount(),
 				status.getCreatedAt());
 
-		TweetEntity t = new TweetEntity(company, tweet);
-		company.getTweets().add(t);
-		System.out.println(tweet.getUser() + " - " + tweet.getText());
+		TweetEntity t = new TweetEntity(tweet);
+
+		logger.debug("Received tweet: " + tweet.getUser() + " - "
+				+ tweet.getText());
 		tweetDAO.persist(t);
-		companyDAO.update(company);
+
 	}
 
 	@Override
