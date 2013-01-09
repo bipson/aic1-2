@@ -54,7 +54,7 @@ public class TwitterListeningThread extends Thread {
 			stream.close();
 			((StatusPersister) listener).shutdown();
 		} catch (Exception e) {
-			logger.error("Error while closing Listerner: " + e.getCause()
+			logger.error("Error while closing Listener: " + e.getCause()
 					+ " , " + e.getMessage());
 		} finally {
 			logger.debug("Listener for " + search.length + " word(s) closed");

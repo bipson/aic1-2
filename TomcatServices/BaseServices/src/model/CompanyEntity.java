@@ -1,12 +1,8 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 
 import db.interfaces.IEntity;
 
@@ -16,7 +12,8 @@ public class CompanyEntity implements IEntity<String> {
 	private String companyName;
 	private String password;
 	private Double currentBill;
-	private List<TweetEntity> tweets;
+
+	// private List<TweetEntity> tweets;
 
 	public CompanyEntity() {
 	}
@@ -25,7 +22,7 @@ public class CompanyEntity implements IEntity<String> {
 		this.companyName = companyName;
 		this.password = password;
 		this.currentBill = currentBill;
-		this.tweets = new ArrayList<TweetEntity>();
+		// this.tweets = new ArrayList<TweetEntity>();
 	}
 
 	@Id
@@ -43,10 +40,10 @@ public class CompanyEntity implements IEntity<String> {
 		return currentBill;
 	}
 
-	@OneToMany
-	public List<TweetEntity> getTweets() {
-		return tweets;
-	}
+	// @OneToMany
+	// public List<TweetEntity> getTweets() {
+	// return tweets;
+	// }
 
 	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
@@ -60,8 +57,8 @@ public class CompanyEntity implements IEntity<String> {
 		this.currentBill = currentBill;
 	}
 
-	public void setTweets(List<TweetEntity> tweets) {
-		this.tweets = tweets;
-	}
+	// public void setTweets(List<TweetEntity> tweets) {
+	// this.tweets = tweets;
+	// }
 
 }
