@@ -156,7 +156,11 @@
                                 </sta:FetchTweets>
                                 <FlowStep.Next>
                                   <FlowStep x:Name="__ReferenceID15" sap2010:WorkflowViewState.IdRef="FlowStep_18">
-                                    <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_6" Text="Tweets fetched. Processing tweets..." />
+                                    <WriteLine sap2010:WorkflowViewState.IdRef="WriteLine_6">
+                                      <InArgument x:TypeArguments="x:String">
+                                        <mca:CSharpValue x:TypeArguments="x:String">fetchedTweets.Count() + " Tweet(s) fetched. Processing tweets..."</mca:CSharpValue>
+                                      </InArgument>
+                                    </WriteLine>
                                     <FlowStep.Next>
                                       <FlowStep x:Name="__ReferenceID12" sap2010:WorkflowViewState.IdRef="FlowStep_15">
                                         <sta:ExtractText DisplayName="Extract Text From Tweets" sap2010:WorkflowViewState.IdRef="ExtractText_2" mva:VisualBasic.Settings="Assembly references and imported namespaces serialized as XML namespaces">
@@ -284,7 +288,7 @@
     <x:Reference>__ReferenceID14</x:Reference>
     <x:Reference>__ReferenceID15</x:Reference>
     <x:Reference>__ReferenceID16</x:Reference>
-    <sads:DebugSymbol.Symbol>d09DOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xRdWVyeVNlbnRpbWVudC54YW1sKkEDoAIPAgEBSwlWFgMB3AFaD1pbAwHSAYACEYQCHQMBxwHWATXhAT4DAbIBXhFpGgMBnQFsFXwiAgF+gAEbgAFrAgF08gEd8gG4AQIBcoQBHYQBigECAXCHASGcATMCAUefASWfAYwBAgFFogEprQE7AgEwsQEvsQGKAQIBJs8BMdMBPQIBG7UBMbUBnAECARm4ATXDAUoCAQTGATnGAZsBAgECTg9OWAMB5wFTD1NjAwHdAYICFYICiwEDAcgB3gE73gGDAQMBvQHZATvZAYoBAwGzAWYXZlkDAagBYRdhagMBngF0G3RzAwGTAXkbeWQDAYkBbxtvZgIBf/IBefIBtQECAXOEAVuEAYcBAgFxjwEnjwFvAgFmmQEnmQF8AgFclAEnlAFwAgFSigEnigFtAgFInwFjnwGJAQIBRqUBL6UBhQECATuqAS+qAXwCATHRATXRAd0BAgEctQFvtQGZAQIBGsABO8ABiQECAQ+7ATu7AYoBAgEFxgF3xgGYAQIBAw==</sads:DebugSymbol.Symbol>
+    <sads:DebugSymbol.Symbol>d09DOlxVc2Vyc1xBSUNcRG9jdW1lbnRzXGFpYzEtMlxXb3JrZmxvd0FwcGxpY2F0aW9uXFdvcmtmbG93c1xRdWVyeVNlbnRpbWVudC54YW1sKkEDpAIPAgEBSwlWFgMB5QFaD1pbAwHbAYQCEYgCHQMB0AHaATXlAT4DAbsBXhFpGgMBpgFsFXwiAwGHAYABG4ABawIBffYBHfYBuAECAXuEAR2EAYoBAgF5hwEhnAEzAgFQnwElowExAgFFpgEpsQE7AgEwtQEvtQGKAQIBJtMBMdcBPQIBG7kBMbkBnAECARm8ATXHAUoCAQTKATnKAZsBAgECTg9OWAMB8AFTD1NjAwHmAYYCFYYCiwEDAdEB4gE74gGDAQMBxgHdATvdAYoBAwG8AWYXZlkDAbEBYRdhagMBpwF0G3RzAwGcAXkbeWQDAZIBbxtvZgMBiAH2AXn2AbUBAgF8hAFbhAGHAQIBeo8BJ48BbwIBb5kBJ5kBfAIBZZQBJ5QBcAIBW4oBJ4oBbQIBUaEBKaEBqAECAUapAS+pAYUBAgE7rgEvrgF8AgEx1QE11QHdAQIBHLkBb7kBmQECARrEATvEAYkBAgEPvwE7vwGKAQIBBcoBd8oBmAECAQM=</sads:DebugSymbol.Symbol>
   </Flowchart>
   <sap2010:WorkflowViewState.ViewStateManager>
     <sap2010:ViewStateManager>

@@ -17,13 +17,8 @@
         white-space: pre;
     }
 
-#queryForm table {
-    width: 100%;
-}
-
-#queryForm td:nth-child(2) {
-    width: 100%;
-    padding: 0 1em;
+#queryForm td {
+    vertical-align:bottom;
 }
 
 #messagecontainer {
@@ -40,6 +35,10 @@
         font-weight: bold;
         color: #2e6e9e;
     }
+
+.sentimentresult:not(:last-child) {
+    margin-bottom: 0.5em;
+}
 
 #unregister {
     margin: 1em;

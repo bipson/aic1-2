@@ -67,8 +67,22 @@ namespace Website.Controllers
             var query = Session["Query"] as QueryContext;
             if (query == null)
                 return Json(new { Error = "There is no sentiment query in progress." });
-            if (!query.ActivityEvent.WaitOne(15000))
-                return Json(new { Error = "The query timed out." });
+
+            if (!query.ActivityEvent.WaitOne(query.WaitTimeout))
+            {
+                if (--query.WaitRetries >= 0)
+                {
+                    return Json(new { 
+                        IsFinished = false,
+                        Messages = new[] { String.Format("The query is still in progress... ({0} retries until timeout)", query.WaitRetries) } });
+                }
+                else
+                {
+                    Session.Remove("Query");
+                    return Json(new { Error = "The query timed out." });
+                }
+            }
+
             var messages = new List<String>();
             while (query.MessageQueue.Count > 0) messages.Add(query.MessageQueue.Dequeue());
             return Json(

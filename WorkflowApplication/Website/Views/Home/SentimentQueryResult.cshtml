@@ -5,6 +5,6 @@
     dynamic parameters = Model.Parameters.ToExpando();
 }
 
-<div>
-    The sentiment from @parameters.DateFrom.ToShortDateString() to @parameters.DateTo.ToShortDateString() is: @Model.Results.Sentiment.ToString()
+<div class="sentimentresult">
+    The sentiment from @parameters.DateFrom.ToShortDateString() to @parameters.DateTo.ToShortDateString() is: @Model.Results.Sentiment.ToString("0.000")
 </div>

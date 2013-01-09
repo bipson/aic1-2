@@ -39,9 +39,13 @@
                 $('#DateFrom').datepicker('option', 'maxDate', selectedDate);
             }
         });
-        $('#queryForm :submit').button();
+        $('#queryForm :submit, #clearResults').button();
         $('#queryForm :text').addClass('ui-corner-all');
-        $('#sentimentresults').hide();
+        $('#sentimentresults, #clearResults').hide();
+        $('#clearResults').click(function () {
+            $('#sentimentresults').slideUp('fast').find('div').remove();
+            $('#clearResults').fadeOut('fast');
+        });
     });
 
     function QueryInProgressCallback(data) {
@@ -55,6 +59,7 @@
             if (data.IsFinished) {
                 $.post('@Url.Action("SentimentQueryResult")', '', function (result) {
                     $('#sentimentresults').slideDown();
+                    $('#clearResults').fadeIn('fast');
                     $(result).hide().appendTo('#sentimentresults').slideDown();
                 });
             } else {
@@ -90,7 +95,19 @@
     }, new { id = "queryForm" }))
 {
     @Html.EditorForModel()
-    <input type="submit" value="Query" />
+    <table>
+        <tbody>
+            <tr>
+                <td>
+                    <input type="submit" value="Query" />
+                </td>
+                <td>
+                    <button id="clearResults" type="button">Clear Results</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
 }
 <fieldset id="sentimentresults" class="ui-corner-all">
     <legend>Query Results:</legend>
