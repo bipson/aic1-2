@@ -9,7 +9,7 @@ import javax.jws.WebService;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import model.TweetEntity;
 
@@ -26,11 +26,10 @@ public final class Twitter implements ITwitter {
 			.createEntityManagerFactory("aic.sentiment");
 
 	@Override
-	@SuppressWarnings("unchecked")
 	public Tweet[] fetchTweets(String searchString, Date from, Date to) {
+		logger.debug("Twitter.fetchTweets: searchString=\"" + searchString
+				+ "\" from=\"" + from + "\" to=\"" + to + "\"");
 		if (MOCKUP) {
-			logger.debug("Twitter.fetchTweets: searchString=\"" + searchString
-					+ "\" from=\"" + from + "\" to=\"" + to + "\"");
 			if (searchString.equals("company1")) {
 				return new Tweet[] {
 						new Tweet(1, "0.2", "user", 0, new Date()),
@@ -56,22 +55,30 @@ public final class Twitter implements ITwitter {
 			}
 		} else {
 			EntityManager manager = emf.createEntityManager();
-			String queryString = "SELECT DISTINCT tweet FROM TweetEntity tweet "
-					+ "WHERE ("
-					+ "tweet.tweet.text like :companyBegin "
-					+ "OR tweet.tweet.text like :company "
-					+ "OR tweet.tweet.text like :companyEnd "
-					+ ")"
-					+ "AND :from <= tweet.tweet.created "
-					+ "AND tweet.tweet.created < :to ";
-			Query query = manager.createQuery(queryString);
+			TypedQuery<TweetEntity> query = manager
+					.createQuery(
+							"SELECT DISTINCT tweet FROM TweetEntity tweet "
+									+ "WHERE ("
+									+ "lower(tweet.tweet.text) like :companyBegin "
+									+ "OR lower(tweet.tweet.text) like :company "
+									+ "OR lower(tweet.tweet.text) like :companyBetween "
+									+ "OR lower(tweet.tweet.text) like :companyEnd "
+									+ ")" + "AND :from <= tweet.tweet.created "
+									+ "AND tweet.tweet.created <= :to ",
+							TweetEntity.class);
 
-			query.setParameter("companyBegin", "" + searchString + " %");
-			query.setParameter("company", "% " + searchString + " %");
-			query.setParameter("companyEnd", "% " + searchString);
+			searchString = searchString.toLowerCase();
+
+			query.setParameter("companyBegin", "" + searchString + "%");
+			query.setParameter("company", searchString);
+			query.setParameter("companyBetween", "%" + searchString + "%");
+			query.setParameter("companyEnd", "%" + searchString);
 			query.setParameter("from", from);
 			query.setParameter("to", to);
 			List<TweetEntity> result = query.getResultList();
+
+			logger.debug("Found results: " + result.toString());
+
 			ArrayList<Tweet> tweets = new ArrayList<Tweet>();
 			Iterator<TweetEntity> it = result.iterator();
 			while (it.hasNext()) {
