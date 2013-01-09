@@ -106,6 +106,9 @@ public class GenericDAO<EntityType extends IEntity<EntityKeyType>, EntityKeyType
 		if (em != null && em.isOpen()) {
 			em.close();
 		}
+	}
+
+	public static void close_emf() {
 		if (emf != null && emf.isOpen()) {
 			emf.close();
 		}
