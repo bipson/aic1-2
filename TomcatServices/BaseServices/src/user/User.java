@@ -3,6 +3,9 @@ package user;
 import javax.jws.WebService;
 
 import model.CompanyEntity;
+
+import org.apache.log4j.Logger;
+
 import db.GenericDAO;
 
 @WebService(targetNamespace = "http://aic.service.user/", endpointInterface = "user.IUser", portName = "User", serviceName = "UserService")
@@ -12,11 +15,13 @@ public final class User implements IUser {
 
 	private static final String PERSISTENCE_UNIT = "aic.sentiment";
 
+	private static Logger logger = Logger.getLogger(User.class.getSimpleName());
+
 	@Override
 	public Boolean add(String companyName, String password) {
+		logger.debug("User.add: companyName=\"" + companyName
+				+ "\" password=\"" + password + "\"");
 		if (MOCKUP) {
-			System.out.println("User.add: companyName=\"" + companyName
-					+ "\" password=\"" + password + "\"");
 			return !(companyName.equals("company1")
 					|| companyName.equals("company2") || companyName
 						.equals("company7"));
@@ -29,7 +34,7 @@ public final class User implements IUser {
 				// if company-name already registered
 				if (companyDAO.get(companyName) != null) {
 					// write to the log
-					System.err.println("Company already exists??");
+					logger.error("Company already exists?");
 					return false;
 				}
 
@@ -40,26 +45,26 @@ public final class User implements IUser {
 				// check if it went through (because we don't get the exception
 				// from the DAO)
 				if (companyDAO.get(companyName) == null) {
-					System.err.println("Company was not persisted??");
+					logger.error("Company was not persisted?");
 					return false;
 				}
 			} catch (Exception ex) {
-				System.err.println(ex.getMessage());
+				logger.error(ex.getMessage());
 				ex.printStackTrace();
 				return false;
 			} finally {
 				GenericDAO.shutdown();
 			}
 
+			logger.debug("User added: companyName=\"" + companyName + "\"");
 			return true;
 		}
 	}
 
 	@Override
 	public Boolean remove(String companyName) {
+		logger.debug("User.remove: companyName=\"" + companyName + "\"");
 		if (MOCKUP) {
-			System.out.println("User.remove: companyName=\"" + companyName
-					+ "\"");
 			return companyName.equals("company1")
 					|| companyName.equals("company2")
 					|| companyName.equals("company6");
@@ -75,8 +80,11 @@ public final class User implements IUser {
 				}
 				companyDAO.delete(company);
 				if (companyDAO.get(companyName) != null) {
+					logger.error("Company was not deleted");
 					return false;
 				}
+				logger.debug("User removed: companyName=\"" + companyName
+						+ "\"");
 				return true;
 			} finally {
 				GenericDAO.shutdown();
@@ -86,9 +94,9 @@ public final class User implements IUser {
 
 	@Override
 	public Boolean exists(String companyName) {
+		logger.debug("User.exists: companyName=\"" + companyName + "\"");
+
 		if (MOCKUP) {
-			System.out.println("User.exists: companyName=\"" + companyName
-					+ "\"");
 			return companyName.equals("company1")
 					|| companyName.equals("company2")
 					|| companyName.equals("company5")
@@ -99,6 +107,10 @@ public final class User implements IUser {
 					CompanyEntity.class);
 			try {
 				return companyDAO.get(companyName) != null;
+			} catch (Exception ex) {
+				logger.error("Exception while checking for existing company: "
+						+ ex.getMessage() + ", " + ex.getCause());
+				return false;
 			} finally {
 				GenericDAO.shutdown();
 			}
@@ -107,9 +119,9 @@ public final class User implements IUser {
 
 	@Override
 	public Boolean checkCredentials(String companyName, String password) {
+		logger.debug("User.checkCredentials: companyName=\"" + companyName
+				+ "\" password=\"" + password + "\"");
 		if (MOCKUP) {
-			System.out.println("User.checkCredentials: companyName=\""
-					+ companyName + "\" password=\"" + password + "\"");
 			return (companyName.equals("company1") && password
 					.equals("c1password"))
 					|| (companyName.equals("company2") && password
@@ -124,6 +136,10 @@ public final class User implements IUser {
 				CompanyEntity company = companyDAO.get(companyName);
 				return (company != null && company.getPassword().equals(
 						password));
+			} catch (Exception ex) {
+				logger.error("Exception while checking for company credentials: "
+						+ ex.getMessage() + ", " + ex.getCause());
+				return false;
 			} finally {
 				GenericDAO.shutdown();
 			}
