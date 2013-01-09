@@ -49,8 +49,8 @@ public final class Accounting implements IAccounting {
 							+ company.getCurrentBill());
 					return company.getCurrentBill();
 				} else {
-					log.debug("getBill() - CompanyName: "
-							+ company.getCompanyName() + "- No bill found. ");
+					log.debug("getBill() - CompanyName: " + company
+							+ "- No company found. ");
 					return Double.NaN;
 				}
 

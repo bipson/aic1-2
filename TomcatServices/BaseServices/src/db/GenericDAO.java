@@ -22,17 +22,26 @@ public class GenericDAO<EntityType extends IEntity<EntityKeyType>, EntityKeyType
 	}
 
 	public static void init(String persistenceUnitName) {
-		GenericDAO.emf = Persistence
-				.createEntityManagerFactory(persistenceUnitName);
-		GenericDAO.em = GenericDAO.emf.createEntityManager();
+		if (emf == null || !emf.isOpen()) {
+			GenericDAO.emf = Persistence
+					.createEntityManagerFactory(persistenceUnitName);
+		}
 	}
 
 	public static EntityManager getEntityManager() {
+		if (emf == null) {
+			throw new RuntimeException(
+					"EntitmanagerFactory not initialized (call init before using)!");
+		}
+		if (em == null || !em.isOpen()) {
+			GenericDAO.em = GenericDAO.emf.createEntityManager();
+		}
 		return GenericDAO.em;
 	}
 
 	@Override
 	public void delete(EntityType entity) {
+		EntityManager em = GenericDAO.getEntityManager();
 		try {
 			em.getTransaction().begin();
 			em.remove(entity);
@@ -45,11 +54,13 @@ public class GenericDAO<EntityType extends IEntity<EntityKeyType>, EntityKeyType
 
 	@Override
 	public EntityType get(EntityKeyType key) {
+		EntityManager em = GenericDAO.getEntityManager();
 		return em.find(entityClass, key);
 	}
 
 	@Override
 	public void persist(EntityType entity) {
+		EntityManager em = GenericDAO.getEntityManager();
 		em.getTransaction().begin();
 		try {
 			em.persist(entity);
@@ -63,6 +74,7 @@ public class GenericDAO<EntityType extends IEntity<EntityKeyType>, EntityKeyType
 	@Override
 	public EntityType update(EntityType entity) {
 		EntityType merged;
+		EntityManager em = GenericDAO.getEntityManager();
 
 		em.getTransaction().begin();
 		try {
@@ -77,6 +89,7 @@ public class GenericDAO<EntityType extends IEntity<EntityKeyType>, EntityKeyType
 
 	@Override
 	public void refresh(EntityType entity) {
+		EntityManager em = GenericDAO.getEntityManager();
 		try {
 			em.refresh(entity);
 		} catch (RuntimeException e) {
@@ -93,6 +106,9 @@ public class GenericDAO<EntityType extends IEntity<EntityKeyType>, EntityKeyType
 		if (em != null && em.isOpen()) {
 			em.close();
 		}
+	}
+
+	public static void close_emf() {
 		if (emf != null && emf.isOpen()) {
 			emf.close();
 		}

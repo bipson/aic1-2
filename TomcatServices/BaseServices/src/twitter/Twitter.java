@@ -6,24 +6,22 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.jws.WebService;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import javax.persistence.TypedQuery;
 
 import model.TweetEntity;
 
 import org.apache.log4j.Logger;
 
+import db.GenericDAO;
+
 @WebService(targetNamespace = "http://aic.service.twitter/", endpointInterface = "twitter.ITwitter", portName = "Twitter", serviceName = "TwitterService")
 public final class Twitter implements ITwitter {
 	// Set to true when using mockup twitter service.
 	private static final boolean MOCKUP = false;
+	private static final String PERSISTENCE_UNIT = "aic.sentiment";
 
 	private static Logger logger = Logger.getLogger(Twitter.class
 			.getSimpleName());
-	private static final EntityManagerFactory emf = Persistence
-			.createEntityManagerFactory("aic.sentiment");
 
 	@Override
 	public Tweet[] fetchTweets(String searchString, Date from, Date to) {
@@ -54,8 +52,9 @@ public final class Twitter implements ITwitter {
 				return new Tweet[0];
 			}
 		} else {
-			EntityManager manager = emf.createEntityManager();
-			TypedQuery<TweetEntity> query = manager
+			GenericDAO.init(PERSISTENCE_UNIT);
+			TypedQuery<TweetEntity> query = GenericDAO
+					.getEntityManager()
 					.createQuery(
 							"SELECT DISTINCT tweet FROM TweetEntity tweet "
 									+ "WHERE ("
