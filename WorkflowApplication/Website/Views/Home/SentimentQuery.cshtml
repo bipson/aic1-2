@@ -30,7 +30,7 @@
             dateFormat: 'dd.mm.yy',
             defaultDate: new Date(@dateTo),
             minDate: new Date(@dateFrom),
-            maxDate: new Date(),
+            maxDate: new Date(+function () { var d = new Date(); d.setDate(d.getDate() + 1); return d; }()),
             showOtherMonths: true,
             selectOtherMonths: true,
             changeMonth: true,
