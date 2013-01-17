@@ -1,1 +1,31 @@
-empty for now
+AIC deployment instructions (Topic 2)
+
+Stage 1
+
+Stage 1 relies heavily on eclipse plugins and thus the submitted workspace should be imported as a whole after these prerequisites are fulfilled:
+* Java 6 JDK installed and %JAVA_HOME% (respectively $JAVA_HOME) set
+* Eclipse Juno (for Java EE Developers) installed
+* Tomcat v7.x installed (e.g. c:\tomcat\)
+* CXF 2.7.x installed (e.g. c:\cxf\)
+
+Then follow these steps:
+* Checkout the project (folder aic1-2)
+* Open the workspace in eclipse ("Switch Workspace" -> select folder "aic1-2/TomcatServices")
+* Install the hsqldb plugin (eclipse marketplace)
+* Adjust Tomcat and CXF paths if necessary (if not installed into C:\tomcat, respectively C:\cxf) in the workspace preferences (search for "server", respectively "cxf" in eclipse preferences). Ensure that the tomcat runtime environment uses the correct Java runtime environment!
+* Build the project
+* Start the hsqldb (open hsqldb view and click start)
+* Start the application server (services should be deployed automatically)
+	- If services are not deployed, right-click Tomcat in the Servers view and choose "Clean Tomcat work directory".
+	- Then, in the same menu, choose "Clean". This redeploys all libraries and the project into the Eclipse Web Tools Platform workspace.
+	- It may be necessary to add the Project as a Tomcat Resource. The fastest way to deploy is then to right click on the project root and select "Run As ÎíÎõ On Server" and then select Tomcat as the target
+* Test by browsing to http://localhost:8080/BaseServices/services
+Stage 2
+
+The whole of stage 2 is contained in the Visual Studio solution, so this part is relatively easy to run.
+* Open the solution file in Visual Studio 2012
+* Make sure that the Website project is set as startup project.
+* In the toolbar, select the browser you want to start the website in. It was created using jQuery and jQueryUI, which is supposed to be browser-independent, but the site looks best in Firefox.
+* Launch the Website in Debug mode. It will be deployed to IIS Express automatically.
+After stopping or restarting the Website, also close all relevant Browser windows. jQuery sometimes reuses old authentication cookies which lead to an exception in the website. Don't ask us why it does this :)
+

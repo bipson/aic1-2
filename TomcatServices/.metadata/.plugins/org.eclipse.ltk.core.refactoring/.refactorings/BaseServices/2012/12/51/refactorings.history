@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;BaseServices/WebContent/WEB-INF/classes/ log4j2.xml&apos; to &apos;log4j2.xml&apos;" description="Rename resource &apos; log4j2.xml&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="WebContent/WEB-INF/classes/ log4j2.xml" name="log4j2.xml" stamp="1356175154740" updateReferences="true"/>
+</session>

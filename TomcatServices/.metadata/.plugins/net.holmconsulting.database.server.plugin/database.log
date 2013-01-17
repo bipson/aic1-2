@@ -1,0 +1,7 @@
+[Server@65355e]: Initiating startup sequence...
+[Server@65355e]: Server socket opened successfully in 0 ms.
+[Server@65355e]: Database [index=0, id=0, db=file:C:\Users\AIC\Documents\aic1-2\TomcatServices\.metadata\.plugins\net.holmconsulting.database.server.plugin\databaseFileStore, alias=mydatabase] opened sucessfully in 1152 ms.
+[Server@65355e]: Startup sequence completed in 1152 ms.
+[Server@65355e]: 2013-01-17 20:30:59.026 HSQLDB server 2.2.5 is online on port 9001
+[Server@65355e]: To close normally, connect and execute SHUTDOWN SQL
+[Server@65355e]: From command line, use [Ctrl]+[C] to abort abruptly
