@@ -32,8 +32,3 @@
 0:0:0:0:0:0:0:1 - - [26/Nov/2012:18:36:51 +0100] "GET /BaseServices/services/?stylesheet=1 HTTP/1.1" 200 -
 0:0:0:0:0:0:0:1 - - [26/Nov/2012:18:36:55 +0100] "GET /BaseServices/services/Sentiment?wsdl HTTP/1.1" 200 3811
 0:0:0:0:0:0:0:1 - - [26/Nov/2012:18:36:57 +0100] "GET /BaseServices/services/Accounting?wsdl HTTP/1.1" 200 5073
-127.0.0.1 - - [26/Nov/2012:21:41:06 +0100] "GET / HTTP/1.1" 404 951
-0:0:0:0:0:0:0:1 - - [26/Nov/2012:21:41:07 +0100] "GET /BaseServices/ HTTP/1.1" 404 977
-0:0:0:0:0:0:0:1 - - [26/Nov/2012:21:41:11 +0100] "GET /BaseServices/services HTTP/1.1" 200 3156
-0:0:0:0:0:0:0:1 - - [26/Nov/2012:21:41:11 +0100] "GET /BaseServices/services/?stylesheet=1 HTTP/1.1" 200 -
-0:0:0:0:0:0:0:1 - - [26/Nov/2012:21:41:15 +0100] "GET /BaseServices/services/Accounting?wsdl HTTP/1.1" 200 3519

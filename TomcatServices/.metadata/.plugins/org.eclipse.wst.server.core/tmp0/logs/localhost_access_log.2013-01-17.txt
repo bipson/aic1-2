@@ -64,3 +64,9 @@
 0:0:0:0:0:0:0:1 - - [17/Jan/2013:20:42:54 +0100] "POST /BaseServices/services/Twitter HTTP/1.1" 200 112521
 0:0:0:0:0:0:0:1 - - [17/Jan/2013:20:42:54 +0100] "POST /BaseServices/services/Twitter HTTP/1.1" 200 63447
 0:0:0:0:0:0:0:1 - - [17/Jan/2013:20:42:56 +0100] "POST /BaseServices/services/Sentiment HTTP/1.1" 200 275
+127.0.0.1 - - [17/Jan/2013:22:48:43 +0100] "GET / HTTP/1.1" 404 951
+0:0:0:0:0:0:0:1 - - [17/Jan/2013:22:48:44 +0100] "GET /BaseServices/ HTTP/1.1" 404 977
+127.0.0.1 - - [17/Jan/2013:22:57:07 +0100] "GET / HTTP/1.1" 404 951
+0:0:0:0:0:0:0:1 - - [17/Jan/2013:22:57:08 +0100] "GET /BaseServices/ HTTP/1.1" 404 977
+0:0:0:0:0:0:0:1 - - [17/Jan/2013:22:57:13 +0100] "GET /BaseServices/services HTTP/1.1" 200 3156
+0:0:0:0:0:0:0:1 - - [17/Jan/2013:22:57:13 +0100] "GET /BaseServices/services/?stylesheet=1 HTTP/1.1" 200 -
