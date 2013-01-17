@@ -1,10 +1,10 @@
-[Server@d52a26]: Initiating startup sequence...
-[Server@d52a26]: Server socket opened successfully in 10 ms.
-[Server@d52a26]: Database [index=0, id=0, db=file:C:\Users\AIC\Documents\aic1-2\TomcatServices\.metadata\.plugins\net.holmconsulting.database.server.plugin\databaseFileStore, alias=mydatabase] opened sucessfully in 771 ms.
-[Server@d52a26]: Startup sequence completed in 781 ms.
-[Server@d52a26]: 2013-01-17 22:56:43.402 HSQLDB server 2.2.5 is online on port 9001
-[Server@d52a26]: To close normally, connect and execute SHUTDOWN SQL
-[Server@d52a26]: From command line, use [Ctrl]+[C] to abort abruptly
-[Server@d52a26]: Initiating shutdown sequence...
-[Server@d52a26]: Shutdown sequence completed in 10 ms.
-[Server@d52a26]: 2013-01-17 22:57:23.850 SHUTDOWN : System.exit() was not called
+[Server@14251eb]: Initiating startup sequence...
+[Server@14251eb]: Server socket opened successfully in 10 ms.
+[Server@14251eb]: Database [index=0, id=0, db=file:C:\Users\AIC\Documents\aic1-2\TomcatServices\.metadata\.plugins\net.holmconsulting.database.server.plugin\databaseFileStore, alias=mydatabase] opened sucessfully in 1162 ms.
+[Server@14251eb]: Startup sequence completed in 1172 ms.
+[Server@14251eb]: 2013-01-17 23:05:44.337 HSQLDB server 2.2.5 is online on port 9001
+[Server@14251eb]: To close normally, connect and execute SHUTDOWN SQL
+[Server@14251eb]: From command line, use [Ctrl]+[C] to abort abruptly
+[Server@14251eb]: Initiating shutdown sequence...
+[Server@14251eb]: Shutdown sequence completed in 0 ms.
+[Server@14251eb]: 2013-01-17 23:07:04.132 SHUTDOWN : System.exit() was not called
